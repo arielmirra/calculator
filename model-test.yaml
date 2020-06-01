@@ -1,0 +1,22 @@
+ISO/IEC 25023:
+    class: Catalog
+    catalogType: QualityCharacteristic
+    catalogElements:
+        - functional suitability:
+            class: CatalogElement
+            type:  QualityCharacteristic
+            elements:
+                - Functional completeness:
+                    class: Element
+                    type: QualitySubcharacteristic
+                    metrics:
+                        - Functional coverage:
+                            name: Functional coverage
+                            standard: ISO/IEC 25023
+                            description: how much the specified and designed functionalities...
+                            calculus:
+                                operators: null
+                                terms: null
+        - performance efficiency:
+        - compatibility:
+        - usability:
