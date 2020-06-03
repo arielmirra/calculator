@@ -7,3 +7,13 @@ import org.springframework.stereotype.Repository
 interface UserRepository : JpaRepository<User, String> {
     fun findByName(name: String): User?
 }
+
+@Repository
+interface CatalogRepository : JpaRepository<Catalog, String> {
+    fun findByName(name: String): Catalog?
+}
+
+@Repository
+interface ElementRepository : JpaRepository<Element, String> {
+    fun findByName(name: String): Element?
+}

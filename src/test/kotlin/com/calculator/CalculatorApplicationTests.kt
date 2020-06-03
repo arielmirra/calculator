@@ -1,8 +1,7 @@
 package com.calculator
 
-import com.calculator.model.User
-import com.calculator.model.UserRepository
-import org.assertj.core.api.Assertions
+import com.calculator.model.*
+import org.assertj.core.api.Assertions.*
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
@@ -11,12 +10,17 @@ import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest
 class CalculatorApplicationTests @Autowired constructor(
-        private val userRepository: UserRepository) {
+        @Autowired private val userRepository: UserRepository,
+        @Autowired private val elementRepository: ElementRepository,
+        @Autowired private val catalogRepository: CatalogRepository
+) {
 
     @BeforeAll
     fun setup() {
         println(">> Testing Setup")
         userRepository.deleteAll()
+        catalogRepository.deleteAll()
+        elementRepository.deleteAll()
     }
 
     @Test
@@ -25,11 +29,51 @@ class CalculatorApplicationTests @Autowired constructor(
 
     @Test
     fun `When findByLogin then return User`() {
-        val newUser = User( "123456789", "ariel", "arimirra@hotmail.com")
+        val newUser = User(name = "ariel", email = "arimirra@hotmail.com")
         userRepository.saveAndFlush(newUser)
-        val user: User? = userRepository.findByName(newUser.name)
-        Assertions.assertThat(user!!.name).isEqualTo("ariel")
-        Assertions.assertThat(user).isEqualTo(newUser)
+        val user = userRepository.findByName(newUser.name)!!
+        assertThat(user.name).isEqualTo("ariel")
+    }
+
+    @Test
+    fun `Composite Pattern POC`() {
+        val elementName = "Quality Characteristic"
+        val catalogName = "example catalog"
+
+        val child = Element(
+                "",
+                elementName,
+                "description",
+                ElementType.QualityCharacteristic,
+                null,
+                mutableListOf()
+        )
+
+        val parent = Element(
+                "",
+                elementName,
+                "description",
+                ElementType.QualityCharacteristic,
+                null,
+                mutableListOf(child)
+        )
+        child.parent = parent
+        elementRepository.saveAndFlush(parent)
+
+        val e = elementRepository.findByName(elementName)!!
+        println(e)
+        assertThat(e.name).isEqualTo(elementName)
+
+        val catalog = Catalog(
+                0,
+                catalogName,
+                "description",
+                mutableListOf(e)
+        )
+
+        catalogRepository.saveAndFlush(catalog)
+        val c = catalogRepository.findByName(catalogName)!!
+        assertThat(c.catalogElements.size).isEqualTo(1)
     }
 
     @AfterAll
