@@ -1,12 +1,12 @@
 ISO/IEC 25023:
     class: Catalog
-    name: Example Catalog ISO/IEC 25023
+    name: Example Catalog
     #catalogType: QualityCharacteristic #??????????????
     catalogElements:
         - functional suitability:
             class: CatalogElement
             type:  QualityCharacteristic
-            elements: # start of recursive behaviour
+            elements:
                 - Functional completeness:
                     class: Element
                     type: QualitySubcharacteristic
