@@ -34,10 +34,11 @@ data class Element(
 
         @ManyToOne(cascade = [CascadeType.ALL])
         @JoinColumn(name = "parent", referencedColumnName = "uuid")
-        var parent: Element?,
+        var parent: Element? = null,
 
         @OneToMany(fetch = FetchType.EAGER, mappedBy = "parent", cascade = [CascadeType.ALL])
-        var elements: MutableList<Element>?
+        var elements: MutableList<Element>? = mutableListOf()
+
 //        @OneToMany(fetch = FetchType.EAGER) var metrics: MutableList<Metric>,
 )
 

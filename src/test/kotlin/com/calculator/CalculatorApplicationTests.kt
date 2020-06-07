@@ -41,22 +41,19 @@ class CalculatorApplicationTests @Autowired constructor(
         val catalogName = "example catalog"
 
         val child = Element(
-                "",
-                elementName,
-                "description",
-                ElementType.QualityCharacteristic,
-                null,
-                mutableListOf()
+                name = elementName,
+                description = "description",
+                type = ElementType.QualityCharacteristic
         )
 
         val parent = Element(
-                "",
-                elementName,
-                "description",
-                ElementType.QualityCharacteristic,
-                null,
-                mutableListOf(child)
+                name = elementName,
+                description = "description",
+                type = ElementType.QualityCharacteristic,
+                parent = null,
+                elements = mutableListOf(child)
         )
+
         child.parent = parent
         elementRepository.saveAndFlush(parent)
 
