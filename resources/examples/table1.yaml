@@ -1,7 +1,5 @@
-ISO/IEC 25023:
-  class: Catalog
-  name: Example Catalog
-  catalogElements:
+Table 1:
+  elements:
     - functional suitability:
         class: Element #(extends CatalogElement)
         type:  QualityCharacteristic
