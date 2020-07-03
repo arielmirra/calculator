@@ -1,4 +1,4 @@
-## Calculator back-end
+# Calculator back-end
 
 ## MySQL database setup
 - install mysql and open terminal
