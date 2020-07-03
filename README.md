@@ -1,15 +1,5 @@
-## Calculator back-end
+# Calculator
+This is a software designed to dynamically create your own quality metrics, measure and analyze them in a graphical and user-friendly interface.
 
-## MySQL database setup
-- install mysql and open terminal
-- `mysql -u root -p` (and enter the root password)
-- `create database calculatordb;` --> Creates the new database
-- `create user 'calculator'@'%' identified by 'password';` --> Creates the user
-- `grant all on calculatordb.* to 'calculator'@'%';` --> Gives all privileges to the new user on the newly created database
-
-Finally, add the Database to intellij configuration:
-
-![Intellij Database Configuration](resources/images/Inteliij Database Configuration.png) 
-
-Tip: if you never used Mysql there may be a warning to install missing drivers, just install them, test connection and you'll be fine.
-
+## How to run
+The detailed instructions are inside each folder for front-end and back-end.  
