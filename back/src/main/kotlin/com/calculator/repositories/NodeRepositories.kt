@@ -8,12 +8,16 @@ import org.springframework.stereotype.Repository
 
 
 @Repository
-interface MeasurableRepository : Neo4jRepository<Measurable, Long>
+interface MeasurableRepository : Neo4jRepository<Measurable, Long>{
+    fun findByName(name: String): Measurable?
+}
 
 @Repository
-interface AttributeRepository : Neo4jRepository<Attribute, Long>
+interface AttributeRepository : Neo4jRepository<Attribute, Long>{
+    fun findByName(name: String): Attribute?
+}
 
 @Repository
 interface PersonRepository : Neo4jRepository<Person, Long> {
-    fun findByName(name: String?): Person?
+    fun findByName(name: String): Person?
 }

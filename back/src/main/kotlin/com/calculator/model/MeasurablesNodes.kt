@@ -12,6 +12,8 @@ import java.util.stream.Collectors
 data class Measurable(
         @Id @GeneratedValue
         val id: Long = -1,
+        val name: String = "",
+        val description: String = "",
         @Relationship(type = "HAS_A", direction = Relationship.OUTGOING)
         val attributes: MutableSet<Attribute> = mutableSetOf(),
         @Relationship(type = "MEASURES", direction = Relationship.OUTGOING)
@@ -57,18 +59,12 @@ class Person {
         private var name: String? = null
 
         private constructor() {
-                // Empty constructor required as of Neo4j API 2.0.5
         }
 
         constructor(name: String?) {
                 this.name = name
         }
 
-        /**
-         * Neo4j doesn't REALLY have bi-directional relationships. It just means when querying
-         * to ignore the direction of the relationship.
-         * https://dzone.com/articles/modelling-data-neo4j
-         */
         @Relationship(type = "TEAMMATE", direction = Relationship.UNDIRECTED)
         var teammates: MutableSet<Person>? = null
         fun worksWith(person: Person) {
