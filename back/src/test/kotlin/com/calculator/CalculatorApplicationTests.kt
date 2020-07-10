@@ -10,7 +10,6 @@ import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest
 class CalculatorApplicationTests @Autowired constructor(
-        @Autowired private val userRepository: UserRepository,
         @Autowired private val elementRepository: ElementRepository,
         @Autowired private val catalogRepository: CatalogRepository
 ) {
@@ -18,7 +17,6 @@ class CalculatorApplicationTests @Autowired constructor(
     @BeforeAll
     fun setup() {
         println(">> Testing Setup")
-        userRepository.deleteAll()
         catalogRepository.deleteAll()
         elementRepository.deleteAll()
     }
@@ -28,28 +26,18 @@ class CalculatorApplicationTests @Autowired constructor(
     }
 
     @Test
-    fun `When findByLogin then return User`() {
-        val newUser = User(name = "ariel", email = "arimirra@hotmail.com")
-        userRepository.saveAndFlush(newUser)
-        val user = userRepository.findByName(newUser.name)!!
-        assertThat(user.name).isEqualTo("ariel")
-    }
-
-    @Test
     fun `Composite Pattern POC`() {
         val elementName = "Quality Characteristic"
         val catalogName = "example catalog"
 
         val child = Element(
                 name = elementName,
-                description = "description",
-                type = ElementType.QualityCharacteristic
+                description = "description"
         )
 
         val parent = Element(
                 name = elementName,
                 description = "description",
-                type = ElementType.QualityCharacteristic,
                 parent = null,
                 elements = mutableListOf(child)
         )

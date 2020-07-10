@@ -30,8 +30,6 @@ data class Element(
 
         var description: String = "",
 
-        var type: ElementType,
-
         @ManyToOne(cascade = [CascadeType.ALL])
         @JoinColumn(name = "parent", referencedColumnName = "uuid")
         var parent: Element? = null,
@@ -41,15 +39,6 @@ data class Element(
 
 //        @OneToMany(fetch = FetchType.EAGER) var metrics: MutableList<Metric>,
 )
-
-enum class ElementType {
-    QualityCharacteristic,
-    QualitySubCharacteristic,
-    Metric,
-    Goal,
-    Question,
-    // should Metric inherit from Element?
-}
 
 @Entity(name = "metrics")
 data class Metric(
