@@ -14,12 +14,18 @@ data class Measurable(
         val id: Long = -1,
         val name: String = "",
         val description: String = "",
-        @Relationship(type = "HAS_A", direction = Relationship.OUTGOING)
+        @Relationship(type = "HAS_ATTRIBUTE", direction = Relationship.OUTGOING)
         val attributes: MutableSet<Attribute> = mutableSetOf(),
+        @Relationship(type = "HAS_CHILDREN", direction = Relationship.OUTGOING)
+        val children: MutableSet<Measurable> = mutableSetOf(),
         @Relationship(type = "MEASURES", direction = Relationship.OUTGOING)
         val metrics: MutableSet<Metric> = mutableSetOf()
 
-)
+) {
+        fun hasAttribute(attribute: Attribute) = attributes.add(attribute)
+        fun hasChildren(measurable: Measurable) = children.add(measurable)
+        fun measures(metric: Metric) = metrics.add(metric)
+}
 
 
 @NodeEntity
@@ -36,8 +42,14 @@ data class Metric(
         val name: String = "",
         val description: String = "",
         @Relationship(type = "CALCULATES", direction = Relationship.OUTGOING)
-        val formula: Calculable? = null
-)
+        var formula: Calculable? = null
+){
+        fun calculates(calculable: Calculable) = run { formula = calculable }
+}
+
+interface Calculus {
+        fun calculate(): Number
+}
 
 
 @NodeEntity
@@ -45,9 +57,13 @@ data class Calculable(
         @Id @GeneratedValue val id: Long = -1,
         val name: String = "",
         val description: String = "",
+        val value: Number = 0,
         @Relationship(type = "CALCULATES", direction = Relationship.OUTGOING)
-        val formula: Calculable? = null
-)
+        var formula: Calculable? = null
+): Calculus {
+        fun calculates(calculable: Calculable) = run { formula = calculable }
+        override fun calculate() = value
+}
 
 
 // just for testing
