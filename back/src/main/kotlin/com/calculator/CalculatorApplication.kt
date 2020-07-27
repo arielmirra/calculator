@@ -12,94 +12,88 @@ import org.springframework.data.neo4j.repository.config.EnableNeo4jRepositories
 @EnableNeo4jRepositories
 class CalculatorApplication {
 
-	@Bean
-	fun demo(
-			metricSetRepository: MetricSetRepository,
-			attributeRepository: AttributeRepository,
-			metricRepository: MetricRepository,
-			calculusRepository: CalculusRepository,
-			measurementRepository: MeasurementRepository
-	): CommandLineRunner? {
-		return CommandLineRunner { args: Array<String?>? ->
-			metricSetRepository.deleteAll()
-			attributeRepository.deleteAll()
-			metricRepository.deleteAll()
-			calculusRepository.deleteAll()
-			measurementRepository.deleteAll()
+    @Bean
+    fun demo(
+            metricSetRepository: MetricSetRepository,
+            attributeRepository: AttributeRepository,
+            metricRepository: MetricRepository,
+            calculusRepository: CalculusRepository,
+            valueRepository: ValueRepository,
+            measurementRepository: MeasurementRepository
+    ): CommandLineRunner? {
+        return CommandLineRunner { args: Array<String?>? ->
+            metricSetRepository.deleteAll()
+            attributeRepository.deleteAll()
+            metricRepository.deleteAll()
+            calculusRepository.deleteAll()
+            valueRepository.deleteAll()
+            measurementRepository.deleteAll()
 
-			val five = Calculus(
-					name = "5",
-					description = "the number 5",
-					value = 5.0
-			)
-			calculusRepository.save(five)
 
-			val two = Calculus(
-					name = "2",
-					description = "the number 2",
-					value = 2.0
-			)
-			calculusRepository.save(two)
+            // calculus
+            val five = valueRepository.save(Value(
+                    name = "5",
+                    value = 5.0
+            ))
 
-			val fiveTimesTwo = Calculus(
-					name = "5 * 2",
-					description = "a multiplication",
-					operator = Operator.TIMES,
-					left = five,
-					right = two
-			)
-			calculusRepository.save(fiveTimesTwo)
+            val two = valueRepository.save(Value(
+                    name = "2",
+                    value = 2.0
+            ))
 
-			println("5 * 2 = ${fiveTimesTwo.calculate()}")
+            val fiveTimesTwo = calculusRepository.save(Calculus(
+                    name = "5 * 2",
+                    operator = Operator.TIMES,
+                    left = five,
+                    right = two
+            ))
+//            val calc = calculusRepository.findByName("5 * 2")!!
+//            println("5 * 2 = ${calc.calculate()}")
 
-			val metric1 = Metric(
-					name = "Metric 1",
-					description = "Measures a calculus",
-					calculus = fiveTimesTwo
-			)
-			metricRepository.save(metric1)
 
-			val measurable1 = MetricSet(
-					name = "MetricSet 1",
-					description = "this node is measurable"
-			)
-			metricSetRepository.save(measurable1)
+            // metric
+            val metric = metricRepository.save(Metric(
+                    name = "Metric 1",
+                    description = "Measures a calculus",
+                    calculates = mutableSetOf(fiveTimesTwo)
+            ))
 
-			val measurable2 = MetricSet(
-					name = "MetricSet 2",
-					description = "this node is measurable"
-			)
-			metricSetRepository.save(measurable2)
+            // metric sets
+            var set1 = metricSetRepository.save(MetricSet(
+                    name = "MetricSet 1",
+                    description = "this node is measurable"
+            ))
 
-			val measurable3 = MetricSet(
-					name = "MetricSet 3",
-					description = "this node is measurable",
-					metrics = mutableSetOf(metric1)
-			)
-			metricSetRepository.save(measurable3)
+            var set2 = metricSetRepository.save(MetricSet(
+                    name = "MetricSet 2",
+                    description = "this node is measurable"
+            ))
 
-			measurable1.measures(measurable2)
-			metricSetRepository.save(measurable1)
-			measurable2.measures(measurable3)
-			metricSetRepository.save(measurable2)
+            var set3 = metricSetRepository.save(MetricSet(
+                    name = "MetricSet 3",
+                    description = "this node is measurable",
+                    metrics = mutableSetOf(metric)
+            ))
 
-			val parent = Attribute(
-					name = "parent",
-					description = "this node has children"
-			)
-			attributeRepository.save(parent)
+            val parent = Attribute(
+                    name = "parent",
+                    description = "this node has children"
+            )
+            attributeRepository.save(parent)
 
-			measurable1.hasAttribute(parent)
-			measurable2.hasAttribute(parent)
-			metricSetRepository.saveAll(setOf(measurable1, measurable2))
+            set1.hasAttribute(parent)
+            set2.hasAttribute(parent)
+            set1.measures(set2)
+            set2.measures(set3)
+            metricSetRepository.saveAll(setOf(set1, set2))
 
-			println("MetricSet1 Measure Result: ${measurable1.measure()}")
-		}
+            println("MetricSet1 Measure Result: ${set1.measure()}")
+        }
 
-	}
+    }
 }
 
 fun main(args: Array<String>) {
-	runApplication<CalculatorApplication>(*args)
+    runApplication<CalculatorApplication>(*args)
 }
 

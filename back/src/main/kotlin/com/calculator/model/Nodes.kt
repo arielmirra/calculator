@@ -4,11 +4,11 @@ import org.neo4j.ogm.annotation.GeneratedValue
 import org.neo4j.ogm.annotation.Id
 import org.neo4j.ogm.annotation.NodeEntity
 import org.neo4j.ogm.annotation.Relationship
-import java.lang.NullPointerException
 import java.time.Instant
 import java.util.*
 import java.util.function.BinaryOperator
 import java.util.function.DoubleBinaryOperator
+
 
 @NodeEntity
 data class Attribute(
@@ -23,9 +23,9 @@ data class MetricSet(
         val id: Long = -1,
         val name: String = "",
         val description: String = "",
-        @Relationship(type = "HAS_ATTRIBUTE", direction = Relationship.OUTGOING)
+        @Relationship(type = "HAS_ATTRIBUTE")
         val attributes: MutableSet<Attribute> = mutableSetOf(),
-        @Relationship(type = "MEASURES", direction = Relationship.OUTGOING)
+        @Relationship(type = "MEASURES")
         val metrics: MutableSet<Measurable> = mutableSetOf()
 
 ) : Measurable {
@@ -50,11 +50,11 @@ data class Metric(
         @Id @GeneratedValue val id: Long = -1,
         val name: String = "",
         val description: String = "",
-        @Relationship(type = "CALCULATES", direction = Relationship.OUTGOING)
-        var calculus: Calculus
+        @Relationship(type = "CALCULATES")
+        val calculates: MutableSet<Calculable> = mutableSetOf()
 ) : Measurable {
-    fun calculates(calculus: Calculus) = run { this.calculus = calculus }
-    fun calculate() = calculus.calculate()
+    fun calculates(calculable: Calculus) = calculates.add(calculable)
+    fun calculate() = calculates.map {c -> c.calculate()}.sum()
 
     override fun measure(): Measurement {
         // TODO should save the measurement
@@ -70,19 +70,22 @@ data class Metric(
 @NodeEntity
 data class Calculus(
         @Id @GeneratedValue val id: Long = -1,
-        val name: String = "",
-        val description: String = "",
-        var value: Double? = null,
-        var left: Calculable? = null,
-        var right: Calculable? = null,
-        var operator: Operator? = null
+        val name: String,
+        var left: Calculable,
+        var right: Calculable,
+        var operator: Operator
 ) : Calculable {
-    override fun calculate(): Double {
-        return if (operator != null && left != null && right != null)
-            operator!!.apply(left!!.calculate(), right!!.calculate())
-        else if (value != null) value!!
-        else -1.0
-    }
+    override fun calculate(): Double =
+            operator.apply(left.calculate(), right.calculate())
+}
+
+@NodeEntity
+data class Value(
+        @Id @GeneratedValue val id: Long = -1,
+        val name: String,
+        var value: Double
+) : Calculable {
+    override fun calculate(): Double = value
 }
 
 enum class Operator : BinaryOperator<Double>, DoubleBinaryOperator {

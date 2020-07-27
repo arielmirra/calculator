@@ -26,6 +26,11 @@ interface CalculusRepository : Neo4jRepository<Calculus, Long>{
 }
 
 @Repository
+interface ValueRepository : Neo4jRepository<Value, Long>{
+    fun findByName(name: String): Value?
+}
+
+@Repository
 interface MeasurementRepository : Neo4jRepository<Measurement, Long>{
     fun findByName(name: String): Measurement?
 }
