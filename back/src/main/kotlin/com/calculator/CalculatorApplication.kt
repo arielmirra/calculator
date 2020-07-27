@@ -1,7 +1,6 @@
 package com.calculator
 
 import com.calculator.model.*
-import com.calculator.repositories.*
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
@@ -18,47 +17,15 @@ class CalculatorApplication {
 			metricSetRepository: MetricSetRepository,
 			attributeRepository: AttributeRepository,
 			metricRepository: MetricRepository,
-			calculusRepository: CalculusRepository
+			calculusRepository: CalculusRepository,
+			measurementRepository: MeasurementRepository
 	): CommandLineRunner? {
 		return CommandLineRunner { args: Array<String?>? ->
 			metricSetRepository.deleteAll()
 			attributeRepository.deleteAll()
 			metricRepository.deleteAll()
 			calculusRepository.deleteAll()
-
-			val measurable1 = MetricSet(
-					name = "1",
-					description = "this node is measurable"
-			)
-			metricSetRepository.save(measurable1)
-
-			val measurable2 = MetricSet(
-					name = "2",
-					description = "this node is measurable"
-			)
-			metricSetRepository.save(measurable2)
-
-			val measurable3 = MetricSet(
-					name = "3",
-					description = "this node is measurable"
-			)
-			metricSetRepository.save(measurable3)
-
-			measurable1.measures(measurable2)
-			metricSetRepository.save(measurable1)
-			measurable2.measures(measurable3)
-			metricSetRepository.save(measurable2)
-
-			val parent = Attribute(
-					name = "parent",
-					description = "this node has children"
-			)
-			attributeRepository.save(parent)
-
-			measurable1.hasAttribute(parent)
-			measurable2.hasAttribute(parent)
-			metricSetRepository.saveAll(setOf(measurable1, measurable2))
-
+			measurementRepository.deleteAll()
 
 			val five = Calculus(
 					name = "5",
@@ -84,6 +51,49 @@ class CalculatorApplication {
 			calculusRepository.save(fiveTimesTwo)
 
 			println("5 * 2 = ${fiveTimesTwo.calculate()}")
+
+			val metric1 = Metric(
+					name = "Metric 1",
+					description = "Measures a calculus",
+					calculus = fiveTimesTwo
+			)
+			metricRepository.save(metric1)
+
+			val measurable1 = MetricSet(
+					name = "MetricSet 1",
+					description = "this node is measurable"
+			)
+			metricSetRepository.save(measurable1)
+
+			val measurable2 = MetricSet(
+					name = "MetricSet 2",
+					description = "this node is measurable"
+			)
+			metricSetRepository.save(measurable2)
+
+			val measurable3 = MetricSet(
+					name = "MetricSet 3",
+					description = "this node is measurable",
+					metrics = mutableSetOf(metric1)
+			)
+			metricSetRepository.save(measurable3)
+
+			measurable1.measures(measurable2)
+			metricSetRepository.save(measurable1)
+			measurable2.measures(measurable3)
+			metricSetRepository.save(measurable2)
+
+			val parent = Attribute(
+					name = "parent",
+					description = "this node has children"
+			)
+			attributeRepository.save(parent)
+
+			measurable1.hasAttribute(parent)
+			measurable2.hasAttribute(parent)
+			metricSetRepository.saveAll(setOf(measurable1, measurable2))
+
+			println("MetricSet1 Measure Result: ${measurable1.measure()}")
 		}
 
 	}

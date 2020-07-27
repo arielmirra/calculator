@@ -1,4 +1,4 @@
-package com.calculator.repositories
+package com.calculator.model
 
 import com.calculator.model.*
 import org.springframework.data.neo4j.repository.Neo4jRepository
@@ -23,4 +23,9 @@ interface MetricRepository : Neo4jRepository<Metric, Long>{
 @Repository
 interface CalculusRepository : Neo4jRepository<Calculus, Long>{
     fun findByName(name: String): Calculus?
+}
+
+@Repository
+interface MeasurementRepository : Neo4jRepository<Measurement, Long>{
+    fun findByName(name: String): Measurement?
 }

@@ -5,5 +5,5 @@ interface Calculable {
 }
 
 interface Measurable {
-    fun measure()
+    fun measure(): Measurement // should be Unit and just save the Measurement?
 }

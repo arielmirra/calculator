@@ -4,6 +4,9 @@ import org.neo4j.ogm.annotation.GeneratedValue
 import org.neo4j.ogm.annotation.Id
 import org.neo4j.ogm.annotation.NodeEntity
 import org.neo4j.ogm.annotation.Relationship
+import java.lang.NullPointerException
+import java.time.Instant
+import java.util.*
 import java.util.function.BinaryOperator
 import java.util.function.DoubleBinaryOperator
 
@@ -23,15 +26,21 @@ data class MetricSet(
         @Relationship(type = "HAS_ATTRIBUTE", direction = Relationship.OUTGOING)
         val attributes: MutableSet<Attribute> = mutableSetOf(),
         @Relationship(type = "MEASURES", direction = Relationship.OUTGOING)
-        val measures: MutableSet<Measurable> = mutableSetOf()
+        val metrics: MutableSet<Measurable> = mutableSetOf()
 
 ) : Measurable {
     fun hasAttribute(attribute: Attribute) = attributes.add(attribute)
-    fun measures(measurable: Measurable) = measures.add(measurable)
+    fun measures(measurable: Measurable) = metrics.add(measurable)
 
-    override fun measure() {
+    override fun measure(): Measurement {
+        // TODO should create unique exception?
+        if (metrics.isEmpty()) throw NullPointerException("there are no metrics to measure")
         // TODO should save the measurement
-        measures.map { m -> m.measure() }
+        val result = metrics.map{m -> m.measure().value}.sum()
+        return Measurement(
+                name = "$name measured",
+                value = result
+        )
     }
 }
 
@@ -42,14 +51,18 @@ data class Metric(
         val name: String = "",
         val description: String = "",
         @Relationship(type = "CALCULATES", direction = Relationship.OUTGOING)
-        var calculus: Calculus? = null
+        var calculus: Calculus
 ) : Measurable {
     fun calculates(calculus: Calculus) = run { this.calculus = calculus }
-    fun calculate() = calculus?.calculate()
+    fun calculate() = calculus.calculate()
 
-    override fun measure() {
+    override fun measure(): Measurement {
         // TODO should save the measurement
-        val value = calculate()
+        val result = calculate()
+        return Measurement(
+                name = "$name measured",
+                value = result
+        )
     }
 }
 
@@ -88,3 +101,11 @@ enum class Operator : BinaryOperator<Double>, DoubleBinaryOperator {
 
     override fun applyAsDouble(t: Double, u: Double) = apply(t, u)
 }
+
+@NodeEntity
+data class Measurement(
+        @Id @GeneratedValue val id: Long = -1,
+        val name: String,
+        val value: Double,
+        val date: Date = Date.from(Instant.now())!!
+)
