@@ -15,39 +15,39 @@ class CalculatorApplication {
 
 	@Bean
 	fun demo(
-			measurableRepository: MeasurableRepository,
+			metricSetRepository: MetricSetRepository,
 			attributeRepository: AttributeRepository,
 			metricRepository: MetricRepository,
-			calculableRepository: CalculableRepository
+			calculusRepository: CalculusRepository
 	): CommandLineRunner? {
 		return CommandLineRunner { args: Array<String?>? ->
-			measurableRepository.deleteAll()
+			metricSetRepository.deleteAll()
 			attributeRepository.deleteAll()
 			metricRepository.deleteAll()
-			calculableRepository.deleteAll()
+			calculusRepository.deleteAll()
 
-			val measurable1 = Measurable(
+			val measurable1 = MetricSet(
 					name = "1",
 					description = "this node is measurable"
 			)
-			measurableRepository.save(measurable1)
+			metricSetRepository.save(measurable1)
 
-			val measurable2 = Measurable(
+			val measurable2 = MetricSet(
 					name = "2",
 					description = "this node is measurable"
 			)
-			measurableRepository.save(measurable2)
+			metricSetRepository.save(measurable2)
 
-			val measurable3 = Measurable(
+			val measurable3 = MetricSet(
 					name = "3",
 					description = "this node is measurable"
 			)
-			measurableRepository.save(measurable3)
+			metricSetRepository.save(measurable3)
 
-			measurable1.hasChildren(measurable2)
-			measurableRepository.save(measurable1)
-			measurable2.hasChildren(measurable3)
-			measurableRepository.save(measurable2)
+			measurable1.measures(measurable2)
+			metricSetRepository.save(measurable1)
+			measurable2.measures(measurable3)
+			metricSetRepository.save(measurable2)
 
 			val parent = Attribute(
 					name = "parent",
@@ -57,31 +57,31 @@ class CalculatorApplication {
 
 			measurable1.hasAttribute(parent)
 			measurable2.hasAttribute(parent)
-			measurableRepository.saveAll(setOf(measurable1, measurable2))
+			metricSetRepository.saveAll(setOf(measurable1, measurable2))
 
 
-			val five = Calculable(
+			val five = Calculus(
 					name = "5",
 					description = "the number 5",
 					value = 5.0
 			)
-			calculableRepository.save(five)
+			calculusRepository.save(five)
 
-			val two = Calculable(
+			val two = Calculus(
 					name = "2",
 					description = "the number 2",
 					value = 2.0
 			)
-			calculableRepository.save(two)
+			calculusRepository.save(two)
 
-			val fiveTimesTwo = Calculable(
+			val fiveTimesTwo = Calculus(
 					name = "5 * 2",
 					description = "a multiplication",
 					operator = Operator.TIMES,
 					left = five,
 					right = two
 			)
-			calculableRepository.save(fiveTimesTwo)
+			calculusRepository.save(fiveTimesTwo)
 
 			println("5 * 2 = ${fiveTimesTwo.calculate()}")
 		}

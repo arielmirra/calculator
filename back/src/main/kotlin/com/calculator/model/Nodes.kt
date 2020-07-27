@@ -7,33 +7,33 @@ import org.neo4j.ogm.annotation.Relationship
 import java.util.function.BinaryOperator
 import java.util.function.DoubleBinaryOperator
 
-
-@NodeEntity
-data class Measurable(
-        @Id @GeneratedValue
-        val id: Long = -1,
-        val name: String = "",
-        val description: String = "",
-        @Relationship(type = "HAS_ATTRIBUTE", direction = Relationship.OUTGOING)
-        val attributes: MutableSet<Attribute> = mutableSetOf(),
-        @Relationship(type = "HAS_CHILDREN", direction = Relationship.OUTGOING)
-        val children: MutableSet<Measurable> = mutableSetOf(),
-        @Relationship(type = "MEASURES", direction = Relationship.OUTGOING)
-        val metrics: MutableSet<Metric> = mutableSetOf()
-
-) {
-    fun hasAttribute(attribute: Attribute) = attributes.add(attribute)
-    fun hasChildren(measurable: Measurable) = children.add(measurable)
-    fun measures(metric: Metric) = metrics.add(metric)
-}
-
-
 @NodeEntity
 data class Attribute(
         @Id @GeneratedValue val id: Long = -1,
         val name: String = "",
         val description: String = ""
 )
+
+@NodeEntity
+data class MetricSet(
+        @Id @GeneratedValue
+        val id: Long = -1,
+        val name: String = "",
+        val description: String = "",
+        @Relationship(type = "HAS_ATTRIBUTE", direction = Relationship.OUTGOING)
+        val attributes: MutableSet<Attribute> = mutableSetOf(),
+        @Relationship(type = "MEASURES", direction = Relationship.OUTGOING)
+        val measures: MutableSet<Measurable> = mutableSetOf()
+
+) : Measurable {
+    fun hasAttribute(attribute: Attribute) = attributes.add(attribute)
+    fun measures(measurable: Measurable) = measures.add(measurable)
+
+    override fun measure() {
+        // TODO should save the measurement
+        measures.map { m -> m.measure() }
+    }
+}
 
 
 @NodeEntity
@@ -43,18 +43,19 @@ data class Metric(
         val description: String = "",
         @Relationship(type = "CALCULATES", direction = Relationship.OUTGOING)
         var calculus: Calculus? = null
-) {
+) : Measurable {
     fun calculates(calculus: Calculus) = run { this.calculus = calculus }
     fun calculate() = calculus?.calculate()
-}
 
-interface Calculus {
-    fun calculate(): Double
+    override fun measure() {
+        // TODO should save the measurement
+        val value = calculate()
+    }
 }
 
 
 @NodeEntity
-data class Calculable(
+data class Calculus(
         @Id @GeneratedValue val id: Long = -1,
         val name: String = "",
         val description: String = "",
@@ -62,11 +63,11 @@ data class Calculable(
         var left: Calculable? = null,
         var right: Calculable? = null,
         var operator: Operator? = null
-) : Calculus {
+) : Calculable {
     override fun calculate(): Double {
         return if (operator != null && left != null && right != null)
             operator!!.apply(left!!.calculate(), right!!.calculate())
-        else  if(value != null) value!!
+        else if (value != null) value!!
         else -1.0
     }
 }

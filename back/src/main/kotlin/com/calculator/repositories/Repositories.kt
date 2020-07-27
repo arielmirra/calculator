@@ -6,8 +6,8 @@ import org.springframework.stereotype.Repository
 
 
 @Repository
-interface MeasurableRepository : Neo4jRepository<Measurable, Long>{
-    fun findByName(name: String): Measurable?
+interface MetricSetRepository : Neo4jRepository<MetricSet, Long>{
+    fun findByName(name: String): MetricSet?
 }
 
 @Repository
@@ -21,6 +21,6 @@ interface MetricRepository : Neo4jRepository<Metric, Long>{
 }
 
 @Repository
-interface CalculableRepository : Neo4jRepository<Calculable, Long>{
-    fun findByName(name: String): Calculable?
+interface CalculusRepository : Neo4jRepository<Calculus, Long>{
+    fun findByName(name: String): Calculus?
 }
