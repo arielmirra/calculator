@@ -1,9 +1,6 @@
 package com.calculator
 
-import com.calculator.model.Attribute
-import com.calculator.model.Calculable
-import com.calculator.model.Measurable
-import com.calculator.model.Person
+import com.calculator.model.*
 import com.calculator.repositories.*
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.autoconfigure.SpringBootApplication
@@ -16,41 +13,8 @@ import org.springframework.data.neo4j.repository.config.EnableNeo4jRepositories
 @EnableNeo4jRepositories
 class CalculatorApplication {
 
-
-	fun demo(personRepository: PersonRepository): CommandLineRunner? {
-		return CommandLineRunner { args: Array<String?>? ->
-			personRepository.deleteAll()
-
-			var greg = Person("Greg")
-			var roy = Person("Roy")
-			val craig = Person("Craig")
-			val team: List<Person> = listOf(greg,craig,roy)
-
-			println("Before linking up with Neo4j...")
-			team.stream().forEach { person: Person -> println("\t" + person.toString()) }
-			personRepository.save(greg)
-			personRepository.save(roy)
-			personRepository.save(craig)
-
-			greg = greg.getName()?.let { personRepository.findByName(it) }!!
-			greg.worksWith(roy)
-			greg.worksWith(craig)
-			personRepository.save(greg)
-			roy = roy.getName()?.let { personRepository.findByName(it) }!!
-			roy.worksWith(craig)
-
-			personRepository.save(roy)
-
-			println("Lookup each person by name...")
-			team.stream().forEach { person: Person ->
-				println(
-						"\t" + person.getName()?.let { personRepository.findByName(it).toString() })
-			}
-		}
-	}
-
 	@Bean
-	fun setupDemo(
+	fun demo(
 			measurableRepository: MeasurableRepository,
 			attributeRepository: AttributeRepository,
 			metricRepository: MetricRepository,
@@ -62,19 +26,19 @@ class CalculatorApplication {
 			metricRepository.deleteAll()
 			calculableRepository.deleteAll()
 
-			var measurable1 = Measurable(
+			val measurable1 = Measurable(
 					name = "1",
 					description = "this node is measurable"
 			)
 			measurableRepository.save(measurable1)
 
-			var measurable2 = Measurable(
+			val measurable2 = Measurable(
 					name = "2",
 					description = "this node is measurable"
 			)
 			measurableRepository.save(measurable2)
 
-			var measurable3 = Measurable(
+			val measurable3 = Measurable(
 					name = "3",
 					description = "this node is measurable"
 			)
@@ -96,20 +60,30 @@ class CalculatorApplication {
 			measurableRepository.saveAll(setOf(measurable1, measurable2))
 
 
-			var five = Calculable(
+			val five = Calculable(
 					name = "5",
-					description = "the number 5"
+					description = "the number 5",
+					value = 5.0
 			)
+			calculableRepository.save(five)
 
-			var two = Calculable(
+			val two = Calculable(
 					name = "2",
-					description = "the number 2"
+					description = "the number 2",
+					value = 2.0
 			)
+			calculableRepository.save(two)
 
-			var fiveTimesTwo = Calculable(
-					name = "2",
-					description = "the number 2"
+			val fiveTimesTwo = Calculable(
+					name = "5 * 2",
+					description = "a multiplication",
+					operator = Operator.TIMES,
+					left = five,
+					right = two
 			)
+			calculableRepository.save(fiveTimesTwo)
+
+			println("5 * 2 = ${fiveTimesTwo.calculate()}")
 		}
 
 	}

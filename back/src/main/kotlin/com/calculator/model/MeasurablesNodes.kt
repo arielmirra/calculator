@@ -4,8 +4,8 @@ import org.neo4j.ogm.annotation.GeneratedValue
 import org.neo4j.ogm.annotation.Id
 import org.neo4j.ogm.annotation.NodeEntity
 import org.neo4j.ogm.annotation.Relationship
-import java.util.*
-import java.util.stream.Collectors
+import java.util.function.BinaryOperator
+import java.util.function.DoubleBinaryOperator
 
 
 @NodeEntity
@@ -22,9 +22,9 @@ data class Measurable(
         val metrics: MutableSet<Metric> = mutableSetOf()
 
 ) {
-        fun hasAttribute(attribute: Attribute) = attributes.add(attribute)
-        fun hasChildren(measurable: Measurable) = children.add(measurable)
-        fun measures(metric: Metric) = metrics.add(metric)
+    fun hasAttribute(attribute: Attribute) = attributes.add(attribute)
+    fun hasChildren(measurable: Measurable) = children.add(measurable)
+    fun measures(metric: Metric) = metrics.add(metric)
 }
 
 
@@ -42,13 +42,14 @@ data class Metric(
         val name: String = "",
         val description: String = "",
         @Relationship(type = "CALCULATES", direction = Relationship.OUTGOING)
-        var formula: Calculable? = null
-){
-        fun calculates(calculable: Calculable) = run { formula = calculable }
+        var calculus: Calculus? = null
+) {
+    fun calculates(calculus: Calculus) = run { this.calculus = calculus }
+    fun calculate() = calculus?.calculate()
 }
 
 interface Calculus {
-        fun calculate(): Number
+    fun calculate(): Double
 }
 
 
@@ -57,52 +58,32 @@ data class Calculable(
         @Id @GeneratedValue val id: Long = -1,
         val name: String = "",
         val description: String = "",
-        val value: Number = 0,
-        @Relationship(type = "CALCULATES", direction = Relationship.OUTGOING)
-        var formula: Calculable? = null
-): Calculus {
-        fun calculates(calculable: Calculable) = run { formula = calculable }
-        override fun calculate() = value
+        var value: Double? = null,
+        var left: Calculable? = null,
+        var right: Calculable? = null,
+        var operator: Operator? = null
+) : Calculus {
+    override fun calculate(): Double {
+        return if (operator != null && left != null && right != null)
+            operator!!.apply(left!!.calculate(), right!!.calculate())
+        else  if(value != null) value!!
+        else -1.0
+    }
 }
 
+enum class Operator : BinaryOperator<Double>, DoubleBinaryOperator {
+    PLUS {
+        override fun apply(t: Double, u: Double): Double = t + u
+    },
+    MINUS {
+        override fun apply(t: Double, u: Double): Double = t - u
+    },
+    TIMES {
+        override fun apply(t: Double, u: Double): Double = t * u
+    },
+    DIVIDE {
+        override fun apply(t: Double, u: Double): Double = t / u
+    };
 
-// just for testing
-@NodeEntity
-class Person {
-        @Id
-        @GeneratedValue
-        private val id: Long? = null
-        private var name: String? = null
-
-        private constructor() {
-        }
-
-        constructor(name: String?) {
-                this.name = name
-        }
-
-        @Relationship(type = "TEAMMATE", direction = Relationship.UNDIRECTED)
-        var teammates: MutableSet<Person>? = null
-        fun worksWith(person: Person) {
-                if (teammates == null) {
-                        teammates = HashSet()
-                }
-                teammates!!.add(person)
-        }
-
-        override fun toString(): String {
-                return ("$name's teammates => "
-                        + Optional.ofNullable(teammates).orElse(
-                        Collections.emptySet()).stream()
-                        .map { obj: Person -> obj.getName() }
-                        .collect(Collectors.toList()))
-        }
-
-        fun getName(): String? {
-                return name
-        }
-
-        fun setName(name: String?) {
-                this.name = name
-        }
+    override fun applyAsDouble(t: Double, u: Double) = apply(t, u)
 }

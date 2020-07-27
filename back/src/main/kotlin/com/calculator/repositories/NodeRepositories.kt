@@ -24,8 +24,3 @@ interface MetricRepository : Neo4jRepository<Metric, Long>{
 interface CalculableRepository : Neo4jRepository<Calculable, Long>{
     fun findByName(name: String): Calculable?
 }
-
-@Repository
-interface PersonRepository : Neo4jRepository<Person, Long> {
-    fun findByName(name: String): Person?
-}
