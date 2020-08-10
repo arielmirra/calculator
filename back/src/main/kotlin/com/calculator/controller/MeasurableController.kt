@@ -3,7 +3,6 @@ package com.calculator.controller
 import com.calculator.model.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
-import java.util.*
 
 @RestController
 @CrossOrigin
@@ -16,7 +15,7 @@ class MeasurableController(
         @Autowired private val valueRepository: ValueRepository,
         @Autowired private val measurementRepository: MeasurementRepository
 ) {
-    @GetMapping("/ping")
+    @GetMapping("/")
     fun greet(): String {
         return "Hello There!"
     }
@@ -24,17 +23,21 @@ class MeasurableController(
     @GetMapping("/metrics")
     fun getAllMetricSets(): List<MetricSet> = metricSetRepository.findAll().toList()
 
+    @GetMapping("/metrics/custom")
+    fun getAllMetricSetsByQuery(): List<MetricSet> =
+            metricSetRepository.getFullMetrics().toList()
+
+    @GetMapping("/metric/{name}")
+    fun getAllMetricSets(@PathVariable name: String): MetricSet? = metricSetRepository.findByName(name)
+
     @GetMapping("/metric")
     fun getAllMetrics(): List<Metric> = metricRepository.findAll().toList()
 
     @GetMapping("attribute")
     fun getAllAttributes(): List<Attribute> = attributeRepository.findAll().toList()
 
-    @GetMapping("/calculable/{name}")
-    fun getAllCalculable(@PathVariable name: String): Calculable? {
-        println(calculusRepository.findAll())
-        return calculusRepository.findByName(name)
-    }
+    @GetMapping("/calculable")
+    fun getAllCalculable(): List<Calculable> = calculusRepository.findAll().toList()
 
     @GetMapping("/value")
     fun getAllValues(): List<Value> = valueRepository.findAll().toList()

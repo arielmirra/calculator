@@ -1,0 +1,1 @@
+match (ms:MetricSet)-[*]->(m:Metric)-[*]->(c:Calculus)-[*]->(v:Value) return ms,m,c,v   // returns full cycle

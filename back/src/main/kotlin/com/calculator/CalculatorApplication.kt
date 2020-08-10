@@ -6,10 +6,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.context.annotation.Bean
 import org.springframework.data.neo4j.repository.config.EnableNeo4jRepositories
+import org.springframework.transaction.annotation.EnableTransactionManagement
 
 
 @SpringBootApplication
 @EnableNeo4jRepositories
+@EnableTransactionManagement
 class CalculatorApplication {
 
     @Bean
@@ -47,16 +49,28 @@ class CalculatorApplication {
                     left = five,
                     right = two
             ))
-//            val calc = calculusRepository.findByName("5 * 2")!!
-//            println("5 * 2 = ${calc.calculate()}")
+            println("---")
+            println(fiveTimesTwo)
+            val calc = calculusRepository.findByName("5 * 2")!!
+            println(calc)
+            println("5 * 2 = ${calc.calculate()}")
+            println("--- \n")
 
 
             // metric
             val metric = metricRepository.save(Metric(
                     name = "Metric 1",
-                    description = "Measures a calculus",
-                    calculates = mutableSetOf(fiveTimesTwo)
+                    description = "Measures a calculus"
             ))
+
+            metric.calculates(calc)
+            metricRepository.save(metric)
+
+            println("---")
+            println(metric)
+            val metric2 = metricRepository.findByName("Metric 1")!!
+            println(metric2)
+            println("--- \n")
 
             // metric sets
             var set1 = metricSetRepository.save(MetricSet(
@@ -75,19 +89,24 @@ class CalculatorApplication {
                     metrics = mutableSetOf(metric)
             ))
 
-            val parent = Attribute(
-                    name = "parent",
-                    description = "this node has children"
-            )
-            attributeRepository.save(parent)
-
-            set1.hasAttribute(parent)
-            set2.hasAttribute(parent)
+//            val parent = Attribute(
+//                    name = "parent",
+//                    description = "this node has children"
+//            )
+//            attributeRepository.save(parent)
+//
+//            set1.hasAttribute(parent)
+//            set2.hasAttribute(parent)
             set1.measures(set2)
             set2.measures(set3)
             metricSetRepository.saveAll(setOf(set1, set2))
 
+            println("---")
             println("MetricSet1 Measure Result: ${set1.measure()}")
+            val set1Bis = metricSetRepository.findByName("MetricSet 1")!!
+            println(set1)
+            println(set1Bis)
+            println("--- \n")
         }
 
     }
@@ -96,4 +115,3 @@ class CalculatorApplication {
 fun main(args: Array<String>) {
     runApplication<CalculatorApplication>(*args)
 }
-

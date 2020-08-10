@@ -36,7 +36,7 @@ data class MetricSet(
         // TODO should create unique exception?
         if (metrics.isEmpty()) throw NullPointerException("there are no metrics to measure")
         // TODO should save the measurement
-        val result = metrics.map{m -> m.measure().value}.sum()
+        val result = metrics.map { m -> m.measure().value }.sum()
         return Measurement(
                 name = "$name measured",
                 value = result
@@ -54,7 +54,7 @@ data class Metric(
         val calculates: MutableSet<Calculable> = mutableSetOf()
 ) : Measurable {
     fun calculates(calculable: Calculus) = calculates.add(calculable)
-    fun calculate() = calculates.map {c -> c.calculate()}.sum()
+    fun calculate() = calculates.map { c -> c.calculate() }.sum()
 
     override fun measure(): Measurement {
         // TODO should save the measurement
@@ -70,20 +70,22 @@ data class Metric(
 @NodeEntity
 data class Calculus(
         @Id @GeneratedValue val id: Long = -1,
-        val name: String,
-        var left: Calculable,
-        var right: Calculable,
-        var operator: Operator
+        val name: String = "",
+        @Relationship(type = "LEFT")
+        var left: Calculable? = null,
+        @Relationship(type = "RIGHT")
+        var right: Calculable? = null,
+        var operator: Operator? = null
 ) : Calculable {
     override fun calculate(): Double =
-            operator.apply(left.calculate(), right.calculate())
+            operator!!.apply(left!!.calculate(), right!!.calculate())
 }
 
 @NodeEntity
 data class Value(
         @Id @GeneratedValue val id: Long = -1,
-        val name: String,
-        var value: Double
+        val name: String = "",
+        var value: Double = 0.0
 ) : Calculable {
     override fun calculate(): Double = value
 }
@@ -108,7 +110,7 @@ enum class Operator : BinaryOperator<Double>, DoubleBinaryOperator {
 @NodeEntity
 data class Measurement(
         @Id @GeneratedValue val id: Long = -1,
-        val name: String,
-        val value: Double,
+        val name: String = "",
+        val value: Double = 0.0,
         val date: Date = Date.from(Instant.now())!!
 )
