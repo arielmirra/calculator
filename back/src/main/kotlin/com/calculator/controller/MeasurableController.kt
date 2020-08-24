@@ -7,38 +7,17 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @CrossOrigin
 @RequestMapping
+// http://localhost:8080/swagger-ui.html
 class MeasurableController(
-        @Autowired private val metricSetRepository: MetricSetRepository,
-        @Autowired private val attributeRepository: AttributeRepository,
         @Autowired private val metricRepository: MetricRepository,
-        @Autowired private val calculusRepository: CalculusRepository,
-        @Autowired private val valueRepository: ValueRepository,
-        @Autowired private val measurementRepository: MeasurementRepository
+        @Autowired private val calculableRepository: CalculableRepository
 ) {
     @GetMapping("/")
-    fun greet(): String {
-        return "Hello There!"
-    }
-
-    @GetMapping("/metrics")
-    fun getAllMetricSets(): List<MetricSet> = metricSetRepository.findAll().toList()
-
-    @GetMapping("/metrics/custom")
-    fun getAllMetricSetsByQuery(): List<MetricSet> =
-            metricSetRepository.getFullMetrics().toList()
-
-    @GetMapping("/metric/{name}")
-    fun getAllMetricSets(@PathVariable name: String): MetricSet? = metricSetRepository.findByName(name)
+    fun greet(): String = "Hello There!"
 
     @GetMapping("/metric")
     fun getAllMetrics(): List<Metric> = metricRepository.findAll().toList()
 
-    @GetMapping("attribute")
-    fun getAllAttributes(): List<Attribute> = attributeRepository.findAll().toList()
-
     @GetMapping("/calculable")
-    fun getAllCalculable(): List<Calculable> = calculusRepository.findAll().toList()
-
-    @GetMapping("/value")
-    fun getAllValues(): List<Value> = valueRepository.findAll().toList()
+    fun getAllCalculable(): List<Calculable> = calculableRepository.findAll().toList()
 }

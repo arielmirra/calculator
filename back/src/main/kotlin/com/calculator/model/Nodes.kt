@@ -17,32 +17,32 @@ data class Attribute(
         val description: String = ""
 )
 
-@NodeEntity
-data class MetricSet(
-        @Id @GeneratedValue
-        val id: Long = -1,
-        val name: String = "",
-        val description: String = "",
-        @Relationship(type = "HAS_ATTRIBUTE")
-        val attributes: MutableSet<Attribute> = mutableSetOf(),
-        @Relationship(type = "MEASURES")
-        val metrics: MutableSet<Measurable> = mutableSetOf()
-
-) : Measurable {
-    fun hasAttribute(attribute: Attribute) = attributes.add(attribute)
-    fun measures(measurable: Measurable) = metrics.add(measurable)
-
-    override fun measure(): Measurement {
-        // TODO should create unique exception?
-        if (metrics.isEmpty()) throw NullPointerException("there are no metrics to measure")
-        // TODO should save the measurement
-        val result = metrics.map { m -> m.measure().value }.sum()
-        return Measurement(
-                name = "$name measured",
-                value = result
-        )
-    }
-}
+//@NodeEntity
+//data class MetricSet(
+//        @Id @GeneratedValue
+//        val id: Long = -1,
+//        val name: String = "",
+//        val description: String = "",
+//        @Relationship(type = "HAS_ATTRIBUTE")
+//        val attributes: MutableSet<Attribute> = mutableSetOf(),
+//        @Relationship(type = "MEASURES")
+//        val metrics: MutableSet<Measurable> = mutableSetOf()
+//
+//) {
+//    fun hasAttribute(attribute: Attribute) = attributes.add(attribute)
+//    fun measures(measurable: Measurable) = metrics.add(measurable)
+//
+//    override fun measure(): Measurement {
+//        // TODO should create unique exception?
+//        if (metrics.isEmpty()) throw NullPointerException("there are no metrics to measure")
+//        // TODO should save the measurement
+//        val result = metrics.map { m -> m.measure().value }.sum()
+//        return Measurement(
+//                name = "$name measured",
+//                value = result
+//        )
+//    }
+//}
 
 
 @NodeEntity
@@ -52,42 +52,27 @@ data class Metric(
         val description: String = "",
         @Relationship(type = "CALCULATES")
         val calculates: MutableSet<Calculable> = mutableSetOf()
-) : Measurable {
-    fun calculates(calculable: Calculus) = calculates.add(calculable)
+) {
+    fun calculates(calculable: Calculable) = calculates.add(calculable)
     fun calculate() = calculates.map { c -> c.calculate() }.sum()
-
-    override fun measure(): Measurement {
-        // TODO should save the measurement
-        val result = calculate()
-        return Measurement(
-                name = "$name measured",
-                value = result
-        )
-    }
 }
 
 
 @NodeEntity
-data class Calculus(
+data class Calculable(
         @Id @GeneratedValue val id: Long = -1,
         val name: String = "",
         @Relationship(type = "LEFT")
         var left: Calculable? = null,
         @Relationship(type = "RIGHT")
         var right: Calculable? = null,
-        var operator: Operator? = null
-) : Calculable {
-    override fun calculate(): Double =
-            operator!!.apply(left!!.calculate(), right!!.calculate())
-}
-
-@NodeEntity
-data class Value(
-        @Id @GeneratedValue val id: Long = -1,
-        val name: String = "",
-        var value: Double = 0.0
-) : Calculable {
-    override fun calculate(): Double = value
+        var operator: Operator? = null,
+        var value: Double? = null
+) {
+    fun calculate(): Double {
+        return if (value != null) value!!
+        else operator!!.apply(left!!.calculate(), right!!.calculate())
+    }
 }
 
 enum class Operator : BinaryOperator<Double>, DoubleBinaryOperator {
