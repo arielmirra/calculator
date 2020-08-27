@@ -62,6 +62,10 @@ class CalculatorApplication {
             println(metric)
             println(metricFromRepository) // calculates node is partially empty
             println("--- \n")
+
+            println("---")
+            println(metric.measure())
+            println("--- \n")
         }
     }
 }

@@ -17,44 +17,40 @@ data class Attribute(
         val description: String = ""
 )
 
-//@NodeEntity
-//data class MetricSet(
-//        @Id @GeneratedValue
-//        val id: Long = -1,
-//        val name: String = "",
-//        val description: String = "",
-//        @Relationship(type = "HAS_ATTRIBUTE")
-//        val attributes: MutableSet<Attribute> = mutableSetOf(),
-//        @Relationship(type = "MEASURES")
-//        val metrics: MutableSet<Measurable> = mutableSetOf()
-//
-//) {
-//    fun hasAttribute(attribute: Attribute) = attributes.add(attribute)
-//    fun measures(measurable: Measurable) = metrics.add(measurable)
-//
-//    override fun measure(): Measurement {
-//        // TODO should create unique exception?
-//        if (metrics.isEmpty()) throw NullPointerException("there are no metrics to measure")
-//        // TODO should save the measurement
-//        val result = metrics.map { m -> m.measure().value }.sum()
-//        return Measurement(
-//                name = "$name measured",
-//                value = result
-//        )
-//    }
-//}
-
 
 @NodeEntity
 data class Metric(
         @Id @GeneratedValue val id: Long = -1,
         val name: String = "",
         val description: String = "",
+        @Relationship(type = "HAS_ATTRIBUTE")
+        val attributes: MutableSet<Attribute> = mutableSetOf(),
+        @Relationship(type = "MEASURES")
+        val metrics: MutableSet<Metric> = mutableSetOf(),
         @Relationship(type = "CALCULATES")
         val calculates: MutableSet<Calculable> = mutableSetOf()
 ) {
+    fun hasAttribute(attribute: Attribute) = attributes.add(attribute)
+    fun measures(metric: Metric) = metrics.add(metric)
+
+    fun measure(): Measurement {
+        // TODO should save the measurement
+
+        var result = if (metrics.isEmpty()) 0.0 else metrics.map { m -> m.measure().value }.sum()
+
+        if (calculates.isNotEmpty()) result += calculate()
+
+        return Measurement(
+                name = "$name measured",
+                value = result
+        )
+    }
     fun calculates(calculable: Calculable) = calculates.add(calculable)
-    fun calculate() = calculates.map { c -> c.calculate() }.sum()
+
+    private fun calculate(): Double {
+        return if (calculates.isNotEmpty()) calculates.map { c -> c.calculate() }.sum()
+        else 0.0
+    }
 }
 
 
