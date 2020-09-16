@@ -2,8 +2,8 @@ package com.calculator.model
 
 data class CalculableForm(
         val name: String,
-        val left: String?,
-        val right: String?,
+        val left: Long?,
+        val right: Long?,
         val operator: String?,
-        val value: String?
-) // todo: handle saving & relationships
+        val value: Double?
+)
