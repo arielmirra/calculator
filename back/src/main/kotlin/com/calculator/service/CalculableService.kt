@@ -15,15 +15,10 @@ class CalculableService(
     fun save(calculable: Calculable) = calculableRepository.save(calculable)
 
     fun create(form: CalculableForm): Calculable? {
-        println(form)
-        val isComposite = form.left != null && form.right != null && form.operator != null
-        if (isComposite) {
+        if (isComposite(form)) {
             val left = calculableRepository.findById(form.left!!)
             val right = calculableRepository.findById(form.right!!)
-
             if (left.isPresent && right.isPresent) {
-                println(left)
-                println(right)
                 val calc = Calculable(
                         name = form.name,
                         left = left.get(),
@@ -31,20 +26,39 @@ class CalculableService(
                         operator = Operator.valueOf(form.operator!!),
                         value = form.value
                 )
-                val result = calculableRepository.save(calc)
-                println(result)
-                return result
-            } else if (form.value != null) {
-                val calc = Calculable(
-                        name = form.name,
-                        value = form.value
-                )
-                val result = calculableRepository.save(calc)
-                println(result)
-                return result
+                return calculableRepository.save(calc)
             }
+        } else if (form.value != null) {
+            val calc = Calculable(
+                    name = form.name,
+                    value = form.value
+            )
+            return calculableRepository.save(calc)
         }
         return null
+    }
+
+    fun update(id: Long, form: CalculableForm): Boolean {
+        val calc = calculableRepository.findById(id)
+        if(calc.isEmpty) return false
+        val calculus = calc.get()
+        if (form.name != calculus.name) calculus.name = form.name
+        if (isComposite(form)) {
+            val left = calculableRepository.findById(form.left!!)
+            val right = calculableRepository.findById(form.right!!)
+            if (left.isPresent && right.isPresent) {
+                calculus.left = left.get()
+                calculus.right = right.get()
+                calculus.operator = Operator.valueOf(form.operator!!)
+                calculableRepository.save(calculus)
+                return true
+            }
+        } else if (form.value != null) {
+            calculus.value = form.value
+            calculableRepository.save(calculus)
+            return true
+        }
+        return false
     }
 
     fun delete(id: Long): Boolean {
@@ -54,4 +68,5 @@ class CalculableService(
         } else false
     }
 
+    private fun isComposite(form: CalculableForm) = form.left != null && form.right != null && form.operator != null
 }

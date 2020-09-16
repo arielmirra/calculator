@@ -13,7 +13,7 @@ import java.util.function.DoubleBinaryOperator
 @NodeEntity
 data class Attribute(
         @Id @GeneratedValue val id: Long = -1,
-        val name: String = "",
+        var name: String = "",
         val description: String = ""
 )
 
@@ -21,14 +21,14 @@ data class Attribute(
 @NodeEntity
 data class Metric(
         @Id @GeneratedValue val id: Long = -1,
-        val name: String = "",
-        val description: String = "",
+        var name: String = "",
+        var description: String = "",
         @Relationship(type = "HAS_ATTRIBUTE")
-        val attributes: MutableSet<Attribute> = mutableSetOf(),
+        var attributes: MutableSet<Attribute> = mutableSetOf(),
         @Relationship(type = "MEASURES")
-        val metrics: MutableSet<Metric> = mutableSetOf(),
+        var metrics: MutableSet<Metric> = mutableSetOf(),
         @Relationship(type = "CALCULATES")
-        val calculates: MutableSet<Calculable> = mutableSetOf()
+        var calculates: MutableSet<Calculable> = mutableSetOf()
 ) {
     fun hasAttribute(attribute: Attribute) = attributes.add(attribute)
     fun measures(metric: Metric) = metrics.add(metric)
@@ -57,7 +57,7 @@ data class Metric(
 @NodeEntity
 data class Calculable(
         @Id @GeneratedValue val id: Long = -1,
-        val name: String = "",
+        var name: String = "",
         @Relationship(type = "LEFT")
         var left: Calculable? = null,
         @Relationship(type = "RIGHT")
