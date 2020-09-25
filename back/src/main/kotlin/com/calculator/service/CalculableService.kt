@@ -42,7 +42,7 @@ class CalculableService(
         val calc = calculableRepository.findById(id)
         if(calc.isEmpty) return false
         val calculus = calc.get()
-        if (form.name != calculus.name) calculus.name = form.name
+        var changed = false
         if (isComposite(form)) {
             val left = calculableRepository.findById(form.left!!)
             val right = calculableRepository.findById(form.right!!)
@@ -51,14 +51,19 @@ class CalculableService(
                 calculus.right = right.get()
                 calculus.operator = Operator.valueOf(form.operator!!)
                 calculableRepository.save(calculus)
-                return true
+                changed = true
             }
         } else if (form.value != null) {
             calculus.value = form.value
             calculableRepository.save(calculus)
-            return true
+            changed = true
         }
-        return false
+        if (form.name != calculus.name) {
+            calculus.name = form.name
+            calculableRepository.save(calculus)
+            changed = true
+        }
+        return changed
     }
 
     fun delete(id: Long): Boolean {
