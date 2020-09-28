@@ -45,12 +45,11 @@ class CalculableController(
 
     @PutMapping("/{id}")
     fun update(@PathVariable id: Long, @RequestBody form: CalculableForm, b: UriComponentsBuilder): ResponseEntity<Boolean> {
-        val updated = calculableService.update(id, form)
-        return if (updated) ResponseEntity.ok(true) else ResponseEntity.badRequest().build()
+        return if (calculableService.update(id, form)) ResponseEntity.ok(true) else ResponseEntity.badRequest().build()
     }
 
     @DeleteMapping("/{id}")
-    fun delete(@PathVariable id: Long): ResponseEntity<Calculable> {
-        return if (calculableService.delete(id)) ResponseEntity.noContent().build() else ResponseEntity.notFound().build()
+    fun delete(@PathVariable id: Long): ResponseEntity<Boolean> {
+        return if (calculableService.delete(id)) ResponseEntity.ok(true) else ResponseEntity.notFound().build()
     }
 }

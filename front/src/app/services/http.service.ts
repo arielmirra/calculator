@@ -67,7 +67,7 @@ export class HttpService {
     return (this.http.options(this.baseUrl + url, {headers: this.requestOptions(options), observe: 'response'}));
   }
 
-  private requestOptions(options?: any) {
+  private requestOptions(options?: any): HttpHeaders {
     const authHeader = {Authorization: `Bearer ${this.authToken}`};
     if (options) {
       return new HttpHeaders(Object.assign(options, authHeader));
