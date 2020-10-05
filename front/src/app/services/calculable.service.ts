@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpService} from './http.service';
 import {Observable, of} from 'rxjs';
 import {catchError, map} from 'rxjs/operators';
@@ -9,7 +9,8 @@ import {Calculable, CalculableForm} from '../models/Calculable';
 })
 export class CalculableService {
 
-  constructor(private http: HttpService) { }
+  constructor(private http: HttpService) {
+  }
 
   getCalculable(id: number): Observable<Calculable> {
     return this.http.get('/calculable/' + id)

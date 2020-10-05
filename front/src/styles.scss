@@ -1,4 +1,64 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: #d6d6d6;
+}
+
+.material-card-container {
+  padding-top: 40px;
+  @media (min-width: 992px) {
+    display: grid;
+    grid-template-columns: 1fr 4fr 1fr;
+    grid-template-areas: ". material-card .";
+  }
+
+  mat-card {
+    grid-area: material-card;
+    margin: 15px;
+  }
+
+  mat-card-header {
+    display: flex;
+    justify-content: center;
+  }
+
+  mat-card-title {
+    font-size: 2rem;
+  }
+
+  mat-card-content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  mat-card-actions {
+    text-align: center;
+  }
+}
+
+.mat-tooltip.tooltip {
+  font-size: 14px !important;
+}
+
+mat-panel-title {
+  transition: all 0.5s;
+}
+
+mat-expansion-panel-header.mat-expanded {
+  color: black;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.empty-list {
+  text-align: center;
+  color: #8f8f8f;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+}

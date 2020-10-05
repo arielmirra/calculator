@@ -1,0 +1,36 @@
+.fill-remaining-space {
+  flex: 1 1 auto;
+}
+
+.navigation-items {
+  margin-right: 1rem;
+  margin-left: 1rem;
+  cursor: pointer;
+}
+
+.nav-title {
+  font-size: 3rem;
+  cursor: pointer;
+}
+
+.mat-toolbar {
+  background-color: #ff1744;
+  color: #ffffff;
+}
+
+.navLogo {
+  max-width: 10%;
+  max-height: 10%;
+  margin-right: 0.5rem;
+}
+
+mat-toolbar {
+  position: fixed;
+  z-index: 999;
+  box-shadow: 0 5px 24px -9px rgba(0, 0, 0, 0.75);
+  top: 0;
+
+  span {
+    outline: none;
+  }
+}

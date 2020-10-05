@@ -1,5 +1,3 @@
-
-
 export class Calculable {
 
   public static empty(): Calculable {
