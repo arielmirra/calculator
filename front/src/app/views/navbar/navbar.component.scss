@@ -1,3 +1,9 @@
+@import "src/app/_vars.scss";
+
+.mat-toolbar-single-row {
+  height: 50px;
+}
+
 .fill-remaining-space {
   flex: 1 1 auto;
 }
@@ -9,12 +15,12 @@
 }
 
 .nav-title {
-  font-size: 3rem;
+  font-size: 2rem;
   cursor: pointer;
 }
 
 .mat-toolbar {
-  background-color: #ff1744;
+  background-color: $calculator-blue;
   color: #ffffff;
 }
 

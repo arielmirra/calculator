@@ -1,4 +1,4 @@
-/* You can add global styles to this file, and also import other style files */
+@import "app/vars";
 
 html, body {
   height: 100%;
@@ -11,7 +11,7 @@ body {
 }
 
 .material-card-container {
-  padding-top: 40px;
+  padding-top: 80px;
   @media (min-width: 992px) {
     display: grid;
     grid-template-columns: 1fr 4fr 1fr;

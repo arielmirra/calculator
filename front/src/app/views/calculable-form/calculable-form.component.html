@@ -1,0 +1,70 @@
+<div class="bg">
+  <div class="material-card-container">
+    <div class="login-container">
+      <div class="login-form">
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>Creá tu propio Calculable</mat-card-title>
+          </mat-card-header>
+          <form [formGroup]="form" novalidate (submit)="newCalc()">
+            <mat-card-content>
+
+              <mat-form-field>
+                <input
+                  matInput
+                  type="text"
+                  formControlName="name"
+                  placeholder="Nombre">
+                <mat-error *ngIf="hasError('name', 'required')">Esta entrada es requerida</mat-error>
+              </mat-form-field>
+
+              <mat-form-field>
+                <input
+                  matInput
+                  type="text"
+                  formControlName="left"
+                  placeholder="1er término">
+              </mat-form-field>
+
+              <mat-form-field>
+                <input
+                  matInput
+                  type="text"
+                  formControlName="right"
+                  placeholder="2do término">
+              </mat-form-field>
+
+              <mat-form-field>
+                <mat-select [(value)]="operator">
+                  <mat-option value="PLUS">Sumar</mat-option>
+                  <mat-option value="MINUS">Restar</mat-option>
+                  <mat-option value="TIMES">Multiplicar</mat-option>
+                  <mat-option value="DIVIDE">Dividir</mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field>
+                <input
+                  matInput
+                  type="number"
+                  formControlName="value"
+                  placeholder="Valor">
+              </mat-form-field>
+
+
+            </mat-card-content>
+            <mat-card-actions>
+              <button mat-raised-button
+                      color="primary"
+                      name="submit"
+                      [disabled]="!form.valid">
+                Guardar
+              </button>
+            </mat-card-actions>
+          </form>
+
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>
