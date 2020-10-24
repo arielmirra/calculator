@@ -43,13 +43,13 @@ export class CalculableFormComponent implements OnInit {
     form.operator = this.operator;
     form.value = this.form.controls.value.value;
     console.log(form);
-    // this.calculableService.addCalculable(form).subscribe(success => {
-    //   if (success) {
-    //     this.snackbarService.openSnackbar('Calculable guardado satisfactoriamente');
-    //   } else {
-    //     this.snackbarService.openSnackbar('No se ha podido guardar los cambios');
-    //   }
-    // });
+    this.calculableService.addCalculable(form).subscribe(success => {
+      if (success) {
+        this.snackbarService.openSnackbar('Calculable guardado satisfactoriamente');
+      } else {
+        this.snackbarService.openSnackbar('No se ha podido guardar los cambios');
+      }
+    });
   }
 
   hasError(controlName: string, errorName: string): boolean {

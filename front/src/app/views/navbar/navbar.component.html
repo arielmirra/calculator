@@ -1,33 +1,22 @@
 <mat-toolbar role="toolbar">
-  <span routerLink="'/'">
+  <span routerLink="/">
 <!--    <img alt="" class="navLogo" src="assets/images/heart-logo-white.png">-->
     <span class="nav-title">Calc</span>
   </span>
 
   <span class="fill-remaining-space"></span>
 
-  <span *ngIf="false; else notLoggedIn"></span>
-
   <mat-menu #menu xPosition="before">
-    <button mat-menu-item routerLink="/profile" data-cy="profile-button">
+    <button mat-menu-item routerLink="/">
       <mat-icon>account_circle</mat-icon>
-      <span>Perfil</span>
+      <span>opción 1</span>
     </button>
     <button mat-menu-item>
       <mat-icon>power_settings_new</mat-icon>
-      <span id="logout-button">
-      Cerrar Sesión
-    </span>
+      <span id="logout-button">opción 2</span>
     </button>
   </mat-menu>
-  <button mat-icon-button [matMenuTriggerFor]="menu" data-cy="navbar-menu">
+  <button mat-icon-button [matMenuTriggerFor]="menu">
     <mat-icon>more_vert</mat-icon>
   </button>
-
-  <ng-template #notLoggedIn>
-    <span routerLink="/login"
-          class="navigation-items">
-    Iniciar Sesión
-  </span>
-  </ng-template>
 </mat-toolbar>

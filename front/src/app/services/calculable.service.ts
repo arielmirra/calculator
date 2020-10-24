@@ -28,9 +28,7 @@ export class CalculableService {
   addCalculable(form: CalculableForm): Observable<boolean> {
     return this.http.post('/calculable/', form)
       .pipe(
-        map((response) => {
-          return response.body;
-        }),
+        map(() => true),
         catchError(err => {
           console.log(err);
           return of(false);
