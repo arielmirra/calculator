@@ -2,8 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {SnackbarService} from '../../services/snackbar.service';
-import {CalculableForm, Operator} from '../../models/Calculable';
+import {Calculable, CalculableForm, Operator} from '../../models/Calculable';
 import {CalculableService} from '../../services/calculable.service';
+import {CalculableModalComponent} from './calculable-modal/calculable-modal.component';
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-calculable-form',
@@ -18,7 +20,8 @@ export class CalculableFormComponent implements OnInit {
   constructor(
     private router: Router,
     private snackbarService: SnackbarService,
-    private calculableService: CalculableService
+    private calculableService: CalculableService,
+    public dialog: MatDialog
   ) {
   }
 
@@ -54,5 +57,17 @@ export class CalculableFormComponent implements OnInit {
 
   hasError(controlName: string, errorName: string): boolean {
     return this.form.controls[controlName].hasError(errorName);
+  }
+
+  // TODO: Use this modal to search & select a node (by name)
+  selectNode(calc: Calculable): void {
+    const dialogRef = this.dialog.open(CalculableModalComponent, {
+      width: '500px',
+      data: {calculable: calc}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
   }
 }
