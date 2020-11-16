@@ -25,6 +25,19 @@ export class CalculableService {
       );
   }
 
+  getCalculableByName(name: string): Observable<Calculable> {
+    return this.http.get('/calculable/name/' + name)
+      .pipe(
+        map((response) => {
+          return Object.assign(Calculable.empty(), response.body);
+        }),
+        catchError(err => {
+          console.log(err);
+          return of(null);
+        })
+      );
+  }
+
   addCalculable(form: CalculableForm): Observable<boolean> {
     return this.http.post('/calculable/', form)
       .pipe(

@@ -6,7 +6,7 @@
           <mat-card-header>
             <mat-card-title>Creá tu propio Calculable</mat-card-title>
           </mat-card-header>
-          <form [formGroup]="form" novalidate (submit)="newCalc()" autocomplete="off">
+          <form [formGroup]="form" novalidate autocomplete="off">
             <mat-card-content>
 
               <mat-form-field>
@@ -18,24 +18,18 @@
                 <mat-error *ngIf="hasError('name', 'required')">Esta entrada es requerida</mat-error>
               </mat-form-field>
 
-              <mat-form-field>
-                <input
-                  matInput
-                  type="number"
-                  formControlName="left"
-                  placeholder="1er término">
-              </mat-form-field>
+              <button mat-raised-button
+                      color="primary"
+                      (click)="selectNodes()">
+                Seleccionar nodos hijos
+              </button>
+
+<!--              <p *ngIf="this.form.controls.left.value">{{this.form.controls.left.value}}</p>-->
+<!--              <p *ngIf="this.form.controls.right.value">{{this.form.controls.right.value}}</p>-->
+
 
               <mat-form-field>
-                <input
-                  matInput
-                  type="number"
-                  formControlName="right"
-                  placeholder="2do término">
-              </mat-form-field>
-
-              <mat-form-field>
-                <mat-select [(value)]="operator">
+                <mat-select [(value)]="operator" placeholder="Operador entre nodos">
                   <mat-option value="PLUS">Sumar</mat-option>
                   <mat-option value="MINUS">Restar</mat-option>
                   <mat-option value="TIMES">Multiplicar</mat-option>
@@ -48,7 +42,7 @@
                   matInput
                   type="number"
                   formControlName="value"
-                  placeholder="Valor">
+                  placeholder="Valor del nodo">
               </mat-form-field>
 
 
@@ -57,7 +51,8 @@
               <button mat-raised-button
                       color="primary"
                       name="submit"
-                      [disabled]="!form.valid">
+                      [disabled]="!form.valid"
+                      (click)="newCalc()">
                 Guardar
               </button>
             </mat-card-actions>

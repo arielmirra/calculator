@@ -28,8 +28,8 @@ export class CalculableForm {
   }
 
   constructor(public name: string,
-              public left?: Calculable,
-              public right?: Calculable,
+              public left?: number, // only id
+              public right?: number,
               public operator?: Operator,
               public value?: number) {
 

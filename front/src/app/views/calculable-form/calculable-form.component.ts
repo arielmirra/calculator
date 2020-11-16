@@ -16,6 +16,8 @@ export class CalculableFormComponent implements OnInit {
 
   form: FormGroup;
   operator: Operator;
+  node1: Calculable;
+  node2: Calculable;
 
   constructor(
     private router: Router,
@@ -31,8 +33,6 @@ export class CalculableFormComponent implements OnInit {
 
     this.form = new FormGroup({
       name: new FormControl('', [Validators.required, Validators.minLength(minInputLength), Validators.maxLength(maxInputLength)]),
-      left: new FormControl(null),
-      right: new FormControl(null),
       operator: new FormControl(null),
       value: new FormControl(null)
     });
@@ -41,8 +41,8 @@ export class CalculableFormComponent implements OnInit {
   newCalc(): void {
     const form = CalculableForm.empty();
     form.name = this.form.controls.name.value;
-    form.left = this.form.controls.left.value;
-    form.right = this.form.controls.right.value;
+    form.left = this.node1.id;
+    form.right = this.node2.id;
     form.operator = this.operator;
     form.value = this.form.controls.value.value;
     console.log(form);
@@ -59,15 +59,23 @@ export class CalculableFormComponent implements OnInit {
     return this.form.controls[controlName].hasError(errorName);
   }
 
-  // TODO: Use this modal to search & select a node (by name)
-  selectNode(calc: Calculable): void {
+  selectNodes(): void {
     const dialogRef = this.dialog.open(CalculableModalComponent, {
       width: '500px',
-      data: {calculable: calc}
+      data: {
+        node1: null,
+        node2: null,
+        input1: '',
+        input2: ''
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-
+      console.log(result);
+      if (result !== false) {
+        this.node1 = result.node1;
+        this.node2 = result.node2;
+      }
     });
   }
 }
