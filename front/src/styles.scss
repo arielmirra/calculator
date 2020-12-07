@@ -14,13 +14,17 @@ body {
   padding-top: 80px;
   @media (min-width: 992px) {
     display: grid;
-    grid-template-columns: 1fr 3fr 1fr;
+    grid-template-columns: 1fr 2fr 1fr;
     grid-template-areas: ". material-card .";
   }
 
   mat-card {
     grid-area: material-card;
     margin: 15px;
+
+    mat-form-field {
+      padding: 5px 10px;
+    }
   }
 
   mat-card-header {
@@ -39,6 +43,7 @@ body {
 
   mat-card-actions {
     text-align: center;
+    margin: 0;
   }
 }
 

@@ -8,6 +8,19 @@ export const routes: Routes = [
     path: '',
     component: CalculableFormComponent
   },
+  {
+    path: 'calculable',
+    children: [
+      {
+        path: 'new',
+        component: CalculableFormComponent
+      },
+      {
+        path: 'measure',
+        component: CalculableFormComponent
+      }
+    ]
+  },
 ];
 
 @NgModule({

@@ -14,6 +14,7 @@ import {MatDialog} from '@angular/material/dialog';
 })
 export class CalculableFormComponent implements OnInit {
 
+  simpleForm: FormGroup;
   form: FormGroup;
   operator: Operator;
   node1: Calculable;
@@ -31,10 +32,14 @@ export class CalculableFormComponent implements OnInit {
     const minInputLength = 3;
     const maxInputLength = 25;
 
+    this.simpleForm = new FormGroup({
+      name: new FormControl('', [Validators.required, Validators.minLength(minInputLength), Validators.maxLength(maxInputLength)]),
+      value: new FormControl(0)
+    });
+
     this.form = new FormGroup({
       name: new FormControl('', [Validators.required, Validators.minLength(minInputLength), Validators.maxLength(maxInputLength)]),
       operator: new FormControl(null),
-      value: new FormControl(null)
     });
   }
 
@@ -44,11 +49,26 @@ export class CalculableFormComponent implements OnInit {
     form.left = this.node1.id;
     form.right = this.node2.id;
     form.operator = this.operator;
+    console.log(form);
+    this.calculableService.addCalculable(form).subscribe(success => {
+      this.resetForm();
+      if (success) {
+        this.snackbarService.openSnackbar('Cálculo guardado satisfactoriamente');
+      } else {
+        this.snackbarService.openSnackbar('No se ha podido guardar los cambios');
+      }
+    });
+  }
+
+  newSimpleCalc(): void {
+    const form = CalculableForm.empty();
+    form.name = this.simpleForm.controls.name.value;
     form.value = this.form.controls.value.value;
     console.log(form);
     this.calculableService.addCalculable(form).subscribe(success => {
+      this.resetForm();
       if (success) {
-        this.snackbarService.openSnackbar('Calculable guardado satisfactoriamente');
+        this.snackbarService.openSnackbar('Cálculo guardado satisfactoriamente');
       } else {
         this.snackbarService.openSnackbar('No se ha podido guardar los cambios');
       }
@@ -77,5 +97,11 @@ export class CalculableFormComponent implements OnInit {
         this.node2 = result.node2;
       }
     });
+  }
+
+  private resetForm(): void {
+    this.operator = null;
+    this.node1 = null;
+    this.node2 = null;
   }
 }

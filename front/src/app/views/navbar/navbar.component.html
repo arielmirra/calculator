@@ -8,16 +8,14 @@
     <div>
       <button mat-button [matMenuTriggerFor]="menu">Crear <mat-icon>expand_more</mat-icon></button>
       <mat-menu #menu xPosition="before">
-        <button mat-menu-item routerLink="/"><mat-icon>add</mat-icon><span>Cálculo simple</span></button>
-        <button mat-menu-item routerLink="/"><mat-icon>add</mat-icon><span>Cálculo compuesto</span></button>
+        <button mat-menu-item routerLink="/calculable/new"><mat-icon>add</mat-icon><span>Cálculo</span></button>
       </mat-menu>
     </div>
 
     <div>
-      <button mat-button [matMenuTriggerFor]="menu">Medir <mat-icon>expand_more</mat-icon></button>
-      <mat-menu #menu xPosition="before">
-        <button mat-menu-item routerLink="/"><mat-icon>add</mat-icon><span>Cálculo simple</span></button>
-        <button mat-menu-item routerLink="/"><mat-icon>add</mat-icon><span>Cálculo compuesto</span></button>
+      <button mat-button [matMenuTriggerFor]="menu2">Medir <mat-icon>expand_more</mat-icon></button>
+      <mat-menu #menu2 xPosition="before">
+        <button mat-menu-item routerLink="/calculable/measure"><mat-icon>add</mat-icon><span>Cálculo</span></button>
       </mat-menu>
     </div>
 
