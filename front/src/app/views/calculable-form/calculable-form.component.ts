@@ -17,8 +17,9 @@ export class CalculableFormComponent implements OnInit {
   simpleForm: FormGroup;
   form: FormGroup;
   operator: Operator;
-  node1: Calculable;
-  node2: Calculable;
+  node1: number;
+  node2: number;
+  calculables: Calculable[];
 
   constructor(
     private router: Router,
@@ -29,7 +30,7 @@ export class CalculableFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const minInputLength = 3;
+    const minInputLength = 1;
     const maxInputLength = 25;
 
     this.simpleForm = new FormGroup({
@@ -39,20 +40,26 @@ export class CalculableFormComponent implements OnInit {
 
     this.form = new FormGroup({
       name: new FormControl('', [Validators.required, Validators.minLength(minInputLength), Validators.maxLength(maxInputLength)]),
-      operator: new FormControl(null),
     });
+
+    this.fetch();
+  }
+
+  fetch(): void {
+    this.calculableService.fetchAll().subscribe(list => this.calculables = list);
   }
 
   newCalc(): void {
     const form = CalculableForm.empty();
     form.name = this.form.controls.name.value;
-    form.left = this.node1.id;
-    form.right = this.node2.id;
+    form.left = this.node1;
+    form.right = this.node2;
     form.operator = this.operator;
     console.log(form);
     this.calculableService.addCalculable(form).subscribe(success => {
       this.resetForm();
       if (success) {
+        this.fetch();
         this.snackbarService.openSnackbar('Cálculo guardado satisfactoriamente');
       } else {
         this.snackbarService.openSnackbar('No se ha podido guardar los cambios');
@@ -63,11 +70,12 @@ export class CalculableFormComponent implements OnInit {
   newSimpleCalc(): void {
     const form = CalculableForm.empty();
     form.name = this.simpleForm.controls.name.value;
-    form.value = this.form.controls.value.value;
+    form.value = this.simpleForm.controls.value.value;
     console.log(form);
     this.calculableService.addCalculable(form).subscribe(success => {
       this.resetForm();
       if (success) {
+        this.fetch();
         this.snackbarService.openSnackbar('Cálculo guardado satisfactoriamente');
       } else {
         this.snackbarService.openSnackbar('No se ha podido guardar los cambios');
@@ -100,6 +108,8 @@ export class CalculableFormComponent implements OnInit {
   }
 
   private resetForm(): void {
+    this.simpleForm.reset();
+    this.form.reset();
     this.operator = null;
     this.node1 = null;
     this.node2 = null;

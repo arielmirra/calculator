@@ -9,11 +9,13 @@ import {Calculable, CalculableForm} from '../models/Calculable';
 })
 export class CalculableService {
 
+  private basePath = '/calculable/';
+
   constructor(private http: HttpService) {
   }
 
   getCalculable(id: number): Observable<Calculable> {
-    return this.http.get('/calculable/' + id)
+    return this.http.get(this.basePath + id)
       .pipe(
         map((response) => {
           return Object.assign(Calculable.empty(), response.body);
@@ -26,7 +28,7 @@ export class CalculableService {
   }
 
   getCalculableByName(name: string): Observable<Calculable> {
-    return this.http.get('/calculable/name/' + name)
+    return this.http.get(this.basePath + 'name/' + name)
       .pipe(
         map((response) => {
           return Object.assign(Calculable.empty(), response.body);
@@ -39,7 +41,7 @@ export class CalculableService {
   }
 
   addCalculable(form: CalculableForm): Observable<boolean> {
-    return this.http.post('/calculable/', form)
+    return this.http.post(this.basePath, form)
       .pipe(
         map(() => true),
         catchError(err => {
@@ -50,7 +52,7 @@ export class CalculableService {
   }
 
   updateCalculable(form: CalculableForm): Observable<boolean> {
-    return this.http.put('/calculable/', form)
+    return this.http.put(this.basePath, form)
       .pipe(
         map(() => {
           return true;
@@ -63,7 +65,7 @@ export class CalculableService {
   }
 
   deleteCalculable(id: number): Observable<boolean> {
-    return this.http.delete('/calculable/' + id)
+    return this.http.delete(this.basePath + id)
       .pipe(
         map(() => {
           return true;
@@ -71,6 +73,19 @@ export class CalculableService {
         catchError(err => {
           console.log(err);
           return of(false);
+        })
+      );
+  }
+
+  fetchAll(): Observable<Calculable[]> {
+    return this.http.get(this.basePath)
+      .pipe(
+        map(response => {
+          return response.body.map(a => Object.assign(Calculable.empty(), a));
+        }),
+        catchError(err => {
+          console.log(err);
+          return of([]);
         })
       );
   }

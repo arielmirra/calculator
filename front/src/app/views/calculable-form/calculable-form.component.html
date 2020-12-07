@@ -29,7 +29,7 @@
               <button mat-raised-button
                       color="primary"
                       name="submit"
-                      [disabled]="!form.valid"
+                      [disabled]="!simpleForm.valid"
                       (click)="newSimpleCalc()">
                 Guardar
               </button>
@@ -53,15 +53,11 @@
                 <mat-error *ngIf="hasError('name', 'required')">Esta entrada es requerida</mat-error>
               </mat-form-field>
 
-              <button mat-raised-button
-                      color="primary"
-                      (click)="selectNodes()">
-                Seleccionar nodos hijos
-              </button>
-
-              <!--              <p *ngIf="this.form.controls.left.value">{{this.form.controls.left.value}}</p>-->
-              <!--              <p *ngIf="this.form.controls.right.value">{{this.form.controls.right.value}}</p>-->
-
+              <mat-form-field>
+                <mat-select [(value)]="node1" placeholder="Primer término">
+                  <mat-option *ngFor="let calc of calculables" value="{{calc._id}}">{{calc.name}}</mat-option>
+                </mat-select>
+              </mat-form-field>
 
               <mat-form-field>
                 <mat-select [(value)]="operator" placeholder="Operador entre nodos">
@@ -69,6 +65,12 @@
                   <mat-option value="MINUS">Restar</mat-option>
                   <mat-option value="TIMES">Multiplicar</mat-option>
                   <mat-option value="DIVIDE">Dividir</mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field>
+                <mat-select [(value)]="node2" placeholder="Segundo término">
+                  <mat-option *ngFor="let calc of calculables" value="{{calc._id}}">{{calc.name}}</mat-option>
                 </mat-select>
               </mat-form-field>
 

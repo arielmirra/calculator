@@ -1,10 +1,11 @@
 export class Calculable {
 
   public static empty(): Calculable {
-    return new Calculable(0, '', null, null, null, null);
+    return new Calculable(0, 'Calculable', '', null, null, null, null);
   }
 
-  constructor(public id: number,
+  constructor(public _id: number,
+              public _type: string,
               public name: string,
               public left?: Calculable,
               public right?: Calculable,
