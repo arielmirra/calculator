@@ -1,22 +1,25 @@
 <mat-toolbar role="toolbar">
-  <span routerLink="/">
-<!--    <img alt="" class="navLogo" src="assets/images/heart-logo-white.png">-->
-    <span class="nav-title">Calc</span>
-  </span>
+  <div class="container">
 
-  <span class="fill-remaining-space"></span>
+    <div class="nav-title menu">
+      <span routerLink="/"><span class="nav-title">Métricas</span></span>
+    </div>
 
-  <mat-menu #menu xPosition="before">
-    <button mat-menu-item routerLink="/">
-      <mat-icon>account_circle</mat-icon>
-      <span>opción 1</span>
-    </button>
-    <button mat-menu-item>
-      <mat-icon>power_settings_new</mat-icon>
-      <span id="logout-button">opción 2</span>
-    </button>
-  </mat-menu>
-  <button mat-icon-button [matMenuTriggerFor]="menu">
-    <mat-icon>more_vert</mat-icon>
-  </button>
+    <div>
+      <button mat-button [matMenuTriggerFor]="menu">Crear <mat-icon>expand_more</mat-icon></button>
+      <mat-menu #menu xPosition="before">
+        <button mat-menu-item routerLink="/"><mat-icon>add</mat-icon><span>Cálculo simple</span></button>
+        <button mat-menu-item routerLink="/"><mat-icon>add</mat-icon><span>Cálculo compuesto</span></button>
+      </mat-menu>
+    </div>
+
+    <div>
+      <button mat-button [matMenuTriggerFor]="menu">Medir <mat-icon>expand_more</mat-icon></button>
+      <mat-menu #menu xPosition="before">
+        <button mat-menu-item routerLink="/"><mat-icon>add</mat-icon><span>Cálculo simple</span></button>
+        <button mat-menu-item routerLink="/"><mat-icon>add</mat-icon><span>Cálculo compuesto</span></button>
+      </mat-menu>
+    </div>
+
+  </div>
 </mat-toolbar>

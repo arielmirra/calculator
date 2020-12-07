@@ -4,10 +4,6 @@
   height: 50px;
 }
 
-.fill-remaining-space {
-  flex: 1 1 auto;
-}
-
 .navigation-items {
   margin-right: 1rem;
   margin-left: 1rem;
@@ -15,8 +11,9 @@
 }
 
 .nav-title {
-  font-size: 2rem;
+  font-size: 1.5rem;
   cursor: pointer;
+  margin-right: 10px;
 }
 
 .mat-toolbar {
@@ -24,11 +21,11 @@
   color: #ffffff;
 }
 
-.navLogo {
-  max-width: 10%;
-  max-height: 10%;
-  margin-right: 0.5rem;
-}
+//.navLogo {
+//  max-width: 10%;
+//  max-height: 10%;
+//  margin-right: 0.5rem;
+//}
 
 mat-toolbar {
   position: fixed;
@@ -39,4 +36,9 @@ mat-toolbar {
   span {
     outline: none;
   }
+}
+
+.container {
+  display: flex;
+  justify-content: space-around;
 }
