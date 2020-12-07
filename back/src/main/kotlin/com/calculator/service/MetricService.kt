@@ -7,7 +7,7 @@ import java.util.*
 
 @Service
 class MetricService(
-        @Autowired private val metricRepository: MetricRepository
+    @Autowired private val metricRepository: MetricRepository
 ) {
 
     fun findByName(name: String): Metric? = metricRepository.findByName(name)
@@ -16,5 +16,7 @@ class MetricService(
     fun create(metric: Metric): Metric? {
         TODO("Not yet implemented")
     }
+
+    fun getAll(): List<Any> = metricRepository.fetchAll()
 
 }

@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*
 class MetricController(
         @Autowired private val metricService: MetricService
 ) {
+    @GetMapping()
+    fun getAll(): List<Any> = metricService.getAll()
 
     @GetMapping("/{name}")
     fun getByName(@PathVariable name: String): Metric? = metricService.findByName(name)

@@ -66,6 +66,13 @@ class CalculatorApplication {
             println("---")
             println(metric.measure())
             println("--- \n")
+
+            val metric2 = metricRepository.save(Metric(
+                name = "Metric 2",
+                description = "Measures a calculus",
+                calculates = mutableSetOf()
+            ))
+            metricRepository.save(metric2)
         }
     }
 }

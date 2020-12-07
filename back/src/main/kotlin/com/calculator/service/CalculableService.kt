@@ -11,7 +11,7 @@ class CalculableService(
 ) {
 
     fun findByName(name: String): Calculable? = calculableRepository.findByName(name)
-    fun findById(id: Long): Optional<Calculable> = calculableRepository.findById(id)
+    fun findById(id: Long): Optional<Calculable> = calculableRepository.findBy_id(id)
     fun save(calculable: Calculable) = calculableRepository.save(calculable)
     fun deleteById(id: Long) = calculableRepository.deleteById(id)
 
@@ -75,4 +75,6 @@ class CalculableService(
     }
 
     private fun isComposite(form: CalculableForm) = form.left != null && form.right != null && form.operator != null
+
+    fun getAll(): List<Calculable> = calculableRepository.findAll().toList()
 }

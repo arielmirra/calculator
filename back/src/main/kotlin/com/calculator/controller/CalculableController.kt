@@ -15,6 +15,9 @@ import org.springframework.web.util.UriComponentsBuilder
 class CalculableController(
         @Autowired private val calculableService: CalculableService
 ) {
+    @GetMapping()
+    fun getAll(): List<Calculable> = calculableService.getAll()
+
     @GetMapping("/{id}")
     fun getById(@PathVariable id: Long): ResponseEntity<Calculable> {
         val optional = calculableService.findById(id)
