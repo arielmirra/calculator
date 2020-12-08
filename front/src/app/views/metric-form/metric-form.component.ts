@@ -14,8 +14,10 @@ import {Metric, MetricForm} from '../../models/Metric';
 })
 export class MetricFormComponent implements OnInit {
   form: FormGroup;
-  calculables: Calculable[];
   metrics: Metric[];
+  calculables: Calculable[];
+  selectedMetrics: number[] = [];
+  selectedCalculables: number[] = [];
 
   constructor(
     private router: Router,
@@ -29,6 +31,7 @@ export class MetricFormComponent implements OnInit {
     const maxInputLength = 25;
     this.form = new FormGroup({
       name: new FormControl('', [Validators.required, Validators.minLength(minInputLength), Validators.maxLength(maxInputLength)]),
+      description: new FormControl('', [Validators.required, Validators.minLength(minInputLength)]),
     });
     this.fetch();
   }
@@ -46,6 +49,8 @@ export class MetricFormComponent implements OnInit {
     const form = MetricForm.empty();
     form.name = this.form.controls.name.value;
     form.description = this.form.controls.name.value;
+    form.metrics = this.selectedMetrics;
+    form.calculates = this.selectedCalculables;
     console.log(form);
     this.metricService.addMetric(form).subscribe(success => {
       this.resetForm();
@@ -60,5 +65,7 @@ export class MetricFormComponent implements OnInit {
 
   private resetForm(): void {
     this.form.reset();
+    this.selectedCalculables = [];
+    this.selectedMetrics = [];
   }
 }

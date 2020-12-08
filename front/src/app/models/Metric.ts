@@ -3,7 +3,7 @@ import {Calculable} from './Calculable';
 export class Metric {
 
   public static empty(): Metric {
-    return new Metric(0, 'Metric', '', '', [], []);
+    return new Metric(-1, 'Metric', '', '', [], []);
   }
 
   constructor(
@@ -27,8 +27,24 @@ export class MetricForm {
   constructor(
     public name: string,
     public description: string,
-    public metrics?: any[],
-    public calculates?: any[]
+    public metrics?: number[],
+    public calculates?: number[]
+  ) {
+
+  }
+}
+
+export class Measurement {
+
+  public static empty(): Measurement {
+    return new Measurement(-1, '', -1, new Date());
+  }
+
+  constructor(
+    public _id: number,
+    public name: string,
+    public value: number,
+    public date: Date,
   ) {
 
   }

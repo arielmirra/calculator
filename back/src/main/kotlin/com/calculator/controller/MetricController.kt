@@ -38,7 +38,8 @@ class MetricController(
 
     @GetMapping("/measure/name/{name}")
     fun measure(@PathVariable name: String): ResponseEntity<Measurement> {
-        val optional = metricService.findByName(name) ?: return ResponseEntity.notFound().build()
+        val optional = metricService.findByName(name)
+        if (optional == null) return ResponseEntity.notFound().build()
         return ResponseEntity.ok(optional.measure())
     }
 

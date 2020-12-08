@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpService} from './http.service';
 import {Observable, of} from 'rxjs';
-import {Metric, MetricForm} from '../models/Metric';
+import {Measurement, Metric, MetricForm} from '../models/Metric';
 import {catchError, map} from 'rxjs/operators';
 
 @Injectable({
@@ -90,8 +90,8 @@ export class MetricService {
       );
   }
 
-  measure(_id: number): Observable<any> { // should be Observable<Measurement>
-    return this.http.get(`${this.basePath}measure/${_id}`)
+  measure(id: number): Observable<Measurement> {
+    return this.http.get(`${this.basePath}measure/${id}`)
       .pipe(
         map(response => {
           return response.body;

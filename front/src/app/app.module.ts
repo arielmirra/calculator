@@ -12,6 +12,7 @@ import {CalculableListComponent} from './views/calculable-list/calculable-list.c
 import {AppMaterialModule} from './app-material.module';
 import {CommonModule} from '@angular/common';
 import { MetricFormComponent } from './views/metric-form/metric-form.component';
+import { MetricListComponent } from './views/metric-list/metric-list.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { MetricFormComponent } from './views/metric-form/metric-form.component';
     CalculableFormComponent,
     NavbarComponent,
     CalculableListComponent,
-    MetricFormComponent
+    MetricFormComponent,
+    MetricListComponent
   ],
   imports: [
     CommonModule,
