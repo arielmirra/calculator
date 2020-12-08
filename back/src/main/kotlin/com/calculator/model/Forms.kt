@@ -7,3 +7,10 @@ data class CalculableForm(
         val operator: String?,
         val value: Double?
 )
+
+data class MetricForm(
+        val name: String,
+        val description: String,
+        val metrics: MutableList<Any>,
+        val calculates: MutableList<Any>
+)

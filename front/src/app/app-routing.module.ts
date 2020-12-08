@@ -2,12 +2,13 @@ import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {CalculableFormComponent} from './views/calculable-form/calculable-form.component';
 import {CalculableListComponent} from './views/calculable-list/calculable-list.component';
+import {MetricFormComponent} from './views/metric-form/metric-form.component';
 
 
 export const routes: Routes = [
   {
     path: '',
-    component: CalculableFormComponent
+    component: CalculableListComponent
   },
   {
     path: 'calculable',
@@ -15,6 +16,19 @@ export const routes: Routes = [
       {
         path: 'new',
         component: CalculableFormComponent
+      },
+      {
+        path: 'list',
+        component: CalculableListComponent
+      }
+    ]
+  },
+  {
+    path: 'metric',
+    children: [
+      {
+        path: 'new',
+        component: MetricFormComponent
       },
       {
         path: 'list',

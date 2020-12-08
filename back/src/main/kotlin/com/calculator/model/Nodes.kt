@@ -48,7 +48,7 @@ data class Metric(
         if (calculates.isNotEmpty()) result += calculate()
 
         return Measurement(
-            name = "$name measured",
+            name = "$name metric measured",
             value = result
         )
     }
