@@ -89,4 +89,17 @@ export class CalculableService {
         })
       );
   }
+
+  calculate(_id: number): Observable<number> {
+    return this.http.get(`${this.basePath}calculate/${_id}`)
+      .pipe(
+        map(response => {
+          return response.body;
+        }),
+        catchError(err => {
+          console.log(err);
+          return of(null);
+        })
+      );
+  }
 }

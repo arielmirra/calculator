@@ -2,14 +2,14 @@
   <mat-card class="material-card">
 
     <mat-toolbar role="toolbar" class="card-title">
-      <span>Calculables</span>
+      <span>Cálculos</span>
 
       <span class="fill-remaining-space"></span>
-<!--            <button mat-mini-fab-->
-<!--                    color="primary"-->
-<!--                    (click)="createCalc()">-->
-<!--              <mat-icon>add</mat-icon>-->
-<!--            </button>-->
+      <button mat-mini-fab
+              color="primary"
+              (click)="createCalc()">
+        <mat-icon>add</mat-icon>
+      </button>
 
     </mat-toolbar>
 
@@ -32,10 +32,22 @@
             </mat-panel-title>
           </mat-expansion-panel-header>
 
-<!--          <button mat-button color="primary"-->
-<!--                  (click)="seeDetails(calc)">-->
-<!--            Ver detalles-->
-<!--          </button>-->
+          <div *ngIf="!calc.operator">
+            <p><strong>Nombre:</strong> {{calc.name}}</p>
+            <p><strong>Valor:</strong> {{calc.value}}</p>
+          </div>
+
+          <div *ngIf="calc.operator">
+            <p><strong>Nombre:</strong> {{calc.name}}</p>
+            <p><strong>1er término:</strong> {{calc.left.name}}</p>
+            <p><strong>Operador entre ellos:</strong> {{calc.operator}}</p>
+            <p><strong>2do término:</strong> {{calc.right.name}}</p>
+          </div>
+
+          <button mat-button color="primary"
+                  (click)="calculate(calc)">
+            Calcular
+          </button>
 
         </mat-expansion-panel>
       </mat-accordion>

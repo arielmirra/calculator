@@ -4,8 +4,6 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {SnackbarService} from '../../services/snackbar.service';
 import {Calculable, CalculableForm, Operator} from '../../models/Calculable';
 import {CalculableService} from '../../services/calculable.service';
-import {CalculableModalComponent} from './calculable-modal/calculable-modal.component';
-import {MatDialog} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-calculable-form',
@@ -24,8 +22,7 @@ export class CalculableFormComponent implements OnInit {
   constructor(
     private router: Router,
     private snackbarService: SnackbarService,
-    private calculableService: CalculableService,
-    public dialog: MatDialog
+    private calculableService: CalculableService
   ) {
   }
 
@@ -85,26 +82,6 @@ export class CalculableFormComponent implements OnInit {
 
   hasError(controlName: string, errorName: string): boolean {
     return this.form.controls[controlName].hasError(errorName);
-  }
-
-  selectNodes(): void {
-    const dialogRef = this.dialog.open(CalculableModalComponent, {
-      width: '500px',
-      data: {
-        node1: null,
-        node2: null,
-        input1: '',
-        input2: ''
-      }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
-      if (result !== false) {
-        this.node1 = result.node1;
-        this.node2 = result.node2;
-      }
-    });
   }
 
   private resetForm(): void {
