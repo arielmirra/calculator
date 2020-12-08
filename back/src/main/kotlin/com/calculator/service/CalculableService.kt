@@ -10,6 +10,7 @@ class CalculableService(
         @Autowired private val calculableRepository: CalculableRepository
 ) {
 
+    fun getAll(): List<Calculable> = calculableRepository.findAll().toList()
     fun findByName(name: String): Calculable? = calculableRepository.findByName(name)
     fun findById(id: Long): Optional<Calculable> = calculableRepository.findBy_id(id)
     fun save(calculable: Calculable) = calculableRepository.save(calculable)
@@ -75,6 +76,4 @@ class CalculableService(
     }
 
     private fun isComposite(form: CalculableForm) = form.left != null && form.right != null && form.operator != null
-
-    fun getAll(): List<Calculable> = calculableRepository.findAll().toList()
 }

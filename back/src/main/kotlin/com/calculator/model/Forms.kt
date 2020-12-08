@@ -11,6 +11,6 @@ data class CalculableForm(
 data class MetricForm(
         val name: String,
         val description: String,
-        val metrics: MutableList<Any>,
-        val calculates: MutableList<Any>
+        val metrics: MutableList<Long>,
+        val calculates: MutableList<Long>
 )
