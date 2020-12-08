@@ -1,1 +1,48 @@
-<p>metric-list works!</p>
+<div class="material-card-container" *ngIf="metrics">
+  <mat-card class="material-card">
+
+    <mat-toolbar role="toolbar" class="card-title">
+      <span>Métricas</span>
+
+      <span class="fill-remaining-space"></span>
+      <button mat-mini-fab
+              color="primary"
+              (click)="createMetric()">
+        <mat-icon>add</mat-icon>
+      </button>
+
+    </mat-toolbar>
+
+    <mat-card-content class="plan-list">
+
+      <div *ngIf="metrics.length === 0" class="empty-list">
+        <h1>No se encuentra ninguna métrica</h1>
+      </div>
+
+      <mat-accordion *ngIf="metrics.length > 0">
+        <mat-expansion-panel *ngFor="let m of metrics">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <div class="title">
+                <p>
+                  {{m.name}}
+                </p>
+              </div>
+
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+            <p><strong>Nombre:</strong> {{m.name}}</p>
+            <p><strong>Descripción:</strong> {{m.description}}</p>
+            <p><strong>Métricas incluídas:</strong> {{m.metrics.length}}</p>
+            <p><strong>Cálculos incluídos:</strong> {{m.calculates.length}}</p>
+
+          <button mat-button color="primary"
+                  (click)="measure(m)">
+            Realizar una medición
+          </button>
+
+        </mat-expansion-panel>
+      </mat-accordion>
+    </mat-card-content>
+  </mat-card>
+</div>

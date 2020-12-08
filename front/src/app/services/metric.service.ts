@@ -90,6 +90,19 @@ export class MetricService {
       );
   }
 
+  fetchAllComplete(): Observable<Metric[]> {
+    return this.http.get(this.basePath)
+      .pipe(
+        map(response => {
+          return response.body.map(a => Object.assign(Metric.empty(), a));
+        }),
+        catchError(err => {
+          console.log(err);
+          return of([]);
+        })
+      );
+  }
+
   measure(id: number): Observable<Measurement> {
     return this.http.get(`${this.basePath}measure/${id}`)
       .pipe(

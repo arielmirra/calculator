@@ -41,14 +41,10 @@ data class Metric(
     fun measures(metric: Metric) = metrics.add(metric)
 
     fun measure(): Measurement {
-        // TODO should save the measurement
-
         var result = if (metrics.isEmpty()) 0.0 else metrics.map { m -> m.measure().value }.sum()
-
         if (calculates.isNotEmpty()) result += calculate()
-
         return Measurement(
-            name = "$name metric measured",
+            name = "Resultado de la métrica $name",
             value = result
         )
     }

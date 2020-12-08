@@ -3,6 +3,7 @@ import {Routes, RouterModule} from '@angular/router';
 import {CalculableFormComponent} from './views/calculable-form/calculable-form.component';
 import {CalculableListComponent} from './views/calculable-list/calculable-list.component';
 import {MetricFormComponent} from './views/metric-form/metric-form.component';
+import {MetricListComponent} from './views/metric-list/metric-list.component';
 
 
 export const routes: Routes = [
@@ -32,7 +33,7 @@ export const routes: Routes = [
       },
       {
         path: 'list',
-        component: CalculableListComponent
+        component: MetricListComponent
       }
     ]
   },
