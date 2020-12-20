@@ -8,7 +8,7 @@ import java.util.*
 
 
 @Repository
-interface MetricRepository : Neo4jRepository<Metric, Long>{
+interface MetricRepository : Neo4jRepository<Metric, Long> {
     @Depth(4)
     fun findBy_id(_id: Long): Optional<Metric>
 
@@ -23,10 +23,19 @@ interface MetricRepository : Neo4jRepository<Metric, Long>{
 }
 
 @Repository
-interface CalculableRepository : Neo4jRepository<Calculable, Long>{
+interface CalculableRepository : Neo4jRepository<Calculable, Long> {
     @Depth(4)
     fun findByName(name: String): Calculable?
 
     @Depth(4)
     fun findBy_id(_id: Long): Optional<Calculable>
+
+    @Query(
+          "MATCH path = (n:Metric)-[*]-(c:Calculable)\n" +
+                "WHERE ID(c) = {0}\n" +
+                "WITH collect(path) as paths\n" +
+                "CALL apoc.convert.toTree(paths) yield value\n" +
+                "RETURN value;"
+    )
+    fun calcUsage(_id: Long): List<Any>
 }

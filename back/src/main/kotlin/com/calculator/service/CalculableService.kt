@@ -69,7 +69,7 @@ class CalculableService(
     }
 
     fun delete(id: Long): Boolean {
-        return if (findById(id).isPresent) {
+        return if (findById(id).isPresent && calculableRepository.calcUsage(id).isEmpty()) {
             deleteById(id)
             true
         } else false
