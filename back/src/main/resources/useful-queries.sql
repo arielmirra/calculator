@@ -24,3 +24,8 @@ WITH [node in nodes | node {.*, label:labels(node)[0]}] as nodes,
      [rel in relationships | rel {.*, fromNode:{label:labels(startNode(rel))[0], name:startNode(rel).name}, toNode:{label:labels(endNode(rel))[0], name:endNode(rel).name}}] as rels
 WITH {nodes:nodes, relationships:rels} as json
 RETURN apoc.convert.toJson(json)
+
+
+
+
+MATCH path = (n:Metric{name: $name})-[*]-(c) WITH collect(path) as paths CALL apoc.convert.toTree(paths) yield value RETURN value;
