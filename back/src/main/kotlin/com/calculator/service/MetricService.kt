@@ -31,7 +31,7 @@ class MetricService(
 
     fun update(id: Long, form: MetricForm): Boolean {
         val metric = findById(id)
-        if (metric.isEmpty) return false
+        if (!metric.isPresent) return false
         val m = metric.get()
         val p = parseArrays(form)
 

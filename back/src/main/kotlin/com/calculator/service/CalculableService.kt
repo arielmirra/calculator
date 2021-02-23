@@ -42,7 +42,7 @@ class CalculableService(
 
     fun update(id: Long, form: CalculableForm): Boolean {
         val calc = findById(id)
-        if(calc.isEmpty) return false
+        if(!calc.isPresent) return false
         val calculus = calc.get()
         var changed = false
         if (isComposite(form)) {
