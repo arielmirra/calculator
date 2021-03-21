@@ -13,7 +13,6 @@ import java.util.function.DoubleBinaryOperator
 interface Node {
     val _type: String
     val _id: Long
-
 }
 
 
@@ -23,8 +22,6 @@ data class Metric(
     override val _type: String = "Metric",
     var name: String = "",
     var description: String = "",
-    var qualityCharacteristic: QualityCharacteristic = QualityCharacteristic.NONE,
-    var qualitySubCharacteristic: QualitySubCharacteristic = QualitySubCharacteristic.NONE,
     @Relationship(type = "MEASURES")
     var metrics: MutableSet<Metric> = mutableSetOf(),
     @Relationship(type = "CALCULATES")
@@ -48,56 +45,6 @@ data class Metric(
         else 0.0
     }
 }
-
-enum class QualityCharacteristic {
-    FUNCTIONAL_SUITABILITY,
-    EFFECTIVENESS,
-    EFFICIENCY,
-    EVOLVABILITY,
-    MAINTAINABILITY,
-    RELIABILITY,
-    SAFETY,
-    SECURITY,
-    TESTABILITY,
-    USABILITY,
-    NONE,
-    PERFORMANCE_EFFICIENCY,
-    COMPATIBILITY
-}
-
-enum class QualitySubCharacteristic {
-    TIME_BEHAVIOR,
-    RESOURCE_UTILIZATION,
-    ACCURACY,
-    CODE_COMPLEXITY_AND_REGRESSION_TESTING,
-    USABILITY_TESTING,
-    NONE,
-    FUNCTIONAL_COMPLETENESS,
-    FUNCTIONAL_CORRECTNESS,
-    FUNCTIONAL_APPROPRIATENESS,
-    CAPACITY,
-    INTEROPERABILITY,
-    COEXISTENCE,
-    ACCESSIBILITY,
-    USER_INTERFACE_AESTHETICS,
-    USER_ERROR_PROTECTION,
-    OPERABILITY,
-    APPROPRIATENESS_RECOGNISABILITY,
-    LEARNABILITY
-}
-
-
-val qualityCharacteristics = mutableSetOf(
-    "effectiveness",
-    "efficiency",
-    "evolvability",
-    "maintainability",
-    "reliability",
-    "safety",
-    "security",
-    "testability",
-    "usability",
-    "none")
 
 
 @NodeEntity
