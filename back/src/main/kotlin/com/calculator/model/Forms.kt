@@ -14,3 +14,15 @@ data class MetricForm(
         val metrics: MutableList<Long>,
         val calculates: MutableList<Long>
 )
+
+data class ProjectForm(
+        val name: String,
+        val description: String,
+        val measurements: MutableList<Long>
+)
+
+data class CompanyForm(
+        val name: String,
+        val description: String,
+        val projects: MutableList<Long>
+)

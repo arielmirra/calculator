@@ -13,6 +13,32 @@ import java.util.function.DoubleBinaryOperator
 interface Node {
     val _type: String
     val _id: Long
+    var name: String
+}
+
+@NodeEntity
+data class Company(
+    @Id @GeneratedValue override val _id: Long = -1,
+    override val _type: String = "Company",
+    override var name: String = "",
+    var description: String = "",
+    @Relationship(type = "HAS_PROJECT")
+    var projects: MutableSet<Project> = mutableSetOf()
+) : Node {
+
+}
+
+@NodeEntity
+data class Project(
+    @Id @GeneratedValue override val _id: Long = -1,
+    override val _type: String = "Project",
+    override var name: String = "",
+    var description: String = "",
+    val created: Date = Date.from(Instant.now())!!,
+    @Relationship(type = "HAS_MEASUREMENTS")
+    var measurements: MutableSet<Metric> = mutableSetOf()
+) : Node {
+
 }
 
 
@@ -20,7 +46,7 @@ interface Node {
 data class Metric(
     @Id @GeneratedValue override val _id: Long = -1,
     override val _type: String = "Metric",
-    var name: String = "",
+    override var name: String = "",
     var description: String = "",
     @Relationship(type = "MEASURES")
     var metrics: MutableSet<Metric> = mutableSetOf(),
@@ -51,7 +77,7 @@ data class Metric(
 data class Calculable(
     @Id @GeneratedValue override val _id: Long = -1,
     override val _type: String = "Calculable",
-    var name: String = "",
+    override var name: String = "",
     @Relationship(type = "LEFT")
     var left: Calculable? = null,
     @Relationship(type = "RIGHT")

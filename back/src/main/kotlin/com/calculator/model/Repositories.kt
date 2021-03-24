@@ -46,3 +46,21 @@ interface CalculableRepository : Neo4jRepository<Calculable, Long> {
     )
     fun calcUsage(_id: Long): List<Any>
 }
+
+@Repository
+interface ProjectRepository : Neo4jRepository<Project, Long> {
+    @Depth(5)
+    fun findByName(name: String): Project?
+
+    @Depth(5)
+    fun findBy_id(_id: Long): Optional<Project>
+}
+
+@Repository
+interface CompanyRepository : Neo4jRepository<Company, Long> {
+    @Depth(5)
+    fun findByName(name: String): Company?
+
+    @Depth(5)
+    fun findBy_id(_id: Long): Optional<Company>
+}

@@ -16,10 +16,14 @@ class CalculatorApplication {
 
     @Bean
     fun demo(
+        companyRepository: CompanyRepository,
+        projectRepository: ProjectRepository,
         metricRepository: MetricRepository,
         calculableRepository: CalculableRepository
     ): CommandLineRunner? {
         return CommandLineRunner {
+            companyRepository.deleteAll()
+            projectRepository.deleteAll()
             metricRepository.deleteAll()
             calculableRepository.deleteAll()
         }
