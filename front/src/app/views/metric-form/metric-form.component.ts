@@ -48,7 +48,7 @@ export class MetricFormComponent implements OnInit {
   newMetric(): void {
     const form = MetricForm.empty();
     form.name = this.form.controls.name.value;
-    form.description = this.form.controls.name.value;
+    form.description = this.form.controls.description.value;
     form.metrics = this.selectedMetrics;
     form.calculates = this.selectedCalculables;
     console.log(form);

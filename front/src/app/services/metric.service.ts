@@ -81,7 +81,8 @@ export class MetricService {
     return this.http.get(this.basePath)
       .pipe(
         map(response => {
-          return response.body.map(a => Object.assign(Metric.empty(), a));
+          const metrics = response.body.map(a => Object.assign(Metric.empty(), a));
+          return metrics[0]._id !== -1 ? metrics : [];
         }),
         catchError(err => {
           console.log(err);

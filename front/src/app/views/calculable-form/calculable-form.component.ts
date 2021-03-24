@@ -32,7 +32,7 @@ export class CalculableFormComponent implements OnInit {
 
     this.simpleForm = new FormGroup({
       name: new FormControl('', [Validators.required, Validators.minLength(minInputLength), Validators.maxLength(maxInputLength)]),
-      value: new FormControl(0)
+      value: new FormControl(null, [Validators.required])
     });
 
     this.form = new FormGroup({
