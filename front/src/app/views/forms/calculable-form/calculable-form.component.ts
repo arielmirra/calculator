@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {FormControl, FormGroup, FormGroupDirective, Validators} from '@angular/forms';
-import {SnackbarService} from '../../services/snackbar.service';
-import {Calculable, CalculableForm, Operator} from '../../models/Calculable';
-import {CalculableService} from '../../services/calculable.service';
+import {SnackbarService} from '../../../services/snackbar.service';
+import {Calculable, CalculableForm, Operator} from '../../../models/Calculable';
+import {CalculableService} from '../../../services/calculable.service';
 
 @Component({
   selector: 'app-calculable-form',

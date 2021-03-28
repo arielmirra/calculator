@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {Metric} from '../../models/Metric';
-import {SnackbarService} from '../../services/snackbar.service';
+import {Metric} from '../../../models/Metric';
+import {SnackbarService} from '../../../services/snackbar.service';
 import {Router} from '@angular/router';
-import {MetricService} from '../../services/metric.service';
+import {MetricService} from '../../../services/metric.service';
 import {MatDialog} from '@angular/material/dialog';
 import {MetricMeasurementModalComponent} from './metric-measurement-modal/metric-measurement-modal.component';
 
@@ -34,7 +34,7 @@ export class MetricListComponent implements OnInit {
 
   measure(m: Metric): void {
     this.metricService.measure(m._id).subscribe(result => {
-      const dialogRef = this.dialog.open(MetricMeasurementModalComponent, {
+      this.dialog.open(MetricMeasurementModalComponent, {
         width: '550px',
         data: {measure: result}
       });

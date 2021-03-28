@@ -1,27 +1,27 @@
-import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
-import {SnackbarService} from '../../services/snackbar.service';
-import {MetricService} from '../../services/metric.service';
+import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, FormGroupDirective, Validators} from '@angular/forms';
-import {Metric} from '../../models/Metric';
-import {ProjectService} from '../../services/project.service';
-import {ProjectForm} from '../../models/Project';
+import {Router} from '@angular/router';
+import {SnackbarService} from '../../../services/snackbar.service';
+import {ProjectService} from '../../../services/project.service';
+import {Project} from '../../../models/Project';
+import {CompanyForm} from '../../../models/Company';
+import {CompanyService} from '../../../services/company.service';
 
 @Component({
-  selector: 'app-project-form',
-  templateUrl: './project-form.component.html',
-  styleUrls: ['./project-form.component.scss']
+  selector: 'app-company-form',
+  templateUrl: './company-form.component.html',
+  styleUrls: ['./company-form.component.scss']
 })
-export class ProjectFormComponent implements OnInit {
+export class CompanyFormComponent implements OnInit {
   form: FormGroup;
-  metrics: Metric[];
-  selectedMetrics: number[] = [];
+  projects: Project[];
+  selectedProjects: number[] = [];
 
   constructor(
     private router: Router,
     private snackbarService: SnackbarService,
-    private metricService: MetricService,
-    private projectService: ProjectService
+    private projectService: ProjectService,
+    private companyService: CompanyService,
   ) {
   }
 
@@ -36,7 +36,7 @@ export class ProjectFormComponent implements OnInit {
   }
 
   fetch(): void {
-    this.metricService.fetchAll().subscribe(list => this.metrics = list);
+    this.projectService.fetchAll().subscribe(list => this.projects = list);
   }
 
   hasError(controlName: string, errorName: string): boolean {
@@ -44,25 +44,27 @@ export class ProjectFormComponent implements OnInit {
   }
 
   newProject(formDirective: FormGroupDirective): void {
-    const form = ProjectForm.empty();
+    const form = CompanyForm.empty();
     form.name = this.form.controls.name.value;
     form.description = this.form.controls.description.value;
-    form.measurements = this.selectedMetrics;
+    form.projects = this.selectedProjects;
     console.log(form);
-    this.projectService.addProject(form).subscribe(success => {
+    this.companyService.addCompany(form).subscribe(success => {
       this.resetForm(formDirective);
       if (success) {
         this.fetch();
-        this.snackbarService.openSnackbar('Proyecto guardado satisfactoriamente');
+        this.snackbarService.openSnackbar('Empresa guardada satisfactoriamente');
       } else {
         this.snackbarService.openSnackbar('No se ha podido guardar los cambios');
       }
     });
   }
 
+
   private resetForm(formDirective: FormGroupDirective): void {
     this.form.reset();
     formDirective.resetForm();
-    this.selectedMetrics = [];
+    this.selectedProjects = [];
   }
+
 }

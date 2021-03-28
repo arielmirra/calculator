@@ -1,0 +1,46 @@
+<div class="material-card-container" *ngIf="companies">
+  <mat-card class="material-card">
+
+    <mat-toolbar role="toolbar" class="card-title">
+      <span>Empresas</span>
+
+      <span class="fill-remaining-space"></span>
+      <button mat-mini-fab
+              color="primary"
+              (click)="createCompany()">
+        <mat-icon>add</mat-icon>
+      </button>
+
+    </mat-toolbar>
+
+    <mat-card-content class="plan-list">
+
+      <div *ngIf="companies.length === 0" class="empty-list">
+        <h1>No se encuentra ninguna empresa</h1>
+      </div>
+
+      <mat-accordion *ngIf="companies.length > 0">
+        <mat-expansion-panel *ngFor="let c of companies">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <div class="title">
+                <p>
+                  {{c.name}}
+                </p>
+              </div>
+
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <p><strong>Nombre:</strong> {{c.name}}</p>
+          <p><strong>Descripción:</strong> {{c.description}}</p>
+          <p><strong>Proyectos incluídos:</strong> {{c.projects.length}}</p>
+
+          <button mat-button color="primary">
+            Realizar una medición
+          </button>
+
+        </mat-expansion-panel>
+      </mat-accordion>
+    </mat-card-content>
+  </mat-card>
+</div>

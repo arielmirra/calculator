@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, FormGroupDirective, Validators} from '@angular/forms';
-import {Calculable} from '../../models/Calculable';
+import {Calculable} from '../../../models/Calculable';
 import {Router} from '@angular/router';
-import {SnackbarService} from '../../services/snackbar.service';
-import {CalculableService} from '../../services/calculable.service';
-import {MetricService} from '../../services/metric.service';
-import {Metric, MetricForm} from '../../models/Metric';
+import {SnackbarService} from '../../../services/snackbar.service';
+import {CalculableService} from '../../../services/calculable.service';
+import {MetricService} from '../../../services/metric.service';
+import {Metric, MetricForm} from '../../../models/Metric';
 
 @Component({
   selector: 'app-metric-form',

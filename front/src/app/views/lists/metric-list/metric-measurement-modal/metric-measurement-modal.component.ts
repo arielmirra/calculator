@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {Measurement} from '../../../models/Metric';
+import {Measurement} from '../../../../models/Metric';
 
 export interface DialogData {
   measure: Measurement;

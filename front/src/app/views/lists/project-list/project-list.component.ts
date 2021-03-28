@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {SnackbarService} from '../../services/snackbar.service';
+import {SnackbarService} from '../../../services/snackbar.service';
 import {MatDialog} from '@angular/material/dialog';
 import {Router} from '@angular/router';
-import {Project} from '../../models/Project';
-import {ProjectService} from '../../services/project.service';
+import {Project} from '../../../models/Project';
+import {ProjectService} from '../../../services/project.service';
 
 @Component({
   selector: 'app-project-list',

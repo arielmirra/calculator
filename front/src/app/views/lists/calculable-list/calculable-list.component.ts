@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {Calculable} from '../../models/Calculable';
-import {CalculableService} from '../../services/calculable.service';
+import {Calculable} from '../../../models/Calculable';
+import {CalculableService} from '../../../services/calculable.service';
 import {Router} from '@angular/router';
-import {SnackbarService} from '../../services/snackbar.service';
+import {SnackbarService} from '../../../services/snackbar.service';
 
 @Component({
   selector: 'app-calculable-list',
