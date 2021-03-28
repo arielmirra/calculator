@@ -3,7 +3,7 @@ import {Router} from '@angular/router';
 import {SnackbarService} from '../../services/snackbar.service';
 import {MetricService} from '../../services/metric.service';
 import {FormControl, FormGroup, FormGroupDirective, Validators} from '@angular/forms';
-import {Metric, MetricForm} from '../../models/Metric';
+import {Metric} from '../../models/Metric';
 import {ProjectService} from '../../services/project.service';
 import {ProjectForm} from '../../models/Project';
 
@@ -59,7 +59,6 @@ export class ProjectFormComponent implements OnInit {
       }
     });
   }
-
 
   private resetForm(formDirective: FormGroupDirective): void {
     this.form.reset();

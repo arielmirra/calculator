@@ -70,4 +70,8 @@ export class MetricFormComponent implements OnInit {
     this.selectedCalculables = [];
     this.selectedMetrics = [];
   }
+
+  isValid(form: FormGroup): boolean {
+    return form.valid && (this.selectedMetrics.length > 0 || this.selectedCalculables.length > 0);
+  }
 }

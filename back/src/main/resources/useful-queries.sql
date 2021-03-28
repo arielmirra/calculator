@@ -1,6 +1,12 @@
 match (n) return n
 match (n) detach delete n
 
+-- returns all projects connected to metrics
+MATCH path = (n:Project)-[*]-(m)
+WITH collect(path) as paths
+CALL apoc.convert.toTree(paths) yield value
+RETURN value;
+
 -- returns all metrics connected to calculables
 MATCH path = (n:Metric)-[*]-(c)
 WITH collect(path) as paths

@@ -45,7 +45,7 @@
         <button mat-raised-button
                 color="primary"
                 name="submit"
-                [disabled]="!form.valid"
+                [disabled]="!isValid(form)"
                 (click)="newMetric(formDirective)">
           Guardar
         </button>

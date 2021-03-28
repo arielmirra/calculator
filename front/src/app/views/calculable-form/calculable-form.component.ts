@@ -92,4 +92,8 @@ export class CalculableFormComponent implements OnInit {
     this.node1 = null;
     this.node2 = null;
   }
+
+  isValid(form: FormGroup): boolean {
+    return form.valid && !!this.operator && !!this.node1 && !!this.node2;
+  }
 }
