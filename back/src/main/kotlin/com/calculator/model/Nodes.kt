@@ -4,8 +4,7 @@ import org.neo4j.ogm.annotation.GeneratedValue
 import org.neo4j.ogm.annotation.Id
 import org.neo4j.ogm.annotation.NodeEntity
 import org.neo4j.ogm.annotation.Relationship
-import java.time.Instant
-import java.util.*
+import java.time.LocalDateTime
 import java.util.function.BinaryOperator
 import java.util.function.DoubleBinaryOperator
 
@@ -22,7 +21,7 @@ data class Company(
     override val _type: String = "Company",
     override var name: String = "",
     var description: String = "",
-    @Relationship(type = "HAS_PROJECT")
+    @Relationship(type = "PROJECTS")
     var projects: MutableSet<Project> = mutableSetOf()
 ) : Node {
 
@@ -34,8 +33,8 @@ data class Project(
     override val _type: String = "Project",
     override var name: String = "",
     var description: String = "",
-    val created: Date = Date.from(Instant.now())!!,
-    @Relationship(type = "HAS_MEASUREMENTS")
+    val date: LocalDateTime = LocalDateTime.now(),
+    @Relationship(type = "MEASUREMENTS")
     var measurements: MutableSet<Metric> = mutableSetOf()
 ) : Node {
 
@@ -110,8 +109,9 @@ enum class Operator : BinaryOperator<Double>, DoubleBinaryOperator {
 
 @NodeEntity
 data class Measurement(
-    @Id @GeneratedValue val id: Long = -1,
-    val name: String = "",
+    @Id @GeneratedValue override val _id: Long = -1,
+    override val _type: String = "Measurement",
+    override var name: String = "",
     val value: Double = 0.0,
-    val date: Date = Date.from(Instant.now())!!
-)
+    val date: LocalDateTime = LocalDateTime.now()
+): Node

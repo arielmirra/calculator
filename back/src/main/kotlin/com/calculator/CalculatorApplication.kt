@@ -19,13 +19,15 @@ class CalculatorApplication {
         companyRepository: CompanyRepository,
         projectRepository: ProjectRepository,
         metricRepository: MetricRepository,
-        calculableRepository: CalculableRepository
+        calculableRepository: CalculableRepository,
+        measurementRepository: MeasurementRepository
     ): CommandLineRunner? {
         return CommandLineRunner {
             companyRepository.deleteAll()
             projectRepository.deleteAll()
             metricRepository.deleteAll()
             calculableRepository.deleteAll()
+            measurementRepository.deleteAll()
         }
     }
 }

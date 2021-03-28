@@ -16,7 +16,7 @@ class CompanyController(
     @Autowired private val companyService: CompanyService
 ) {
     @GetMapping()
-    fun getAll(): List<Company> = companyService.getAll()
+    fun getAll(): List<Any> = companyService.getAll()
 
     @GetMapping("/{id}")
     fun getById(@PathVariable id: Long): ResponseEntity<Company> {
