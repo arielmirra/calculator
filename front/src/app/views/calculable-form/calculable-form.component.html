@@ -9,7 +9,7 @@
 
       <mat-tab label="Simple">
         <ng-template matTabContent>
-          <form [formGroup]="simpleForm" novalidate autocomplete="off">
+          <form [formGroup]="simpleForm" #formDirective="ngForm" novalidate autocomplete="off">
             <mat-card-content>
               <mat-form-field appearance="outline">
                 <mat-label>Nombre</mat-label>
@@ -34,7 +34,7 @@
                       color="primary"
                       name="submit"
                       [disabled]="!simpleForm.valid"
-                      (click)="newSimpleCalc()">
+                      (click)="newSimpleCalc(formDirective)">
                 Guardar
               </button>
             </mat-card-actions>
@@ -45,7 +45,7 @@
 
       <mat-tab label="Compuesto">
         <ng-template matTabContent>
-          <form [formGroup]="form" novalidate autocomplete="off">
+          <form [formGroup]="form" novalidate #formDirective="ngForm" autocomplete="off">
             <mat-card-content>
 
               <mat-form-field appearance="outline">
@@ -88,7 +88,7 @@
                       color="primary"
                       name="submit"
                       [disabled]="!form.valid"
-                      (click)="newCalc()">
+                      (click)="newCalc(formDirective)">
                 Guardar
               </button>
             </mat-card-actions>

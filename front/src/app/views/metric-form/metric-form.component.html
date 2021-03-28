@@ -5,7 +5,7 @@
       <mat-card-subtitle>Cada métrica puede tener otras métricas y cálculos
         dentro que utiliza para realizar su medición final</mat-card-subtitle>
     </mat-card-header>
-    <form [formGroup]="form" novalidate autocomplete="off">
+    <form [formGroup]="form" #formDirective="ngForm" novalidate autocomplete="off">
       <mat-card-content>
         <mat-form-field appearance="outline">
           <mat-label>Nombre</mat-label>
@@ -46,7 +46,7 @@
                 color="primary"
                 name="submit"
                 [disabled]="!form.valid"
-                (click)="newMetric()">
+                (click)="newMetric(formDirective)">
           Guardar
         </button>
       </mat-card-actions>

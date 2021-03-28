@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormControl, FormGroup, FormGroupDirective, Validators} from '@angular/forms';
 import {SnackbarService} from '../../services/snackbar.service';
 import {Calculable, CalculableForm, Operator} from '../../models/Calculable';
 import {CalculableService} from '../../services/calculable.service';
@@ -46,7 +46,7 @@ export class CalculableFormComponent implements OnInit {
     this.calculableService.fetchAll().subscribe(list => this.calculables = list);
   }
 
-  newCalc(): void {
+  newCalc(formDirective: FormGroupDirective): void {
     const form = CalculableForm.empty();
     form.name = this.form.controls.name.value;
     form.left = this.node1;
@@ -54,7 +54,7 @@ export class CalculableFormComponent implements OnInit {
     form.operator = this.operator;
     console.log(form);
     this.calculableService.addCalculable(form).subscribe(success => {
-      this.resetForm();
+      this.resetForm(formDirective);
       if (success) {
         this.fetch();
         this.snackbarService.openSnackbar('Cálculo guardado satisfactoriamente');
@@ -64,13 +64,13 @@ export class CalculableFormComponent implements OnInit {
     });
   }
 
-  newSimpleCalc(): void {
+  newSimpleCalc(formDirective: FormGroupDirective): void {
     const form = CalculableForm.empty();
     form.name = this.simpleForm.controls.name.value;
     form.value = this.simpleForm.controls.value.value;
     console.log(form);
     this.calculableService.addCalculable(form).subscribe(success => {
-      this.resetForm();
+      this.resetForm(formDirective);
       if (success) {
         this.fetch();
         this.snackbarService.openSnackbar('Cálculo guardado satisfactoriamente');
@@ -84,7 +84,8 @@ export class CalculableFormComponent implements OnInit {
     return this.form.controls[controlName].hasError(errorName);
   }
 
-  private resetForm(): void {
+  private resetForm(formDirective: FormGroupDirective): void {
+    formDirective.resetForm();
     this.simpleForm.reset();
     this.form.reset();
     this.operator = null;
