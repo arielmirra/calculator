@@ -1,29 +1,27 @@
 import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup, FormGroupDirective, Validators} from '@angular/forms';
-import {Calculable} from '../../models/Calculable';
 import {Router} from '@angular/router';
 import {SnackbarService} from '../../services/snackbar.service';
-import {CalculableService} from '../../services/calculable.service';
 import {MetricService} from '../../services/metric.service';
+import {FormControl, FormGroup, FormGroupDirective, Validators} from '@angular/forms';
 import {Metric, MetricForm} from '../../models/Metric';
+import {ProjectService} from '../../services/project.service';
+import {ProjectForm} from '../../models/Project';
 
 @Component({
-  selector: 'app-metric-form',
-  templateUrl: './metric-form.component.html',
-  styleUrls: ['./metric-form.component.scss']
+  selector: 'app-project-form',
+  templateUrl: './project-form.component.html',
+  styleUrls: ['./project-form.component.scss']
 })
-export class MetricFormComponent implements OnInit {
+export class ProjectFormComponent implements OnInit {
   form: FormGroup;
   metrics: Metric[];
-  calculables: Calculable[];
   selectedMetrics: number[] = [];
-  selectedCalculables: number[] = [];
 
   constructor(
     private router: Router,
     private snackbarService: SnackbarService,
-    private calculableService: CalculableService,
-    private metricService: MetricService
+    private metricService: MetricService,
+    private projectService: ProjectService
   ) {
   }
 
@@ -38,7 +36,6 @@ export class MetricFormComponent implements OnInit {
   }
 
   fetch(): void {
-    this.calculableService.fetchAll().subscribe(list => this.calculables = list);
     this.metricService.fetchAll().subscribe(list => this.metrics = list);
   }
 
@@ -46,28 +43,27 @@ export class MetricFormComponent implements OnInit {
     return this.form.controls[controlName].hasError(errorName);
   }
 
-  newMetric(formDirective: FormGroupDirective): void {
-    const form = MetricForm.empty();
+  newProject(formDirective: FormGroupDirective): void {
+    const form = ProjectForm.empty();
     form.name = this.form.controls.name.value;
     form.description = this.form.controls.description.value;
-    form.metrics = this.selectedMetrics;
-    form.calculates = this.selectedCalculables;
+    form.measurements = this.selectedMetrics;
     console.log(form);
-    this.metricService.addMetric(form).subscribe(success => {
+    this.projectService.addProject(form).subscribe(success => {
       this.resetForm(formDirective);
       if (success) {
         this.fetch();
-        this.snackbarService.openSnackbar('Métrica guardada satisfactoriamente');
+        this.snackbarService.openSnackbar('Proyecto guardado satisfactoriamente');
       } else {
         this.snackbarService.openSnackbar('No se ha podido guardar los cambios');
       }
     });
   }
 
+
   private resetForm(formDirective: FormGroupDirective): void {
     this.form.reset();
     formDirective.resetForm();
-    this.selectedCalculables = [];
     this.selectedMetrics = [];
   }
 }

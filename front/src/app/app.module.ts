@@ -14,6 +14,8 @@ import {CommonModule} from '@angular/common';
 import { MetricFormComponent } from './views/metric-form/metric-form.component';
 import { MetricListComponent } from './views/metric-list/metric-list.component';
 import { MetricMeasurementModalComponent } from './views/metric-list/metric-measurement-modal/metric-measurement-modal.component';
+import { ProjectFormComponent } from './views/project-form/project-form.component';
+import { ProjectListComponent } from './views/project-list/project-list.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,9 @@ import { MetricMeasurementModalComponent } from './views/metric-list/metric-meas
     CalculableListComponent,
     MetricFormComponent,
     MetricListComponent,
-    MetricMeasurementModalComponent
+    MetricMeasurementModalComponent,
+    ProjectFormComponent,
+    ProjectListComponent
   ],
   imports: [
     CommonModule,

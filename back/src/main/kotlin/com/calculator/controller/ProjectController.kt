@@ -16,7 +16,7 @@ class ProjectController(
     @Autowired private val projectService: ProjectService
 ) {
     @GetMapping()
-    fun getAll(): List<Project> = projectService.getAll()
+    fun getAll(): List<Any> = projectService.getAll()
 
     @GetMapping("/{id}")
     fun getById(@PathVariable id: Long): ResponseEntity<Project> {

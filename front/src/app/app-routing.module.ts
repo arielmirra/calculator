@@ -4,6 +4,8 @@ import {CalculableFormComponent} from './views/calculable-form/calculable-form.c
 import {CalculableListComponent} from './views/calculable-list/calculable-list.component';
 import {MetricFormComponent} from './views/metric-form/metric-form.component';
 import {MetricListComponent} from './views/metric-list/metric-list.component';
+import {ProjectFormComponent} from './views/project-form/project-form.component';
+import {ProjectListComponent} from './views/project-list/project-list.component';
 
 
 export const routes: Routes = [
@@ -34,6 +36,19 @@ export const routes: Routes = [
       {
         path: 'list',
         component: MetricListComponent
+      }
+    ]
+  },
+  {
+    path: 'project',
+    children: [
+      {
+        path: 'new',
+        component: ProjectFormComponent
+      },
+      {
+        path: 'list',
+        component: ProjectListComponent
       }
     ]
   },
