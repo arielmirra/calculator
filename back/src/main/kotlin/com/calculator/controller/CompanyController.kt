@@ -21,7 +21,7 @@ class CompanyController(
     @GetMapping("/{id}")
     fun getById(@PathVariable id: Long): ResponseEntity<Company> {
         val optional = companyService.findById(id)
-        return optional.map{ c -> ResponseEntity.ok(c)}.orElse(ResponseEntity.notFound().build())
+        return optional.map { c -> ResponseEntity.ok(c) }.orElse(ResponseEntity.notFound().build())
     }
 
 
@@ -41,7 +41,11 @@ class CompanyController(
     }
 
     @PutMapping("/{id}")
-    fun update(@PathVariable id: Long, @RequestBody form: CompanyForm, b: UriComponentsBuilder): ResponseEntity<Boolean> {
+    fun update(
+        @PathVariable id: Long,
+        @RequestBody form: CompanyForm,
+        b: UriComponentsBuilder
+    ): ResponseEntity<Boolean> {
         return if (companyService.update(id, form)) ResponseEntity.ok(true) else ResponseEntity.badRequest().build()
     }
 

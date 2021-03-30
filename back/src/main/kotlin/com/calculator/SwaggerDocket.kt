@@ -17,18 +17,18 @@ class SwaggerDocket {
     @Bean
     fun api(): Docket {
         return Docket(DocumentationType.SWAGGER_2)
-                .select()
-                .apis(RequestHandlerSelectors.any())
-                .paths(PathSelectors.any())
-                .build()
-                .apiInfo(apiInfo())
+            .select()
+            .apis(RequestHandlerSelectors.any())
+            .paths(PathSelectors.any())
+            .build()
+            .apiInfo(apiInfo())
     }
 
     private fun apiInfo(): ApiInfo {
         return ApiInfoBuilder()
-                .title("Calculator Rest API")
-                .description("")
-                .version("")
-                .build()
+            .title("Calculator Rest API")
+            .description("")
+            .version("")
+            .build()
     }
 }

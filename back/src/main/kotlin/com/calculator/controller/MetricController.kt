@@ -1,6 +1,8 @@
 package com.calculator.controller
 
-import com.calculator.model.*
+import com.calculator.model.Measurement
+import com.calculator.model.Metric
+import com.calculator.model.MetricForm
 import com.calculator.service.MetricService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
@@ -11,15 +13,15 @@ import org.springframework.web.util.UriComponentsBuilder
 @CrossOrigin
 @RequestMapping("/metric")
 class MetricController(
-        @Autowired private val metricService: MetricService
+    @Autowired private val metricService: MetricService
 ) {
     @GetMapping()
     fun getAll(): List<Any> = metricService.getAll()
-    
+
     @GetMapping("/{id}")
     fun getById(@PathVariable id: Long): ResponseEntity<Metric> {
         val optional = metricService.findById(id)
-        return optional.map{ c -> ResponseEntity.ok(c)}.orElse(ResponseEntity.notFound().build())
+        return optional.map { c -> ResponseEntity.ok(c) }.orElse(ResponseEntity.notFound().build())
     }
 
 
@@ -33,7 +35,7 @@ class MetricController(
     @GetMapping("/measure/{id}")
     fun measure(@PathVariable id: Long): ResponseEntity<Measurement> {
         val optional = metricService.findById(id)
-        return optional.map{ m -> ResponseEntity.ok(m.measure())}.orElse(ResponseEntity.notFound().build())
+        return optional.map { m -> ResponseEntity.ok(m.measure()) }.orElse(ResponseEntity.notFound().build())
     }
 
     @GetMapping("/measure/name/{name}")
@@ -52,7 +54,11 @@ class MetricController(
     }
 
     @PutMapping("/{id}")
-    fun update(@PathVariable id: Long, @RequestBody form: MetricForm, b: UriComponentsBuilder): ResponseEntity<Boolean> {
+    fun update(
+        @PathVariable id: Long,
+        @RequestBody form: MetricForm,
+        b: UriComponentsBuilder
+    ): ResponseEntity<Boolean> {
         return if (metricService.update(id, form)) ResponseEntity.ok(true) else ResponseEntity.badRequest().build()
     }
 

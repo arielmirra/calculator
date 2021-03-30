@@ -11,7 +11,7 @@ class ProjectService(
     @Autowired private val metricRepository: MetricRepository
 ) {
 
-    fun getAll(): List<Any> = projectRepository.fetchAll();
+    fun getAll(): List<Any> = projectRepository.fetchAll()
     fun findByName(name: String): Project? = projectRepository.findByName(name)
     fun findById(id: Long): Optional<Project> = projectRepository.findBy_id(id)
     fun save(project: Project) = projectRepository.save(project)
@@ -32,7 +32,7 @@ class ProjectService(
     fun update(id: Long, form: ProjectForm): Boolean {
         //todo: update project
         val project = findById(id)
-        if(!project.isPresent) return false
+        if (!project.isPresent) return false
         val p = project.get()
 
         var changed = false

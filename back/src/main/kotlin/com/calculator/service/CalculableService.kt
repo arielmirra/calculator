@@ -1,13 +1,16 @@
 package com.calculator.service
 
-import com.calculator.model.*
+import com.calculator.model.Calculable
+import com.calculator.model.CalculableForm
+import com.calculator.model.CalculableRepository
+import com.calculator.model.Operator
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.util.*
 
 @Service
 class CalculableService(
-        @Autowired private val calculableRepository: CalculableRepository
+    @Autowired private val calculableRepository: CalculableRepository
 ) {
 
     fun getAll(): List<Calculable> = calculableRepository.findAll().toList()
@@ -22,18 +25,18 @@ class CalculableService(
             val right = findById(form.right!!)
             if (left.isPresent && right.isPresent) {
                 val calc = Calculable(
-                        name = form.name,
-                        left = left.get(),
-                        right = right.get(),
-                        operator = Operator.valueOf(form.operator!!),
-                        value = form.value
+                    name = form.name,
+                    left = left.get(),
+                    right = right.get(),
+                    operator = Operator.valueOf(form.operator!!),
+                    value = form.value
                 )
                 return save(calc)
             }
         } else if (form.value != null) {
             val calc = Calculable(
-                    name = form.name,
-                    value = form.value
+                name = form.name,
+                value = form.value
             )
             return save(calc)
         }
@@ -42,7 +45,7 @@ class CalculableService(
 
     fun update(id: Long, form: CalculableForm): Boolean {
         val calc = findById(id)
-        if(!calc.isPresent) return false
+        if (!calc.isPresent) return false
         val calculus = calc.get()
         var changed = false
         if (isComposite(form)) {

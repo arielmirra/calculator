@@ -21,7 +21,7 @@ class ProjectController(
     @GetMapping("/{id}")
     fun getById(@PathVariable id: Long): ResponseEntity<Project> {
         val optional = projectService.findById(id)
-        return optional.map{ c -> ResponseEntity.ok(c)}.orElse(ResponseEntity.notFound().build())
+        return optional.map { c -> ResponseEntity.ok(c) }.orElse(ResponseEntity.notFound().build())
     }
 
 
@@ -41,7 +41,11 @@ class ProjectController(
     }
 
     @PutMapping("/{id}")
-    fun update(@PathVariable id: Long, @RequestBody form: ProjectForm, b: UriComponentsBuilder): ResponseEntity<Boolean> {
+    fun update(
+        @PathVariable id: Long,
+        @RequestBody form: ProjectForm,
+        b: UriComponentsBuilder
+    ): ResponseEntity<Boolean> {
         return if (projectService.update(id, form)) ResponseEntity.ok(true) else ResponseEntity.badRequest().build()
     }
 

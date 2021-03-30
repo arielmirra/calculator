@@ -13,7 +13,7 @@ import org.springframework.web.util.UriComponentsBuilder
 @CrossOrigin
 @RequestMapping("/calculable")
 class CalculableController(
-        @Autowired private val calculableService: CalculableService
+    @Autowired private val calculableService: CalculableService
 ) {
     @GetMapping()
     fun getAll(): List<Calculable> = calculableService.getAll()
@@ -21,7 +21,7 @@ class CalculableController(
     @GetMapping("/{id}")
     fun getById(@PathVariable id: Long): ResponseEntity<Calculable> {
         val optional = calculableService.findById(id)
-        return optional.map{ c -> ResponseEntity.ok(c)}.orElse(ResponseEntity.notFound().build())
+        return optional.map { c -> ResponseEntity.ok(c) }.orElse(ResponseEntity.notFound().build())
     }
 
 
@@ -35,7 +35,7 @@ class CalculableController(
     @GetMapping("/calculate/{id}")
     fun calculate(@PathVariable id: Long): ResponseEntity<Double> {
         val optional = calculableService.findById(id)
-        return optional.map{ c -> ResponseEntity.ok(c.calculate())}.orElse(ResponseEntity.notFound().build())
+        return optional.map { c -> ResponseEntity.ok(c.calculate()) }.orElse(ResponseEntity.notFound().build())
     }
 
     @PostMapping
@@ -47,7 +47,11 @@ class CalculableController(
     }
 
     @PutMapping("/{id}")
-    fun update(@PathVariable id: Long, @RequestBody form: CalculableForm, b: UriComponentsBuilder): ResponseEntity<Boolean> {
+    fun update(
+        @PathVariable id: Long,
+        @RequestBody form: CalculableForm,
+        b: UriComponentsBuilder
+    ): ResponseEntity<Boolean> {
         return if (calculableService.update(id, form)) ResponseEntity.ok(true) else ResponseEntity.badRequest().build()
     }
 

@@ -1,6 +1,9 @@
 package com.calculator.service
 
-import com.calculator.model.*
+import com.calculator.model.Calculable
+import com.calculator.model.Metric
+import com.calculator.model.MetricForm
+import com.calculator.model.MetricRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.util.*

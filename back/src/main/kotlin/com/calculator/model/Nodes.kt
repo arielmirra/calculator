@@ -17,40 +17,36 @@ interface Node {
 
 @NodeEntity
 data class Company(
-    @Id @GeneratedValue override val _id: Long = -1,
-    override val _type: String = "Company",
-    override var name: String = "",
-    var description: String = "",
-    @Relationship(type = "PROJECTS")
-    var projects: MutableSet<Project> = mutableSetOf()
-) : Node {
-
-}
+        @Id @GeneratedValue override val _id: Long = -1,
+        override val _type: String = "Company",
+        override var name: String = "",
+        var description: String = "",
+        @Relationship(type = "PROJECTS")
+        var projects: MutableSet<Project> = mutableSetOf()
+) : Node
 
 @NodeEntity
 data class Project(
-    @Id @GeneratedValue override val _id: Long = -1,
-    override val _type: String = "Project",
-    override var name: String = "",
-    var description: String = "",
-    val date: LocalDateTime = LocalDateTime.now(),
-    @Relationship(type = "MEASUREMENTS")
-    var measurements: MutableSet<Metric> = mutableSetOf()
-) : Node {
-
-}
+        @Id @GeneratedValue override val _id: Long = -1,
+        override val _type: String = "Project",
+        override var name: String = "",
+        var description: String = "",
+        val date: LocalDateTime = LocalDateTime.now(),
+        @Relationship(type = "MEASUREMENTS")
+        var measurements: MutableSet<Metric> = mutableSetOf()
+) : Node
 
 
 @NodeEntity
 data class Metric(
-    @Id @GeneratedValue override val _id: Long = -1,
-    override val _type: String = "Metric",
-    override var name: String = "",
-    var description: String = "",
-    @Relationship(type = "MEASURES")
-    var metrics: MutableSet<Metric> = mutableSetOf(),
-    @Relationship(type = "CALCULATES")
-    var calculates: MutableSet<Calculable> = mutableSetOf()
+        @Id @GeneratedValue override val _id: Long = -1,
+        override val _type: String = "Metric",
+        override var name: String = "",
+        var description: String = "",
+        @Relationship(type = "MEASURES")
+        var metrics: MutableSet<Metric> = mutableSetOf(),
+        @Relationship(type = "CALCULATES")
+        var calculates: MutableSet<Calculable> = mutableSetOf()
 ) : Node {
     fun measures(metric: Metric) = metrics.add(metric)
 
@@ -58,8 +54,8 @@ data class Metric(
         var result = if (metrics.isEmpty()) 0.0 else metrics.map { m -> m.measure().value }.sum()
         if (calculates.isNotEmpty()) result += calculate()
         return Measurement(
-            name = "Resultado de la métrica $name",
-            value = result
+                name = "Resultado de la métrica $name",
+                value = result
         )
     }
 
@@ -74,15 +70,15 @@ data class Metric(
 
 @NodeEntity
 data class Calculable(
-    @Id @GeneratedValue override val _id: Long = -1,
-    override val _type: String = "Calculable",
-    override var name: String = "",
-    @Relationship(type = "LEFT")
-    var left: Calculable? = null,
-    @Relationship(type = "RIGHT")
-    var right: Calculable? = null,
-    var operator: Operator? = null,
-    var value: Double? = null
+        @Id @GeneratedValue override val _id: Long = -1,
+        override val _type: String = "Calculable",
+        override var name: String = "",
+        @Relationship(type = "LEFT")
+        var left: Calculable? = null,
+        @Relationship(type = "RIGHT")
+        var right: Calculable? = null,
+        var operator: Operator? = null,
+        var value: Double? = null
 ) : Node {
     fun calculate(): Double {
         return if (value != null) value!!
@@ -109,9 +105,9 @@ enum class Operator : BinaryOperator<Double>, DoubleBinaryOperator {
 
 @NodeEntity
 data class Measurement(
-    @Id @GeneratedValue override val _id: Long = -1,
-    override val _type: String = "Measurement",
-    override var name: String = "",
-    val value: Double = 0.0,
-    val date: LocalDateTime = LocalDateTime.now()
-): Node
+        @Id @GeneratedValue override val _id: Long = -1,
+        override val _type: String = "Measurement",
+        override var name: String = "",
+        val value: Double = 0.0,
+        val date: LocalDateTime = LocalDateTime.now()
+) : Node

@@ -7,8 +7,8 @@ import java.util.*
 
 @Service
 class CompanyService(
-    @Autowired private val companyRepository: CompanyRepository,
-    @Autowired private val projectRepository: ProjectRepository
+        @Autowired private val companyRepository: CompanyRepository,
+        @Autowired private val projectRepository: ProjectRepository
 ) {
 
     fun getAll(): List<Any> = companyRepository.fetchAll()
@@ -21,9 +21,9 @@ class CompanyService(
         val projects = parseProjects(form)
 
         val project = Company(
-            name = form.name,
-            description = form.description,
-            projects = projects
+                name = form.name,
+                description = form.description,
+                projects = projects
         )
 
         return save(project)
@@ -32,7 +32,7 @@ class CompanyService(
     fun update(id: Long, form: CompanyForm): Boolean {
         //todo: update company
         val company = findById(id)
-        if(!company.isPresent) return false
+        if (!company.isPresent) return false
         val p = company.get()
 
         var changed = false
@@ -48,9 +48,9 @@ class CompanyService(
 
     private fun parseProjects(form: CompanyForm): MutableSet<Project> {
         return form.projects
-            .map { projectRepository.findById(it) }
-            .filter { it.isPresent }
-            .map { it.get() }
-            .toMutableSet()
+                .map { projectRepository.findById(it) }
+                .filter { it.isPresent }
+                .map { it.get() }
+                .toMutableSet()
     }
 }
