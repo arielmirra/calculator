@@ -6,7 +6,6 @@ import com.calculator.model.CalculableRepository
 import com.calculator.model.Operator
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
-import java.util.*
 
 @Service
 class CalculableService(
@@ -15,68 +14,63 @@ class CalculableService(
 
     fun getAll(): List<Calculable> = calculableRepository.findAll().toList()
     fun findByName(name: String): Calculable? = calculableRepository.findByName(name)
-    fun findById(id: Long): Optional<Calculable> = calculableRepository.findBy_id(id)
+    fun findById(id: Long): Calculable? = calculableRepository.findBy_id(id)
     fun save(calculable: Calculable) = calculableRepository.save(calculable)
     fun deleteById(id: Long) = calculableRepository.deleteById(id)
 
-    fun create(form: CalculableForm): Calculable? {
+    fun create(form: CalculableForm): Calculable =
         if (isComposite(form)) {
             val left = findById(form.left!!)
             val right = findById(form.right!!)
-            if (left.isPresent && right.isPresent) {
-                val calc = Calculable(
-                    name = form.name,
-                    left = left.get(),
-                    right = right.get(),
-                    operator = Operator.valueOf(form.operator!!),
-                    value = form.value
-                )
-                return save(calc)
-            }
-        } else if (form.value != null) {
+
+            val calc = Calculable(
+                name = form.name,
+                left = left,
+                right = right,
+                operator = Operator.valueOf(form.operator!!)
+            )
+            save(calc)
+        } else {
             val calc = Calculable(
                 name = form.name,
                 value = form.value
             )
-            return save(calc)
+            save(calc)
         }
-        return null
-    }
 
-    fun update(id: Long, form: CalculableForm): Boolean {
-        val calc = findById(id)
-        if (!calc.isPresent) return false
-        val calculus = calc.get()
-        var changed = false
-        if (isComposite(form)) {
-            val left = findById(form.left!!)
-            val right = findById(form.right!!)
-            if (left.isPresent && right.isPresent) {
-                calculus.left = left.get()
-                calculus.right = right.get()
-                calculus.operator = Operator.valueOf(form.operator!!)
-                save(calculus)
+    fun calculate(id: Long): Double? = findById(id)?.let { it.calculate() }
+
+    fun update(id: Long, form: CalculableForm): Boolean =
+        findById(id)?.let {
+            var changed = false
+            if (isComposite(form)) {
+                val left = findById(form.left!!)
+                val right = findById(form.right!!)
+                it.left = left
+                it.right = right
+                it.operator = Operator.valueOf(form.operator!!)
+                save(it)
+                changed = true
+            } else if (form.value != null) {
+                it.value = form.value
+                save(it)
                 changed = true
             }
-        } else if (form.value != null) {
-            calculus.value = form.value
-            save(calculus)
-            changed = true
-        }
-        if (form.name != calculus.name) {
-            calculus.name = form.name
-            save(calculus)
-            changed = true
-        }
-        return changed
-    }
+            if (form.name != it.name) {
+                it.name = form.name
+                save(it)
+                changed = true
+            }
+            return changed
+        } ?: false
 
-    fun delete(id: Long): Boolean {
-        return if (findById(id).isPresent && calculableRepository.calcUsage(id).isEmpty()) {
-            deleteById(id)
-            true
-        } else false
-    }
+    fun delete(id: Long): Boolean =
+        findById(id)?.let {
+            if (calculableRepository.calcUsage(id).isEmpty()) {
+                deleteById(id)
+                true
+            } else false
+        } ?: false
 
     private fun isComposite(form: CalculableForm) = form.left != null && form.right != null && form.operator != null
 }

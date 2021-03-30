@@ -13,7 +13,7 @@ class CompanyService(
 
     fun getAll(): List<Any> = companyRepository.fetchAll()
     fun findByName(name: String): Company? = companyRepository.findByName(name)
-    fun findById(id: Long): Optional<Company> = companyRepository.findBy_id(id)
+    fun findById(id: Long): Company? = companyRepository.findBy_id(id)
     fun save(company: Company) = companyRepository.save(company)
     fun deleteById(id: Long) = companyRepository.deleteById(id)
 
@@ -31,19 +31,13 @@ class CompanyService(
 
     fun update(id: Long, form: CompanyForm): Boolean {
         //todo: update company
-        val company = findById(id)
-        if (!company.isPresent) return false
-        val p = company.get()
-
         var changed = false
         return changed
     }
 
     fun delete(id: Long): Boolean {
-        return if (findById(id).isPresent) {
-            deleteById(id)
-            true
-        } else false
+        //todo: delete company
+        return false
     }
 
     private fun parseProjects(form: CompanyForm): MutableSet<Project> {

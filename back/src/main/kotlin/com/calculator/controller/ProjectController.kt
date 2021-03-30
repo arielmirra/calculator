@@ -14,43 +14,37 @@ import org.springframework.web.util.UriComponentsBuilder
 @RequestMapping("/project")
 class ProjectController(
     @Autowired private val projectService: ProjectService
-) {
+): WebApi<Project> {
     @GetMapping()
     fun getAll(): List<Any> = projectService.getAll()
 
     @GetMapping("/{id}")
-    fun getById(@PathVariable id: Long): ResponseEntity<Project> {
-        val optional = projectService.findById(id)
-        return optional.map { c -> ResponseEntity.ok(c) }.orElse(ResponseEntity.notFound().build())
-    }
-
+    fun getById(@PathVariable id: Long): ResponseEntity<Project> =
+        projectService.findById(id)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()
 
     @GetMapping("/name/{name}")
-    fun getByName(@PathVariable name: String): ResponseEntity<Project> {
-        val optional = projectService.findByName(name)
-        return if (optional != null) ResponseEntity.ok(optional)
-        else ResponseEntity.notFound().build()
-    }
+    fun getByName(@PathVariable name: String): ResponseEntity<Project> =
+        projectService.findByName(name)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()
 
     @PostMapping
-    fun create(@RequestBody form: ProjectForm, b: UriComponentsBuilder): ResponseEntity<Project> {
-        val created = projectService.create(form)
-        val components = b.path("/project/{id}").buildAndExpand(created)
-        return if (created != null) ResponseEntity.created(components.toUri()).build()
-        else ResponseEntity.badRequest().build()
-    }
+    fun create(@RequestBody form: ProjectForm, b: UriComponentsBuilder): ResponseEntity<Project> =
+        try {
+            val created = projectService.create(form)
+            val components = b.path("/calculable/{id}").buildAndExpand(created)
+            ResponseEntity.created(components.toUri()).build()
+        } catch (e: Exception) {
+            ResponseEntity.badRequest().build()
+        }
 
     @PutMapping("/{id}")
     fun update(
         @PathVariable id: Long,
         @RequestBody form: ProjectForm,
         b: UriComponentsBuilder
-    ): ResponseEntity<Boolean> {
-        return if (projectService.update(id, form)) ResponseEntity.ok(true) else ResponseEntity.badRequest().build()
-    }
+    ): ResponseEntity<Boolean> =
+        if (projectService.update(id, form)) ResponseEntity.ok(true) else ResponseEntity.badRequest().build()
 
     @DeleteMapping("/{id}")
-    fun delete(@PathVariable id: Long): ResponseEntity<Boolean> {
-        return if (projectService.delete(id)) ResponseEntity.ok(true) else ResponseEntity.notFound().build()
-    }
+    fun delete(@PathVariable id: Long): ResponseEntity<Boolean> =
+        if (projectService.delete(id)) ResponseEntity.ok(true) else ResponseEntity.notFound().build()
 }

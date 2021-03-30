@@ -80,10 +80,7 @@ data class Calculable(
         var operator: Operator? = null,
         var value: Double? = null
 ) : Node {
-    fun calculate(): Double {
-        return if (value != null) value!!
-        else operator!!.apply(left!!.calculate(), right!!.calculate())
-    }
+    fun calculate(): Double = value?.let { it } ?: operator!!.apply(left!!.calculate(), right!!.calculate())
 }
 
 enum class Operator : BinaryOperator<Double>, DoubleBinaryOperator {

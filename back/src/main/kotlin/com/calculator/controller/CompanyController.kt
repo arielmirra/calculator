@@ -19,38 +19,33 @@ class CompanyController(
     fun getAll(): List<Any> = companyService.getAll()
 
     @GetMapping("/{id}")
-    fun getById(@PathVariable id: Long): ResponseEntity<Company> {
-        val optional = companyService.findById(id)
-        return optional.map { c -> ResponseEntity.ok(c) }.orElse(ResponseEntity.notFound().build())
-    }
+    fun getById(@PathVariable id: Long): ResponseEntity<Company> =
+        companyService.findById(id)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()
 
 
     @GetMapping("/name/{name}")
-    fun getByName(@PathVariable name: String): ResponseEntity<Company> {
-        val optional = companyService.findByName(name)
-        return if (optional != null) ResponseEntity.ok(optional)
-        else ResponseEntity.notFound().build()
-    }
+    fun getByName(@PathVariable name: String): ResponseEntity<Company> =
+        companyService.findByName(name)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()
 
     @PostMapping
-    fun create(@RequestBody form: CompanyForm, b: UriComponentsBuilder): ResponseEntity<Company> {
-        val created = companyService.create(form)
-        val components = b.path("/company/{id}").buildAndExpand(created)
-        return if (created != null) ResponseEntity.created(components.toUri()).build()
-        else ResponseEntity.badRequest().build()
-    }
+    fun create(@RequestBody form: CompanyForm, b: UriComponentsBuilder): ResponseEntity<Company> =
+        try {
+            val created = companyService.create(form)
+            val components = b.path("/calculable/{id}").buildAndExpand(created)
+            ResponseEntity.created(components.toUri()).build()
+        } catch (e: Exception) {
+            ResponseEntity.badRequest().build()
+        }
 
     @PutMapping("/{id}")
     fun update(
         @PathVariable id: Long,
         @RequestBody form: CompanyForm,
         b: UriComponentsBuilder
-    ): ResponseEntity<Boolean> {
-        return if (companyService.update(id, form)) ResponseEntity.ok(true) else ResponseEntity.badRequest().build()
-    }
+    ): ResponseEntity<Boolean> =
+        if (companyService.update(id, form)) ResponseEntity.ok(true) else ResponseEntity.badRequest().build()
 
     @DeleteMapping("/{id}")
-    fun delete(@PathVariable id: Long): ResponseEntity<Boolean> {
-        return if (companyService.delete(id)) ResponseEntity.ok(true) else ResponseEntity.notFound().build()
-    }
+    fun delete(@PathVariable id: Long): ResponseEntity<Boolean> =
+        if (companyService.delete(id)) ResponseEntity.ok(true) else ResponseEntity.notFound().build()
 }

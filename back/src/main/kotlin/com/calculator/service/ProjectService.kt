@@ -3,7 +3,6 @@ package com.calculator.service
 import com.calculator.model.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
-import java.util.*
 
 @Service
 class ProjectService(
@@ -13,7 +12,7 @@ class ProjectService(
 
     fun getAll(): List<Any> = projectRepository.fetchAll()
     fun findByName(name: String): Project? = projectRepository.findByName(name)
-    fun findById(id: Long): Optional<Project> = projectRepository.findBy_id(id)
+    fun findById(id: Long): Project? = projectRepository.findBy_id(id)
     fun save(project: Project) = projectRepository.save(project)
     fun deleteById(id: Long) = projectRepository.deleteById(id)
 
@@ -32,18 +31,12 @@ class ProjectService(
     fun update(id: Long, form: ProjectForm): Boolean {
         //todo: update project
         val project = findById(id)
-        if (!project.isPresent) return false
-        val p = project.get()
-
-        var changed = false
-        return changed
+        return false
     }
 
     fun delete(id: Long): Boolean {
-        return if (findById(id).isPresent) {
-            deleteById(id)
-            true
-        } else false
+        //todo: delete project
+        return false
     }
 
     private fun parseMetrics(form: ProjectForm): MutableSet<Metric> {

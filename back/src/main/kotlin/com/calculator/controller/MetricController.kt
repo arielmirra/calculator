@@ -19,51 +19,41 @@ class MetricController(
     fun getAll(): List<Any> = metricService.getAll()
 
     @GetMapping("/{id}")
-    fun getById(@PathVariable id: Long): ResponseEntity<Metric> {
-        val optional = metricService.findById(id)
-        return optional.map { c -> ResponseEntity.ok(c) }.orElse(ResponseEntity.notFound().build())
-    }
+    fun getById(@PathVariable id: Long): ResponseEntity<Metric> =
+        metricService.findById(id)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()
 
 
     @GetMapping("/name/{name}")
-    fun getByName(@PathVariable name: String): ResponseEntity<Metric> {
-        val optional = metricService.findByName(name)
-        return if (optional != null) ResponseEntity.ok(optional)
-        else ResponseEntity.notFound().build()
-    }
+    fun getByName(@PathVariable name: String): ResponseEntity<Metric> =
+        metricService.findByName(name)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()
 
     @GetMapping("/measure/{id}")
-    fun measure(@PathVariable id: Long): ResponseEntity<Measurement> {
-        val optional = metricService.findById(id)
-        return optional.map { m -> ResponseEntity.ok(m.measure()) }.orElse(ResponseEntity.notFound().build())
-    }
+    fun measure(@PathVariable id: Long): ResponseEntity<Measurement> =
+        metricService.findById(id)?.let { ResponseEntity.ok(it.measure()) } ?: ResponseEntity.notFound().build()
 
     @GetMapping("/measure/name/{name}")
-    fun measure(@PathVariable name: String): ResponseEntity<Measurement> {
-        val optional = metricService.findByName(name)
-        if (optional == null) return ResponseEntity.notFound().build()
-        return ResponseEntity.ok(optional.measure())
-    }
+    fun measure(@PathVariable name: String): ResponseEntity<Measurement> =
+        metricService.findByName(name)?.let { ResponseEntity.ok(it.measure()) } ?: ResponseEntity.notFound().build()
 
     @PostMapping
-    fun create(@RequestBody form: MetricForm, b: UriComponentsBuilder): ResponseEntity<Metric> {
-        val created = metricService.create(form)
-        val components = b.path("/calculable/{id}").buildAndExpand(created)
-        return if (created != null) ResponseEntity.created(components.toUri()).build()
-        else ResponseEntity.badRequest().build()
-    }
+    fun create(@RequestBody form: MetricForm, b: UriComponentsBuilder): ResponseEntity<Metric> =
+        try {
+            val created = metricService.create(form)
+            val components = b.path("/calculable/{id}").buildAndExpand(created)
+            ResponseEntity.created(components.toUri()).build()
+        } catch (e: Exception) {
+            ResponseEntity.badRequest().build()
+        }
 
     @PutMapping("/{id}")
     fun update(
         @PathVariable id: Long,
         @RequestBody form: MetricForm,
         b: UriComponentsBuilder
-    ): ResponseEntity<Boolean> {
-        return if (metricService.update(id, form)) ResponseEntity.ok(true) else ResponseEntity.badRequest().build()
-    }
+    ): ResponseEntity<Boolean> =
+        if (metricService.update(id, form)) ResponseEntity.ok(true) else ResponseEntity.badRequest().build()
 
     @DeleteMapping("/{id}")
-    fun delete(@PathVariable id: Long): ResponseEntity<Boolean> {
-        return if (metricService.delete(id)) ResponseEntity.ok(true) else ResponseEntity.notFound().build()
-    }
+    fun delete(@PathVariable id: Long): ResponseEntity<Boolean> =
+        if (metricService.delete(id)) ResponseEntity.ok(true) else ResponseEntity.notFound().build()
 }

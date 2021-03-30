@@ -6,7 +6,6 @@ import com.calculator.model.MetricForm
 import com.calculator.model.MetricRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
-import java.util.*
 
 @Service
 class MetricService(
@@ -15,7 +14,7 @@ class MetricService(
 ) {
     fun getAll(): List<Any> = metricRepository.fetchAllComplete()
     fun findByName(name: String): Metric? = metricRepository.findByName(name)
-    fun findById(id: Long): Optional<Metric> = metricRepository.findBy_id(id)
+    fun findById(id: Long): Metric? = metricRepository.findBy_id(id)
     fun save(metric: Metric) = metricRepository.save(metric)
     fun deleteById(id: Long) = metricRepository.deleteById(id)
 
@@ -32,39 +31,32 @@ class MetricService(
         return save(metric)
     }
 
-    fun update(id: Long, form: MetricForm): Boolean {
-        val metric = findById(id)
-        if (!metric.isPresent) return false
-        val m = metric.get()
+    fun update(id: Long, form: MetricForm): Boolean = findById(id)?.let {
         val p = parseArrays(form)
 
-        m.name = form.name
-        m.description = form.description
-        m.metrics = p.first
-        m.calculates = p.second
+        it.name = form.name
+        it.description = form.description
+        it.metrics = p.first
+        it.calculates = p.second
 
-        save(m)
-        return true
-    }
+        save(it)
+        true
+    } ?: false
 
-    fun delete(id: Long): Boolean {
-        return if (findById(id).isPresent) {
-            deleteById(id)
-            true
-        } else false
-    }
+    fun delete(id: Long): Boolean = findById(id)?.let {
+        deleteById(id)
+        true
+    } ?: false
 
     private fun parseArrays(form: MetricForm): Pair<MutableSet<Metric>, MutableSet<Calculable>> {
         val metrics = form.metrics
             .map { findById(it) }
-            .filter { it.isPresent }
-            .map { it.get() }
+            .filterNotNull()
             .toMutableSet()
 
         val calculates = form.calculates
             .map { calculableService.findById(it) }
-            .filter { it.isPresent }
-            .map { it.get() }
+            .filterNotNull()
             .toMutableSet()
 
         return Pair(metrics, calculates)

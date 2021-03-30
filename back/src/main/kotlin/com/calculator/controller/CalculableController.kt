@@ -19,32 +19,27 @@ class CalculableController(
     fun getAll(): List<Calculable> = calculableService.getAll()
 
     @GetMapping("/{id}")
-    fun getById(@PathVariable id: Long): ResponseEntity<Calculable> {
-        val optional = calculableService.findById(id)
-        return optional.map { c -> ResponseEntity.ok(c) }.orElse(ResponseEntity.notFound().build())
-    }
+    fun getById(@PathVariable id: Long): ResponseEntity<Calculable> =
+        calculableService.findById(id)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()
 
 
     @GetMapping("/name/{name}")
-    fun getByName(@PathVariable name: String): ResponseEntity<Calculable> {
-        val optional = calculableService.findByName(name)
-        return if (optional != null) ResponseEntity.ok(optional)
-        else ResponseEntity.notFound().build()
-    }
+    fun getByName(@PathVariable name: String): ResponseEntity<Calculable> =
+        calculableService.findByName(name)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()
 
     @GetMapping("/calculate/{id}")
-    fun calculate(@PathVariable id: Long): ResponseEntity<Double> {
-        val optional = calculableService.findById(id)
-        return optional.map { c -> ResponseEntity.ok(c.calculate()) }.orElse(ResponseEntity.notFound().build())
-    }
+    fun calculate(@PathVariable id: Long): ResponseEntity<Double> =
+        calculableService.calculate(id)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()
 
     @PostMapping
-    fun create(@RequestBody form: CalculableForm, b: UriComponentsBuilder): ResponseEntity<Calculable> {
-        val created = calculableService.create(form)
-        val components = b.path("/calculable/{id}").buildAndExpand(created)
-        return if (created != null) ResponseEntity.created(components.toUri()).build()
-        else ResponseEntity.badRequest().build()
-    }
+    fun create(@RequestBody form: CalculableForm, b: UriComponentsBuilder): ResponseEntity<Calculable> =
+        try {
+            val created = calculableService.create(form)
+            val components = b.path("/calculable/{id}").buildAndExpand(created)
+            ResponseEntity.created(components.toUri()).build()
+        } catch (e: Exception) {
+            ResponseEntity.badRequest().build()
+        }
 
     @PutMapping("/{id}")
     fun update(
