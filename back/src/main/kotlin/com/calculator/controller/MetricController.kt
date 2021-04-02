@@ -14,18 +14,18 @@ import org.springframework.web.util.UriComponentsBuilder
 @RequestMapping("/metric")
 class MetricController(
     @Autowired private val metricService: MetricService
-) {
+): WebApi<Metric> {
     @GetMapping()
     fun getAll(): List<Any> = metricService.getAll()
 
     @GetMapping("/{id}")
     fun getById(@PathVariable id: Long): ResponseEntity<Metric> =
-        metricService.findById(id)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()
+        metricService.findById(id)?.let { ok(it) } ?: notFound()
 
 
     @GetMapping("/name/{name}")
     fun getByName(@PathVariable name: String): ResponseEntity<Metric> =
-        metricService.findByName(name)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()
+        metricService.findByName(name)?.let { ok(it) } ?: notFound()
 
     @GetMapping("/measure/{id}")
     fun measure(@PathVariable id: Long): ResponseEntity<Measurement> =
@@ -55,5 +55,5 @@ class MetricController(
 
     @DeleteMapping("/{id}")
     fun delete(@PathVariable id: Long): ResponseEntity<Boolean> =
-        if (metricService.delete(id)) ResponseEntity.ok(true) else ResponseEntity.notFound().build()
+        if (metricService.delete(id)) ResponseEntity.ok(true) else notFoundBool()
 }

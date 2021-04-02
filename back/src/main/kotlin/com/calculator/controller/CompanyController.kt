@@ -14,18 +14,18 @@ import org.springframework.web.util.UriComponentsBuilder
 @RequestMapping("/company")
 class CompanyController(
     @Autowired private val companyService: CompanyService
-) {
+): WebApi<Company> {
     @GetMapping()
     fun getAll(): List<Any> = companyService.getAll()
 
     @GetMapping("/{id}")
     fun getById(@PathVariable id: Long): ResponseEntity<Company> =
-        companyService.findById(id)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()
+        companyService.findById(id)?.let { ok(it) } ?: notFound()
 
 
     @GetMapping("/name/{name}")
     fun getByName(@PathVariable name: String): ResponseEntity<Company> =
-        companyService.findByName(name)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()
+        companyService.findByName(name)?.let { ok(it) } ?: notFound()
 
     @PostMapping
     fun create(@RequestBody form: CompanyForm, b: UriComponentsBuilder): ResponseEntity<Company> =
@@ -47,5 +47,5 @@ class CompanyController(
 
     @DeleteMapping("/{id}")
     fun delete(@PathVariable id: Long): ResponseEntity<Boolean> =
-        if (companyService.delete(id)) ResponseEntity.ok(true) else ResponseEntity.notFound().build()
+        if (companyService.delete(id)) ResponseEntity.ok(true) else notFoundBool()
 }

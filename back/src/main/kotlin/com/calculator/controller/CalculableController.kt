@@ -14,18 +14,18 @@ import org.springframework.web.util.UriComponentsBuilder
 @RequestMapping("/calculable")
 class CalculableController(
     @Autowired private val calculableService: CalculableService
-) {
+): WebApi<Calculable> {
     @GetMapping()
     fun getAll(): List<Calculable> = calculableService.getAll()
 
     @GetMapping("/{id}")
     fun getById(@PathVariable id: Long): ResponseEntity<Calculable> =
-        calculableService.findById(id)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()
+        calculableService.findById(id)?.let { ok(it) } ?: notFound()
 
 
     @GetMapping("/name/{name}")
     fun getByName(@PathVariable name: String): ResponseEntity<Calculable> =
-        calculableService.findByName(name)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()
+        calculableService.findByName(name)?.let { ok(it) } ?: notFound()
 
     @GetMapping("/calculate/{id}")
     fun calculate(@PathVariable id: Long): ResponseEntity<Double> =
@@ -52,6 +52,6 @@ class CalculableController(
 
     @DeleteMapping("/{id}")
     fun delete(@PathVariable id: Long): ResponseEntity<Boolean> {
-        return if (calculableService.delete(id)) ResponseEntity.ok(true) else ResponseEntity.notFound().build()
+        return if (calculableService.delete(id)) ResponseEntity.ok(true) else notFoundBool()
     }
 }

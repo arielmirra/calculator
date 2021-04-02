@@ -20,11 +20,11 @@ class ProjectController(
 
     @GetMapping("/{id}")
     fun getById(@PathVariable id: Long): ResponseEntity<Project> =
-        projectService.findById(id)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()
+        projectService.findById(id)?.let { ok(it) } ?: notFound()
 
     @GetMapping("/name/{name}")
     fun getByName(@PathVariable name: String): ResponseEntity<Project> =
-        projectService.findByName(name)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()
+        projectService.findByName(name)?.let { ok(it) } ?: notFound()
 
     @PostMapping
     fun create(@RequestBody form: ProjectForm, b: UriComponentsBuilder): ResponseEntity<Project> =
@@ -46,5 +46,5 @@ class ProjectController(
 
     @DeleteMapping("/{id}")
     fun delete(@PathVariable id: Long): ResponseEntity<Boolean> =
-        if (projectService.delete(id)) ResponseEntity.ok(true) else ResponseEntity.notFound().build()
+        if (projectService.delete(id)) ResponseEntity.ok(true) else notFoundBool()
 }
