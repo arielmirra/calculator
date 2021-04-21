@@ -53,7 +53,7 @@ export class CompanyFormComponent implements OnInit {
       this.resetForm(formDirective);
       if (success) {
         this.fetch();
-        this.snackbarService.openSnackbar('Empresa guardada satisfactoriamente');
+        this.snackbarService.openSnackbar('Empresa guardada satisfactoriamente', 'Crear Proyectos', '/project/new/');
       } else {
         this.snackbarService.openSnackbar('No se ha podido guardar los cambios');
       }

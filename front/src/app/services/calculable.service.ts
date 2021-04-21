@@ -51,8 +51,8 @@ export class CalculableService {
       );
   }
 
-  updateCalculable(form: CalculableForm): Observable<boolean> {
-    return this.http.put(this.basePath, form)
+  updateCalculable(form: CalculableForm, id: number): Observable<boolean> {
+    return this.http.put(this.basePath + id, form)
       .pipe(
         map(() => {
           return true;

@@ -5,6 +5,7 @@
       <span>Cálculos</span>
 
       <span class="fill-remaining-space"></span>
+
       <button mat-mini-fab
               color="primary"
               (click)="createCalc()">
@@ -27,6 +28,9 @@
                 <p>
                   {{calc.name}}
                 </p>
+                <button mat-icon-button (click)="openDialog(calc)">
+                  <mat-icon>edit</mat-icon>
+                </button>
               </div>
 
             </mat-panel-title>
@@ -48,6 +52,7 @@
                   (click)="calculate(calc)">
             Calcular
           </button>
+
 
         </mat-expansion-panel>
       </mat-accordion>

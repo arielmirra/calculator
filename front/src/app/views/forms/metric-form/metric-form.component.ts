@@ -57,9 +57,9 @@ export class MetricFormComponent implements OnInit {
       this.resetForm(formDirective);
       if (success) {
         this.fetch();
-        this.snackbarService.openSnackbar('Métrica guardada satisfactoriamente');
+        this.snackbarService.openSnackbar('Métrica guardada satisfactoriamente', 'Crear Calculos', '/calculable/new');
       } else {
-        this.snackbarService.openSnackbar('No se ha podido guardar los cambios');
+        this.snackbarService.openSnackbar('No se han podido guardar los cambios.');
       }
     });
   }
@@ -72,6 +72,6 @@ export class MetricFormComponent implements OnInit {
   }
 
   isValid(form: FormGroup): boolean {
-    return form.valid && (this.selectedMetrics.length > 0 || this.selectedCalculables.length > 0);
+    return form.valid;
   }
 }

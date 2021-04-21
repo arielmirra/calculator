@@ -53,7 +53,7 @@ export class ProjectFormComponent implements OnInit {
       this.resetForm(formDirective);
       if (success) {
         this.fetch();
-        this.snackbarService.openSnackbar('Proyecto guardado satisfactoriamente');
+        this.snackbarService.openSnackbar('Proyecto guardado satisfactoriamente', 'Crear Métricas', '/metric/new');
       } else {
         this.snackbarService.openSnackbar('No se ha podido guardar los cambios');
       }

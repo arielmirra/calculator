@@ -1,8 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {Calculable} from '../../../models/Calculable';
+import {Calculable, CalculableForm} from '../../../models/Calculable';
 import {CalculableService} from '../../../services/calculable.service';
 import {Router} from '@angular/router';
 import {SnackbarService} from '../../../services/snackbar.service';
+import {UpdateDialogComponent} from '../../dialogs/update-dialog/update-dialog.component';
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-calculable-list',
@@ -15,7 +17,8 @@ export class CalculableListComponent implements OnInit {
   constructor(
     private calculableService: CalculableService,
     private snackbar: SnackbarService,
-    private router: Router) {
+    private router: Router,
+    private dialog: MatDialog) {
   }
 
   ngOnInit(): void {
@@ -32,5 +35,28 @@ export class CalculableListComponent implements OnInit {
 
   createCalc(): void {
     this.router.navigate(['calculable/new']);
+  }
+
+  openDialog(calculable: Calculable): void {
+    const dialogRef = this.dialog.open(UpdateDialogComponent, {
+      width: '250px',
+      data: {actual: calculable, calculables: this.calculables}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      const form = CalculableForm.empty();
+      form.name = result.name;
+      form.value = result.value;
+      form.left = result.left;
+      form.right = result.right;
+      form.operator = result.operator;
+      this.calculableService.updateCalculable(form, result._id).subscribe(success => {
+        if (success) {
+          this.snackbar.openSnackbar('Cálculo guardado satisfactoriamente');
+        } else {
+          this.snackbar.openSnackbar('No se ha podido guardar los cambios');
+        }
+      });
+    });
   }
 }
