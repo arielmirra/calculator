@@ -15,8 +15,8 @@ export class CalculableFormComponent implements OnInit {
   simpleForm: FormGroup;
   form: FormGroup;
   operator: Operator;
-  node1: number;
-  node2: number;
+  left: number;
+  right: number;
   calculables: Calculable[];
 
   constructor(
@@ -49,8 +49,8 @@ export class CalculableFormComponent implements OnInit {
   newCalc(formDirective: FormGroupDirective): void {
     const form = CalculableForm.empty();
     form.name = this.form.controls.name.value;
-    form.left = this.node1;
-    form.right = this.node2;
+    form.left = this.left;
+    form.right = this.right;
     form.operator = this.operator;
     console.log(form);
     this.calculableService.addCalculable(form).subscribe(success => {
@@ -89,11 +89,11 @@ export class CalculableFormComponent implements OnInit {
     this.simpleForm.reset();
     this.form.reset();
     this.operator = null;
-    this.node1 = null;
-    this.node2 = null;
+    this.left = null;
+    this.right = null;
   }
 
   isValid(form: FormGroup): boolean {
-    return form.valid && !!this.operator && !!this.node1 && !!this.node2;
+    return form.valid && !!this.operator;
   }
 }

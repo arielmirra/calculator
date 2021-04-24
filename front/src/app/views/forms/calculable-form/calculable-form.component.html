@@ -60,7 +60,7 @@
 
               <mat-form-field appearance="outline">
                 <mat-label>Primer término</mat-label>
-                <mat-select [(value)]="node1" placeholder="Primer término">
+                <mat-select [(value)]="left" placeholder="Primer término">
                   <mat-option *ngFor="let calc of calculables" value="{{calc._id}}">{{calc.name}}</mat-option>
                 </mat-select>
               </mat-form-field>
@@ -77,7 +77,7 @@
 
               <mat-form-field appearance="outline">
                 <mat-label>Segundo término</mat-label>
-                <mat-select [(value)]="node2" placeholder="Segundo término">
+                <mat-select [(value)]="right" placeholder="Segundo término">
                   <mat-option *ngFor="let calc of calculables" value="{{calc._id}}">{{calc.name}}</mat-option>
                 </mat-select>
               </mat-form-field>

@@ -43,9 +43,9 @@
 
           <div *ngIf="calc.operator">
             <p><strong>Nombre:</strong> {{calc.name}}</p>
-            <p><strong>1er término:</strong> {{calc.left.name}}</p>
+            <p *ngIf="calc.left"><strong>1er término:</strong> {{calc.left.name}}</p>
             <p><strong>Operador entre ellos:</strong> {{calc.operator}}</p>
-            <p><strong>2do término:</strong> {{calc.right.name}}</p>
+            <p *ngIf="calc.right"><strong>2do término:</strong> {{calc.right.name}}</p>
           </div>
 
           <button mat-button color="primary"
