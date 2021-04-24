@@ -2,7 +2,7 @@
 <div mat-dialog-content>
 
   <div *ngIf="!calculable.operator || calculable.operator == null">
-    <form #calculableForm="ngForm" novalidate autocomplete="on">
+    <form novalidate autocomplete="on">
       <mat-card-content>
 
         <mat-form-field appearance="outline">
@@ -18,19 +18,19 @@
   </div>
 
   <div *ngIf="calculable.operator != null">
-    <form #calculableForm="ngForm" novalidate autocomplete="on">
+    <form novalidate autocomplete="on">
       <mat-card-content>
 
         <mat-form-field appearance="outline">
           <mat-label>Primer término</mat-label>
-          <mat-select name="left" [(ngModel)]="calculable.left">
+          <mat-select name="left" [(value)]="calculable.left">
             <mat-option *ngFor="let calc of everyCalculable" [value]="calc">{{calc.name}}</mat-option>
           </mat-select>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Operador entre términos</mat-label>
-          <mat-select [(value)]="calculable.operator" name="operator" [(ngModel)]="calculable.operator">
+          <mat-select [(value)]="calculable.operator" name="operator">
             <mat-option value="PLUS">Sumar</mat-option>
             <mat-option value="MINUS">Restar</mat-option>
             <mat-option value="TIMES">Multiplicar</mat-option>
@@ -40,7 +40,7 @@
 
         <mat-form-field appearance="outline">
           <mat-label>Segundo término</mat-label>
-          <mat-select name="right" [(ngModel)]="calculable.right">
+          <mat-select name="right" [(value)]="calculable.right">
             <mat-option *ngFor="let calc of everyCalculable" [value]="calc">{{calc.name}}</mat-option>
           </mat-select>
         </mat-form-field>

@@ -47,9 +47,10 @@ export class CalculableListComponent implements OnInit {
       const form = CalculableForm.empty();
       form.name = result.name;
       form.value = result.value;
-      form.left = result.left;
-      form.right = result.right;
+      form.left = result.left._id;
+      form.right = result.right._id;
       form.operator = result.operator;
+      console.log(form);
       this.calculableService.updateCalculable(form, result._id).subscribe(success => {
         if (success) {
           this.snackbar.openSnackbar('Cálculo guardado satisfactoriamente');

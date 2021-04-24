@@ -19,9 +19,7 @@ export class UpdateDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.calculable = this.data.actual;
-    console.log(this.calculable);
     this.everyCalculable = this.data.calculables.filter(c => c._id !== this.data.actual._id);
-    console.log(this.everyCalculable);
   }
 
   onNoClick(): void {
