@@ -12,7 +12,7 @@ class MetricService(
     @Autowired private val metricRepository: MetricRepository,
     @Autowired private val calculableService: CalculableService
 ) {
-    fun getAll(): List<Any> = metricRepository.fetchAllComplete()
+    fun getAll(): List<Any> = metricRepository.fetchAll()
     fun findByName(name: String): Metric? = metricRepository.findByName(name)
     fun findById(id: Long): Metric? = metricRepository.findBy_id(id)
     fun save(metric: Metric) = metricRepository.save(metric)

@@ -18,32 +18,39 @@ class CalculableService(
     fun save(calculable: Calculable) = calculableRepository.save(calculable)
     fun deleteById(id: Long) = calculableRepository.deleteById(id)
 
-    fun create(form: CalculableForm): Calculable =
-        if (isComposite(form)) {
-            val left = findById(form.left!!)
-            val right = findById(form.right!!)
-
-            val calc = Calculable(
-                name = form.name,
-                left = left,
-                right = right,
-                operator = Operator.valueOf(form.operator!!)
-            )
-            save(calc)
+    fun create(form: CalculableForm): Calculable {
+        val calc: Calculable
+        if (hasOperator(form)) {
+            if (hasTerms(form)) {
+                val left = findById(form.left!!)
+                val right = findById(form.right!!)
+                calc = Calculable(
+                    name = form.name,
+                    left = left,
+                    right = right,
+                    operator = Operator.valueOf(form.operator!!)
+                )
+            } else {
+                calc = Calculable(
+                    name = form.name,
+                    operator = Operator.valueOf(form.operator!!)
+                )
+            }
         } else {
-            val calc = Calculable(
+            calc = Calculable(
                 name = form.name,
                 value = form.value
             )
-            save(calc)
         }
+        return save(calc)
+    }
 
-    fun calculate(id: Long): Double? = findById(id)?.let { it.calculate() }
+    fun calculate(id: Long): Double? = findById(id)?.calculate()
 
     fun update(id: Long, form: CalculableForm): Boolean =
         findById(id)?.let {
             var changed = false
-            if (isComposite(form)) {
+            if (hasOperator(form)) {
                 val left = findById(form.left!!)
                 val right = findById(form.right!!)
                 it.left = left
@@ -72,5 +79,6 @@ class CalculableService(
             } else false
         } ?: false
 
-    private fun isComposite(form: CalculableForm) = form.left != null && form.right != null && form.operator != null
+    private fun hasOperator(form: CalculableForm) = form.operator != null
+    private fun hasTerms(form: CalculableForm) = form.left != null && form.right != null
 }
