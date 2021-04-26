@@ -33,7 +33,7 @@ data class Project(
         var description: String = "",
         val date: LocalDateTime = LocalDateTime.now(),
         @Relationship(type = "MEASUREMENTS")
-        var measurements: MutableSet<Metric> = mutableSetOf()
+        var metrics: MutableSet<Metric> = mutableSetOf()
 ) : Node
 
 

@@ -11,7 +11,7 @@ export class Project {
     public _type: string,
     public name: string,
     public description: string,
-    public measurements: Metric[],
+    public metrics: Metric[],
   ) {
 
   }
@@ -26,7 +26,7 @@ export class ProjectForm {
   constructor(
     public name: string,
     public description: string,
-    public measurements?: number[]
+    public metrics?: number[]
   ) {
 
   }

@@ -22,7 +22,7 @@ class ProjectService(
         val project = Project(
             name = form.name,
             description = form.description,
-            measurements = measurements
+            metrics = measurements
         )
 
         return save(project)
@@ -31,7 +31,7 @@ class ProjectService(
     fun update(id: Long, form: ProjectForm): Boolean = findById(id)?.let {
         it.name = form.name
         it.description = form.description
-        it.measurements = parseMetrics(form)
+        it.metrics = parseMetrics(form)
 
         save(it)
         true

@@ -47,7 +47,7 @@ export class ProjectFormComponent implements OnInit {
     const form = ProjectForm.empty();
     form.name = this.form.controls.name.value;
     form.description = this.form.controls.description.value;
-    form.measurements = this.selectedMetrics;
+    form.metrics = this.selectedMetrics;
     console.log(form);
     this.projectService.addProject(form).subscribe(success => {
       this.resetForm(formDirective);
