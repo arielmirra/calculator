@@ -29,16 +29,19 @@ class CompanyService(
         return save(project)
     }
 
-    fun update(id: Long, form: CompanyForm): Boolean {
-        //todo: update company
-        var changed = false
-        return changed
-    }
+    fun update(id: Long, form: CompanyForm): Boolean = findById(id)?.let {
+        it.name = form.name
+        it.description = form.description
+        it.projects = parseProjects(form)
 
-    fun delete(id: Long): Boolean {
-        //todo: delete company
-        return false
-    }
+        save(it)
+        true
+    } ?: false
+
+    fun delete(id: Long): Boolean = findById(id)?.let {
+        deleteById(id)
+        true
+    } ?: false
 
     private fun parseProjects(form: CompanyForm): MutableSet<Project> {
         return form.projects

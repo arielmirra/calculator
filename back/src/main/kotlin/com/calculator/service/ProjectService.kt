@@ -28,16 +28,19 @@ class ProjectService(
         return save(project)
     }
 
-    fun update(id: Long, form: ProjectForm): Boolean {
-        //todo: update project
-        val project = findById(id)
-        return false
-    }
+    fun update(id: Long, form: ProjectForm): Boolean = findById(id)?.let {
+        it.name = form.name
+        it.description = form.description
+        it.measurements = parseMetrics(form)
 
-    fun delete(id: Long): Boolean {
-        //todo: delete project
-        return false
-    }
+        save(it)
+        true
+    } ?: false
+
+    fun delete(id: Long): Boolean = findById(id)?.let {
+        deleteById(id)
+        true
+    } ?: false
 
     private fun parseMetrics(form: ProjectForm): MutableSet<Metric> {
         return form.measurements

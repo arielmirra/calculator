@@ -50,13 +50,11 @@ class MetricService(
 
     private fun parseArrays(form: MetricForm): Pair<MutableSet<Metric>, MutableSet<Calculable>> {
         val metrics = form.metrics
-            .map { findById(it) }
-            .filterNotNull()
+            .mapNotNull { findById(it) }
             .toMutableSet()
 
         val calculates = form.calculates
-            .map { calculableService.findById(it) }
-            .filterNotNull()
+            .mapNotNull { calculableService.findById(it) }
             .toMutableSet()
 
         return Pair(metrics, calculates)
