@@ -25,6 +25,7 @@ export class CalculableForm {
   constructor(
     public name: string,
     public left?: number, // only id
+    public id?: number,
     public right?: number,
     public operator?: Operator,
     public value?: number) {
