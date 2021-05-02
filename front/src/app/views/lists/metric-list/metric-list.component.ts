@@ -1,12 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {Metric, MetricForm} from '../../../models/Metric';
+import {Metric} from '../../../models/Metric';
 import {SnackbarService} from '../../../services/snackbar.service';
 import {Router} from '@angular/router';
 import {MetricService} from '../../../services/metric.service';
 import {MatDialog} from '@angular/material/dialog';
 import {MetricMeasurementModalComponent} from './metric-measurement-modal/metric-measurement-modal.component';
-import {Calculable, CalculableForm} from '../../../models/Calculable';
-import {UpdateCalculableDialogComponent} from '../../dialogs/update-calculable-dialog/update-calculable-dialog.component';
+import {Calculable} from '../../../models/Calculable';
 import {UpdateMetricDialogComponent} from '../../dialogs/update-metric-dialog/update-metric-dialog.component';
 import {CalculableService} from '../../../services/calculable.service';
 

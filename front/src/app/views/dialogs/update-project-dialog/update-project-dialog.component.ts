@@ -1,6 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {Metric, MetricForm} from '../../../models/Metric';
-import {Calculable} from '../../../models/Calculable';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {Project, ProjectForm} from '../../../models/Project';
 
