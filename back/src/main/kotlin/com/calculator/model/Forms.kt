@@ -18,7 +18,7 @@ data class MetricForm(
 data class ProjectForm(
     val name: String,
     val description: String,
-    val measurements: MutableList<Long>
+    val metrics: MutableList<Long>
 )
 
 data class CompanyForm(
