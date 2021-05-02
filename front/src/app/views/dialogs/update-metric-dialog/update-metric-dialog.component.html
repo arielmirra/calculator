@@ -8,7 +8,7 @@
         <input
           matInput
           name="name"
-          type="string"
+          type="text"
           [(ngModel)]="metricForm.name">
         <mat-error *ngIf="!metricForm.name || metricForm.name === null">Esta entrada debe ser correcta</mat-error>
       </mat-form-field>
@@ -18,7 +18,7 @@
         <input
           matInput
           name="description"
-          type="string"
+          type="text"
           [(ngModel)]="metricForm.description">
         <mat-error *ngIf="!metricForm.description || metricForm.description === null">Esta entrada debe ser correcta</mat-error>
       </mat-form-field>
@@ -26,14 +26,14 @@
       <mat-form-field appearance="outline">
         <mat-label>Métricas incluídas</mat-label>
         <mat-select [(value)]="metricForm.metrics" multiple>
-          <mat-option *ngFor="let m of everyMetric" value="{{m._id}}">{{m.name}}</mat-option>
+          <mat-option *ngFor="let m of everyMetric" [value]="m._id">{{m.name}}</mat-option>
         </mat-select>
       </mat-form-field>
 
       <mat-form-field appearance="outline">
         <mat-label>Cálculos incluídos</mat-label>
         <mat-select [(value)]="metricForm.calculates" multiple>
-          <mat-option *ngFor="let calc of everyCalculable" value="{{calc._id}}">{{calc.name}}</mat-option>
+          <mat-option *ngFor="let calc of everyCalculable" [value]="calc._id">{{calc.name}}</mat-option>
         </mat-select>
       </mat-form-field>
     </mat-card-content>

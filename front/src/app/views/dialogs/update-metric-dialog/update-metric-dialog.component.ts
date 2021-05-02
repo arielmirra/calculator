@@ -39,7 +39,7 @@ export class UpdateMetricDialogComponent implements OnInit {
   }
 
   isValid(): boolean {
-    return this.metric.name !== null && this.metric.description !== null;
+    return this.metricForm.name !== null && this.metricForm.description !== null;
   }
 
 }

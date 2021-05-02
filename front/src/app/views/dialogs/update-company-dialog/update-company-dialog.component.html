@@ -1,1 +1,42 @@
-<p>update-company-dialog works!</p>
+<h1 mat-dialog-title>{{company.name}}</h1>
+<div mat-dialog-content>
+
+  <form novalidate autocomplete="off">
+    <mat-card-content>
+      <mat-form-field appearance="outline">
+        <mat-label>Nombre</mat-label>
+        <input
+          matInput
+          name="name"
+          type="string"
+          [(ngModel)]="companyForm.name">
+        <mat-error *ngIf="!companyForm.name || companyForm.name === null">Esta entrada debe ser correcta</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Descripción</mat-label>
+        <input
+          matInput
+          name="description"
+          type="string"
+          [(ngModel)]="companyForm.description">
+        <mat-error *ngIf="!companyForm.description || companyForm.description === null">Esta entrada debe ser correcta</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Métricas incluídas</mat-label>
+        <mat-select [(value)]="companyForm.projects" multiple>
+          <mat-option *ngFor="let p of everyProject" [value]="p._id">{{p.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-card-content>
+  </form>
+
+
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Close</button>
+  <button mat-button
+          [disabled]="!isValid()"
+          [mat-dialog-close]="companyForm">Update</button>
+</div>

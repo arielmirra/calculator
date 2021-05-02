@@ -29,7 +29,6 @@ export class MetricListComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetch();
-    this.calculableService.fetchAll().subscribe(r => this.calculables = r);
   }
 
   fetch(): void {
@@ -37,6 +36,7 @@ export class MetricListComponent implements OnInit {
       console.log(list);
       this.metrics = list;
     });
+    this.calculableService.fetchAll().subscribe(r => this.calculables = r);
   }
 
   measure(m: Metric): void {
@@ -59,12 +59,6 @@ export class MetricListComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      // console.log(result);
-      // const form = MetricForm.empty();
-      // form.name = result.name;
-      // form.description = result.description;
-      // form.calculates = result.calculates.map(c => c._id);
-      // form.metrics = result.metrics.map(c => c._id);
       console.log(result);
       this.metricService.updateMetric(result).subscribe(success => {
         if (success) {
