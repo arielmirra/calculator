@@ -32,7 +32,7 @@ data class Project(
         override var name: String = "",
         var description: String = "",
         val date: LocalDateTime = LocalDateTime.now(),
-        @Relationship(type = "MEASUREMENTS")
+        @Relationship(type = "METRICS")
         var metrics: MutableSet<Metric> = mutableSetOf()
 ) : Node
 
@@ -43,7 +43,7 @@ data class Metric(
         override val _type: String = "Metric",
         override var name: String = "",
         var description: String = "",
-        @Relationship(type = "MEASURES")
+        @Relationship(type = "METRICS")
         var metrics: MutableSet<Metric> = mutableSetOf(),
         @Relationship(type = "CALCULATES")
         var calculates: MutableSet<Calculable> = mutableSetOf()

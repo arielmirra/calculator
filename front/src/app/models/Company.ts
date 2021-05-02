@@ -26,6 +26,7 @@ export class CompanyForm {
   constructor(
     public name: string,
     public description: string,
+    public id?: number,
     public projects?: number[]
   ) {
 

@@ -26,6 +26,7 @@ export class ProjectForm {
   constructor(
     public name: string,
     public description: string,
+    public id?: number,
     public metrics?: number[]
   ) {
 

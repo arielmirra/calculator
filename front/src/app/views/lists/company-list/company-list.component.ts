@@ -4,6 +4,9 @@ import {MatDialog} from '@angular/material/dialog';
 import {Router} from '@angular/router';
 import {Company} from '../../../models/Company';
 import {CompanyService} from '../../../services/company.service';
+import {UpdateCompanyDialogComponent} from '../../dialogs/update-company-dialog/update-company-dialog.component';
+import {Project} from '../../../models/Project';
+import {ProjectService} from '../../../services/project.service';
 
 @Component({
   selector: 'app-company-list',
@@ -12,9 +15,11 @@ import {CompanyService} from '../../../services/company.service';
 })
 export class CompanyListComponent implements OnInit {
   companies: Company[];
+  projects: Project[];
 
   constructor(
     private companyService: CompanyService,
+    private projectService: ProjectService,
     private snackbar: SnackbarService,
     public dialog: MatDialog,
     private router: Router) {
@@ -29,10 +34,31 @@ export class CompanyListComponent implements OnInit {
       console.log(list);
       this.companies = list;
     });
+    this.projectService.fetchAll().subscribe(list => {
+      this.projects = list;
+    });
   }
 
   createCompany(): void {
     this.router.navigate(['company/new']);
+  }
+
+  openDialog(company: Company): void {
+    const dialogRef = this.dialog.open(UpdateCompanyDialogComponent, {
+      width: '250px',
+      data: {actual: company, projects: this.projects}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+      this.companyService.updateCompany(result).subscribe(success => {
+        if (success) {
+          this.snackbar.openSnackbar('Cálculo guardado satisfactoriamente');
+        } else {
+          this.snackbar.openSnackbar('No se ha podido guardar los cambios');
+        }
+      });
+    });
   }
 
 }

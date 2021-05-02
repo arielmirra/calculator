@@ -17,12 +17,12 @@ class ProjectService(
     fun deleteById(id: Long) = projectRepository.deleteById(id)
 
     fun create(form: ProjectForm): Project? {
-        val measurements = parseMetrics(form)
+        val metrics = parseMetrics(form)
 
         val project = Project(
             name = form.name,
             description = form.description,
-            metrics = measurements
+            metrics = metrics
         )
 
         return save(project)
@@ -43,7 +43,7 @@ class ProjectService(
     } ?: false
 
     private fun parseMetrics(form: ProjectForm): MutableSet<Metric> {
-        return form.measurements
+        return form.metrics
             .map { metricRepository.findById(it) }
             .filter { it.isPresent }
             .map { it.get() }

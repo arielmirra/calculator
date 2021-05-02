@@ -18,7 +18,10 @@ import { ProjectFormComponent } from './views/forms/project-form/project-form.co
 import { ProjectListComponent } from './views/lists/project-list/project-list.component';
 import { CompanyFormComponent } from './views/forms/company-form/company-form.component';
 import { CompanyListComponent } from './views/lists/company-list/company-list.component';
-import { UpdateDialogComponent } from './views/dialogs/update-dialog/update-dialog.component';
+import { UpdateCalculableDialogComponent } from './views/dialogs/update-calculable-dialog/update-calculable-dialog.component';
+import { UpdateMetricDialogComponent } from './views/dialogs/update-metric-dialog/update-metric-dialog.component';
+import { UpdateProjectDialogComponent } from './views/dialogs/update-project-dialog/update-project-dialog.component';
+import { UpdateCompanyDialogComponent } from './views/dialogs/update-company-dialog/update-company-dialog.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +36,10 @@ import { UpdateDialogComponent } from './views/dialogs/update-dialog/update-dial
     ProjectListComponent,
     CompanyFormComponent,
     CompanyListComponent,
-    UpdateDialogComponent
+    UpdateCalculableDialogComponent,
+    UpdateMetricDialogComponent,
+    UpdateProjectDialogComponent,
+    UpdateCompanyDialogComponent
   ],
   imports: [
     CommonModule,
