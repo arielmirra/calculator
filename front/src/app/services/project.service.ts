@@ -52,7 +52,7 @@ export class ProjectService {
   }
 
   updateProject(form: ProjectForm): Observable<boolean> {
-    return this.http.put(this.basePath, form)
+    return this.http.put(this.basePath + form.id, form)
       .pipe(
         map(() => {
           return true;

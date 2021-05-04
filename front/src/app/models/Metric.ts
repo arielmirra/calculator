@@ -27,6 +27,7 @@ export class MetricForm {
   constructor(
     public name: string,
     public description: string,
+    public id?: number,
     public metrics?: number[],
     public calculates?: number[]
   ) {
