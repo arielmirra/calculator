@@ -1,15 +1,13 @@
 package com.calculator.service
 
-import com.calculator.model.Calculable
-import com.calculator.model.Metric
-import com.calculator.model.MetricForm
-import com.calculator.model.MetricRepository
+import com.calculator.model.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 @Service
 class MetricService(
     @Autowired private val metricRepository: MetricRepository,
+    @Autowired private val measurementRepository: MeasurementRepository,
     @Autowired private val calculableService: CalculableService
 ) {
     fun getAll(): List<Metric> = metricRepository.findAll()
@@ -59,4 +57,26 @@ class MetricService(
 
         return Pair(metrics, calculates)
     }
+
+    fun measureByName(name: String): Measurement? =
+        findByName(name)?.let {
+            val result = it.measure()
+            val measurement = Measurement(
+                name ="Resultado de la métrica ${it.name}",
+                value  = result,
+                from = it
+            )
+            measurementRepository.save(measurement)
+        }
+
+    fun measure(id: Long): Measurement? =
+        findById(id)?.let {
+            val result = it.measure()
+            val measurement = Measurement(
+                name ="Resultado de la métrica ${it.name}",
+                value  = result,
+                from = it
+            )
+            measurementRepository.save(measurement)
+        }
 }

@@ -43,19 +43,16 @@ data class Metric(
 ) {
     fun measures(metric: Metric) = metrics.add(metric)
 
-    fun measure(): Measurement {
-        var result = if (metrics.isEmpty()) 0.0 else metrics.map { m -> m.measure().value }.sum()
-        if (calculates.isNotEmpty()) result += calculate()
-        return Measurement(
-            name = "Resultado de la métrica $name",
-            value = result
-        )
+    fun measure(): Double {
+        var result = if (metrics.isEmpty()) 0.0 else metrics.sumOf { m -> m.measure() }
+        if (calculates.isNotEmpty()) result += calculateCalculables()
+        return result
     }
 
     fun calculates(calculable: Calculable) = calculates.add(calculable)
 
-    private fun calculate(): Double {
-        return if (calculates.isNotEmpty()) calculates.map { c -> c.calculate() }.sum()
+    private fun calculateCalculables(): Double {
+        return if (calculates.isNotEmpty()) calculates.sumOf { c -> c.calculate() }
         else 0.0
     }
 }
@@ -99,5 +96,7 @@ data class Measurement(
     val _type: String = "Measurement",
     var name: String = "",
     val value: Double = 0.0,
-    val date: LocalDateTime = LocalDateTime.now()
+    val date: LocalDateTime = LocalDateTime.now(),
+    @Relationship(type = "from_metric")
+    val from: Metric? = null,
 )

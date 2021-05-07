@@ -63,7 +63,7 @@ class CalculatorApplication {
                 operator = Operator.PLUS
             ))
 
-            val metric = metricRepository.save(Metric(
+            val testMetric = metricRepository.save(Metric(
                 name = "test",
                 description = "test metric",
                 calculates = mutableSetOf(simpleCalc, simpleCalc2)
@@ -101,6 +101,12 @@ class CalculatorApplication {
                 name = "company",
                 description = "company with a project",
                 projects = mutableSetOf(project)
+            ))
+
+            val measurement = measurementRepository.save(Measurement(
+                name = "test measurement",
+                value = 1.0,
+                from = testMetric
             ))
         }
     }
