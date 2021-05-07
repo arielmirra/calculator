@@ -8,20 +8,20 @@
     <div>
       <button mat-button [matMenuTriggerFor]="menu">Crear <mat-icon>expand_more</mat-icon></button>
       <mat-menu #menu xPosition="before">
-        <button mat-menu-item routerLink="/calculable/new"><mat-icon>add</mat-icon><span>Cálculo</span></button>
-        <button mat-menu-item routerLink="/metric/new"><mat-icon>add</mat-icon><span>Métrica</span></button>
-        <button mat-menu-item routerLink="/project/new"><mat-icon>add</mat-icon><span>Proyecto</span></button>
         <button mat-menu-item routerLink="/company/new"><mat-icon>add</mat-icon><span>Empresa</span></button>
+        <button mat-menu-item routerLink="/project/new"><mat-icon>add</mat-icon><span>Proyecto</span></button>
+        <button mat-menu-item routerLink="/metric/new"><mat-icon>add</mat-icon><span>Métrica</span></button>
+        <button mat-menu-item routerLink="/calculable/new"><mat-icon>add</mat-icon><span>Cálculo</span></button>
       </mat-menu>
     </div>
 
     <div>
       <button mat-button [matMenuTriggerFor]="menu2">Listar <mat-icon>expand_more</mat-icon></button>
       <mat-menu #menu2 xPosition="before">
-        <button mat-menu-item routerLink="/calculable/list"><mat-icon>list</mat-icon><span>Cálculos</span></button>
-        <button mat-menu-item routerLink="/metric/list"><mat-icon>list</mat-icon><span>Métricas</span></button>
-        <button mat-menu-item routerLink="/project/list"><mat-icon>list</mat-icon><span>Proyectos</span></button>
         <button mat-menu-item routerLink="/company/list"><mat-icon>list</mat-icon><span>Empresas</span></button>
+        <button mat-menu-item routerLink="/project/list"><mat-icon>list</mat-icon><span>Proyectos</span></button>
+        <button mat-menu-item routerLink="/metric/list"><mat-icon>list</mat-icon><span>Métricas</span></button>
+        <button mat-menu-item routerLink="/calculable/list"><mat-icon>list</mat-icon><span>Cálculos</span></button>
       </mat-menu>
     </div>
 
