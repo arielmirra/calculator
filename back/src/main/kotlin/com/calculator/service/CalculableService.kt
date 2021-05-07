@@ -12,7 +12,7 @@ class CalculableService(
     @Autowired private val calculableRepository: CalculableRepository
 ) {
 
-    fun getAll(): List<Calculable> = calculableRepository.findAll().toList()
+    fun getAll(): List<Calculable> = calculableRepository.findAll()
     fun findByName(name: String): Calculable? = calculableRepository.findByName(name)
     fun findById(id: Long): Calculable? = calculableRepository.findBy_id(id)
     fun save(calculable: Calculable) = calculableRepository.save(calculable)

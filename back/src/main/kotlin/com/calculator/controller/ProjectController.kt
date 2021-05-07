@@ -14,9 +14,9 @@ import org.springframework.web.util.UriComponentsBuilder
 @RequestMapping("/project")
 class ProjectController(
     @Autowired private val projectService: ProjectService
-): WebApi<Project> {
+) : WebApi<Project> {
     @GetMapping()
-    fun getAll(): List<Any> = projectService.getAll()
+    fun getAll(): List<Project> = projectService.getAll()
 
     @GetMapping("/{id}")
     fun getById(@PathVariable id: Long): ResponseEntity<Project> =

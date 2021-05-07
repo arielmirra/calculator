@@ -14,9 +14,9 @@ import org.springframework.web.util.UriComponentsBuilder
 @RequestMapping("/metric")
 class MetricController(
     @Autowired private val metricService: MetricService
-): WebApi<Metric> {
+) : WebApi<Metric> {
     @GetMapping()
-    fun getAll(): List<Any> = metricService.getAll()
+    fun getAll(): List<Metric> = metricService.getAll()
 
     @GetMapping("/{id}")
     fun getById(@PathVariable id: Long): ResponseEntity<Metric> =

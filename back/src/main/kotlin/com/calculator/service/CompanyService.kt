@@ -3,15 +3,14 @@ package com.calculator.service
 import com.calculator.model.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
-import java.util.*
 
 @Service
 class CompanyService(
-        @Autowired private val companyRepository: CompanyRepository,
-        @Autowired private val projectRepository: ProjectRepository
+    @Autowired private val companyRepository: CompanyRepository,
+    @Autowired private val projectRepository: ProjectRepository
 ) {
 
-    fun getAll(): List<Any> = companyRepository.fetchAll()
+    fun getAll(): List<Company> = companyRepository.findAll()
     fun findByName(name: String): Company? = companyRepository.findByName(name)
     fun findById(id: Long): Company? = companyRepository.findBy_id(id)
     fun save(company: Company) = companyRepository.save(company)
@@ -21,9 +20,9 @@ class CompanyService(
         val projects = parseProjects(form)
 
         val project = Company(
-                name = form.name,
-                description = form.description,
-                projects = projects
+            name = form.name,
+            description = form.description,
+            projects = projects
         )
 
         return save(project)
@@ -45,9 +44,9 @@ class CompanyService(
 
     private fun parseProjects(form: CompanyForm): MutableSet<Project> {
         return form.projects
-                .map { projectRepository.findById(it) }
-                .filter { it.isPresent }
-                .map { it.get() }
-                .toMutableSet()
+            .map { projectRepository.findById(it) }
+            .filter { it.isPresent }
+            .map { it.get() }
+            .toMutableSet()
     }
 }

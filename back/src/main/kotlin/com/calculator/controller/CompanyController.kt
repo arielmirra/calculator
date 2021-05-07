@@ -14,9 +14,9 @@ import org.springframework.web.util.UriComponentsBuilder
 @RequestMapping("/company")
 class CompanyController(
     @Autowired private val companyService: CompanyService
-): WebApi<Company> {
+) : WebApi<Company> {
     @GetMapping()
-    fun getAll(): List<Any> = companyService.getAll()
+    fun getAll(): List<Company> = companyService.getAll()
 
     @GetMapping("/{id}")
     fun getById(@PathVariable id: Long): ResponseEntity<Company> =

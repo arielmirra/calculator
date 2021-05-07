@@ -10,7 +10,7 @@ class ProjectService(
     @Autowired private val metricRepository: MetricRepository
 ) {
 
-    fun getAll(): List<Any> = projectRepository.fetchAll()
+    fun getAll(): List<Project> = projectRepository.findAll()
     fun findByName(name: String): Project? = projectRepository.findByName(name)
     fun findById(id: Long): Project? = projectRepository.findBy_id(id)
     fun save(project: Project) = projectRepository.save(project)

@@ -14,7 +14,7 @@ import org.springframework.web.util.UriComponentsBuilder
 @RequestMapping("/calculable")
 class CalculableController(
     @Autowired private val calculableService: CalculableService
-): WebApi<Calculable> {
+) : WebApi<Calculable> {
     @GetMapping()
     fun getAll(): List<Calculable> = calculableService.getAll()
 
