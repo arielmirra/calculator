@@ -18,7 +18,7 @@ export class SnackbarService {
 
     snackbarRef.onAction().subscribe(() => {
       if (actionLink){
-        this.router.navigateByUrl(actionLink);
+        this.router.navigate([actionLink]);
       }
     });
   }
