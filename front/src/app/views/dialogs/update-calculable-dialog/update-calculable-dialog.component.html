@@ -5,7 +5,7 @@
     <form novalidate autocomplete="off">
       <mat-card-content>
 
-        <mat-form-field appearance="outline">
+        <mat-form-field style="display: block" appearance="outline">
           <mat-label>Nombre</mat-label>
           <input
             matInput
@@ -15,7 +15,7 @@
           <mat-error *ngIf="!calculableForm.name || calculableForm.name === ''">Esta entrada debe ser correcta</mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="outline">
+        <mat-form-field style="display: block" appearance="outline">
           <mat-label>Valor numérico</mat-label>
           <input
             matInput
@@ -32,7 +32,7 @@
     <form novalidate autocomplete="on">
       <mat-card-content>
 
-        <mat-form-field appearance="outline">
+        <mat-form-field style="display: block" appearance="outline">
           <mat-label>Nombre</mat-label>
           <input
             matInput
@@ -42,14 +42,14 @@
           <mat-error *ngIf="!calculableForm.name || calculableForm.name === ''">Esta entrada debe ser correcta</mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="outline">
+        <mat-form-field style="display: block" appearance="outline">
           <mat-label>Primer término</mat-label>
           <mat-select [(value)]="calculableForm.left">
             <mat-option *ngFor="let calc of everyCalculable" [value]="calc._id">{{calc.name}}</mat-option>
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field appearance="outline">
+        <mat-form-field style="display: block" appearance="outline">
           <mat-label>Operador entre términos</mat-label>
           <mat-select [(value)]="calculableForm.operator">
             <mat-option value="PLUS">Sumar</mat-option>
@@ -59,7 +59,7 @@
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field appearance="outline">
+        <mat-form-field style="display: block" appearance="outline">
           <mat-label>Segundo término</mat-label>
           <mat-select [(value)]="calculableForm.right">
             <mat-option *ngFor="let calc of everyCalculable" [value]="calc._id">{{calc.name}}</mat-option>

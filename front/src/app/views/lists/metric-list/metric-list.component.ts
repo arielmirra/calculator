@@ -53,7 +53,7 @@ export class MetricListComponent implements OnInit {
 
   openDialog(metric: Metric): void {
     const dialogRef = this.dialog.open(UpdateMetricDialogComponent, {
-      width: '250px',
+      width: '400px',
       data: {actual: metric, metrics: this.metrics, calculables: this.calculables}
     });
 
@@ -62,6 +62,7 @@ export class MetricListComponent implements OnInit {
       this.metricService.updateMetric(result).subscribe(success => {
         if (success) {
           this.snackbar.openSnackbar('Cálculo guardado satisfactoriamente');
+          this.fetch();
         } else {
           this.snackbar.openSnackbar('No se ha podido guardar los cambios');
         }

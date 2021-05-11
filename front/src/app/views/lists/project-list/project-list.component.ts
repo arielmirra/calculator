@@ -45,7 +45,7 @@ export class ProjectListComponent implements OnInit {
 
   openDialog(project: Project): void {
     const dialogRef = this.dialog.open(UpdateProjectDialogComponent, {
-      width: '250px',
+      width: '400px',
       data: {actual: project, metrics: this.metrics}
     });
 
@@ -54,6 +54,7 @@ export class ProjectListComponent implements OnInit {
       this.projectService.updateProject(result).subscribe(success => {
         if (success) {
           this.snackbar.openSnackbar('Cálculo guardado satisfactoriamente');
+          this.fetch();
         } else {
           this.snackbar.openSnackbar('No se ha podido guardar los cambios');
         }

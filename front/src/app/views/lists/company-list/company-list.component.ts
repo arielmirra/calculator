@@ -45,7 +45,7 @@ export class CompanyListComponent implements OnInit {
 
   openDialog(company: Company): void {
     const dialogRef = this.dialog.open(UpdateCompanyDialogComponent, {
-      width: '250px',
+      width: '400px',
       data: {actual: company, projects: this.projects}
     });
 
@@ -54,6 +54,7 @@ export class CompanyListComponent implements OnInit {
       this.companyService.updateCompany(result).subscribe(success => {
         if (success) {
           this.snackbar.openSnackbar('Cálculo guardado satisfactoriamente');
+          this.fetch();
         } else {
           this.snackbar.openSnackbar('No se ha podido guardar los cambios');
         }

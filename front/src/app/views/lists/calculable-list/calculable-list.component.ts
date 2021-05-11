@@ -39,7 +39,7 @@ export class CalculableListComponent implements OnInit {
 
   openDialog(calculable: Calculable): void {
     const dialogRef = this.dialog.open(UpdateCalculableDialogComponent, {
-      width: '250px',
+      width: '400px',
       data: {actual: calculable, calculables: this.calculables}
     });
 
