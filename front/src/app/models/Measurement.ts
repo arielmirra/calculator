@@ -1,7 +1,9 @@
+import {Metric} from './Metric';
+
 export class Measurement {
 
   public static empty(): Measurement {
-    return new Measurement(-1, '', -1, new Date());
+    return new Measurement(-1, '', -1, new Date(), Metric.empty(), -1);
   }
 
   constructor(
@@ -9,6 +11,8 @@ export class Measurement {
     public name: string,
     public value: number,
     public date: Date,
+    public from: Metric,
+    public metricId: number,
   ) {
 
   }

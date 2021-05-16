@@ -31,7 +31,7 @@ export class MeasurementService {
     return this.http.get(this.basePath + 'from/' + metricId)
       .pipe(
         map((response) => {
-          return Object.assign(Measurement.empty(), response.body);
+          return response.body.map(a => Object.assign(Measurement.empty(), a));
         }),
         catchError(err => {
           console.log(err);
@@ -57,8 +57,7 @@ export class MeasurementService {
     return this.http.get(this.basePath)
       .pipe(
         map(response => {
-          const companies = response.body.map(a => Object.assign(Measurement.empty(), a));
-          return companies[0].id !== -1 ? companies : [];
+          return response.body.map(a => Object.assign(Measurement.empty(), a));
         }),
         catchError(err => {
           console.log(err);
