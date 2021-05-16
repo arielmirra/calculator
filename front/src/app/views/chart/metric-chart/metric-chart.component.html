@@ -1,3 +1,5 @@
-<app-chart [dataSet]="[chartDataSet]" [labels]="measurementDates">
+<div *ngIf="measurementValues">
+  <app-chart [dataSet]="[chartDataSet]" [labels]="measurementDates">
+  </app-chart>
+</div>
 
-</app-chart>
