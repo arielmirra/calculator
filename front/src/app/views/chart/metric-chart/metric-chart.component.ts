@@ -52,7 +52,7 @@ export class MetricChartComponent implements OnInit {
   }
 
   private setLabels(): void {
-    this.measurementDates = this.measures.map((m, index) => m.date.toDateString());
+    this.measurementDates = this.measures.map((m, index) => m.date.getDate() + '');
     console.log('MEASUREMENT DATES');
     console.log(this.measurementDates);
   }
