@@ -3,6 +3,9 @@ import {Metric} from '../../../models/Metric';
 import {ChartDataSets} from 'chart.js';
 import {MeasurementService} from '../../../services/measurement.service';
 import {Measurement} from '../../../models/Measurement';
+import {formatDate} from '@angular/common';
+import localeEsAr from '@angular/common/locales/es-AR';
+import { registerLocaleData } from '@angular/common';
 
 @Component({
   selector: 'app-metric-chart',
@@ -52,8 +55,16 @@ export class MetricChartComponent implements OnInit {
   }
 
   private setLabels(): void {
-    this.measurementDates = this.measures.map((m, index) => m.date.getDate() + '');
+    this.measurementDates = this.measures.map((m, index) => this.parseDate(m.date));
     console.log('MEASUREMENT DATES');
     console.log(this.measurementDates);
+  }
+
+  private parseDate(date: Date): string {
+    const val = Date.parse(date.toString());
+    const theDate =  new Date();
+    theDate.setTime(val);
+    registerLocaleData(localeEsAr, 'es-AR');
+    return formatDate(theDate, 'dd/MM/yy H:mm', 'es-AR');
   }
 }
