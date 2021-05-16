@@ -3,12 +3,11 @@ import {Project} from './Project';
 export class Company {
 
   public static empty(): Company {
-    return new Company(-1, 'Company', '', '', []);
+    return new Company(-1, '', '', []);
   }
 
   constructor(
-    public _id: number,
-    public _type: string,
+    public id: number,
     public name: string,
     public description: string,
     public projects: Project[],

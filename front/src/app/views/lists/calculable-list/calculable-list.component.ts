@@ -30,7 +30,7 @@ export class CalculableListComponent implements OnInit {
   }
 
   calculate(calc: Calculable): void {
-    this.calculableService.calculate(calc._id).subscribe(result => this.snackbar.openSnackbar(`El resultado del cálculo es ${result}`));
+    this.calculableService.calculate(calc.id).subscribe(result => this.snackbar.openSnackbar(`El resultado del cálculo es ${result}`));
   }
 
   createCalc(): void {

@@ -39,12 +39,12 @@ export class UpdateCompanyDialogComponent implements OnInit {
     this.company = this.data.actual;
     this.everyProject = this.data.projects;
     this.companyForm = CompanyForm.empty();
-    this.companyForm.id = this.company._id;
+    this.companyForm.id = this.company.id;
     this.companyForm.name = this.company.name;
     this.companyForm.description = this.company.description;
-    this.companyForm.projects = this.company.projects.map(c => c._id);
+    this.companyForm.projects = this.company.projects.map(c => c.id);
 
-    this.selectedProjects = this.everyProject.filter(m => this.companyForm.projects.indexOf(m._id) > -1);
+    this.selectedProjects = this.everyProject.filter(m => this.companyForm.projects.indexOf(m.id) > -1);
     this.filteredProjects = this.projectCtrl.valueChanges.pipe(
       startWith(null),
       map((m: string | null) => m ? this._filter(m) : this.left()));
@@ -75,24 +75,24 @@ export class UpdateCompanyDialogComponent implements OnInit {
     if (input) {
       input.value = '';
     }
-    this.companyForm.projects = this.selectedProjects.map(m => m._id);
+    this.companyForm.projects = this.selectedProjects.map(m => m.id);
     this.projectCtrl.setValue(null);
   }
 
   remove(project: number): void {
-    const index = this.selectedProjects.indexOf(this.everyProject.filter(p => p._id === project)[0]);
+    const index = this.selectedProjects.indexOf(this.everyProject.filter(p => p.id === project)[0]);
 
     if (index >= 0) {
       this.selectedProjects.splice(index, 1);
     }
-    this.companyForm.projects = this.selectedProjects.map(p => p._id);
+    this.companyForm.projects = this.selectedProjects.map(p => p.id);
   }
 
   selected(event: MatAutocompleteSelectedEvent): void {
     this.selectedProjects.push(this.everyProject.filter(p => p.name === event.option.value)[0]);
     this.projectsInput.nativeElement.value = '';
     this.projectCtrl.setValue(null);
-    this.companyForm.projects = this.selectedProjects.map(p => p._id);
+    this.companyForm.projects = this.selectedProjects.map(p => p.id);
   }
 
   private _filter(value: string): Project[] {

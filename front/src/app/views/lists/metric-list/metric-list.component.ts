@@ -39,7 +39,7 @@ export class MetricListComponent implements OnInit {
   }
 
   measure(m: Metric): void {
-    this.metricService.measure(m._id).subscribe(result => {
+    this.metricService.measure(m.id).subscribe(result => {
       this.dialog.open(MetricMeasurementModalComponent, {
         width: '550px',
         data: {measure: result}

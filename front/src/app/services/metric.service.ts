@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import {HttpService} from './http.service';
 import {Observable, of} from 'rxjs';
-import {Measurement, Metric, MetricForm} from '../models/Metric';
+import {Metric, MetricForm} from '../models/Metric';
 import {catchError, map} from 'rxjs/operators';
+import {Measurement} from '../models/Measurement';
 
 @Injectable({
   providedIn: 'root'
@@ -82,7 +83,7 @@ export class MetricService {
       .pipe(
         map(response => {
           const metrics = response.body.map(a => Object.assign(Metric.empty(), a));
-          return metrics[0]._id !== -1 ? metrics : [];
+          return metrics[0].id !== -1 ? metrics : [];
         }),
         catchError(err => {
           console.log(err);

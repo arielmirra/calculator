@@ -31,7 +31,7 @@
             *ngFor="let m of selectedMetrics"
             [selectable]="selectable"
             [removable]="removable"
-            (removed)="remove(m._id)">
+            (removed)="remove(m.id)">
             {{m.name}}
             <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
           </mat-chip>

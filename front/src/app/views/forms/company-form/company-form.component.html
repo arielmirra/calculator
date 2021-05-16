@@ -29,7 +29,7 @@
         <mat-form-field appearance="outline">
           <mat-label>Proyectos incluídos</mat-label>
           <mat-select [(value)]="selectedProjects" multiple>
-            <mat-option *ngFor="let p of projects" value="{{p._id}}">{{p.name}}</mat-option>
+            <mat-option *ngFor="let p of projects" value="{{p.id}}">{{p.name}}</mat-option>
           </mat-select>
         </mat-form-field>
 
