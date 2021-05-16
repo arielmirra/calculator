@@ -8,7 +8,8 @@ import {ProjectFormComponent} from './views/forms/project-form/project-form.comp
 import {ProjectListComponent} from './views/lists/project-list/project-list.component';
 import {CompanyFormComponent} from './views/forms/company-form/company-form.component';
 import {CompanyListComponent} from './views/lists/company-list/company-list.component';
-
+import {ChartComponent} from './views/chart/chart.component';
+import {MetricChartComponent} from './views/chart/metric-chart/metric-chart.component';
 
 export const routes: Routes = [
   {
@@ -67,6 +68,15 @@ export const routes: Routes = [
       }
     ]
   },
+  {
+    path: 'chart',
+    children: [
+      {
+        path: 'example',
+        component: MetricChartComponent
+      },
+    ]
+  }
 ];
 
 @NgModule({
