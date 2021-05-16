@@ -59,18 +59,6 @@ class MetricService(
         return Pair(metrics, calculates)
     }
 
-    fun measureByName(name: String): Measurement? =
-        findByName(name)?.let {
-            val result = it.measure()
-            val measurement = Measurement(
-                name ="Resultado de la métrica ${it.name}",
-                value  = result,
-                from = it,
-                metricId = it.id
-            )
-            measurementRepository.save(measurement)
-        }
-
     fun measure(id: Long): Measurement? =
         findById(id)?.let {
             val result = it.measure()

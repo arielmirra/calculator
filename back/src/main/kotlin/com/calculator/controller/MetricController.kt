@@ -36,15 +36,6 @@ class MetricController(
             ResponseEntity.notFound().build()
         }
 
-    @GetMapping("/measure/name/{name}")
-    fun measure(@PathVariable name: String): ResponseEntity<Measurement> =
-        try {
-            val measurement = metricService.measureByName(name)
-            ResponseEntity.ok(measurement)
-        } catch (e: Exception) {
-            ResponseEntity.notFound().build()
-        }
-
     @PostMapping
     fun create(@RequestBody form: MetricForm, b: UriComponentsBuilder): ResponseEntity<Metric> =
         try {
