@@ -106,7 +106,8 @@ class CalculatorApplication {
             val measurement = measurementRepository.save(Measurement(
                 name = "test measurement",
                 value = 1.0,
-                from = testMetric
+                from = testMetric,
+                metricId = testMetric.id
             ))
         }
     }

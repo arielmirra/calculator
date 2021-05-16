@@ -10,8 +10,7 @@ import java.util.function.DoubleBinaryOperator
 
 @Node
 data class Company(
-    @Id @GeneratedValue val _id: Long = -1,
-    val _type: String = "Company",
+    @Id @GeneratedValue val id: Long = -1,
     var name: String = "",
     var description: String = "",
     @Relationship(type = "projects")
@@ -20,8 +19,7 @@ data class Company(
 
 @Node
 data class Project(
-    @Id @GeneratedValue val _id: Long = -1,
-    val _type: String = "Project",
+    @Id @GeneratedValue val id: Long = -1,
     var name: String = "",
     var description: String = "",
     val date: LocalDateTime = LocalDateTime.now(),
@@ -32,8 +30,7 @@ data class Project(
 
 @Node
 data class Metric(
-    @Id @GeneratedValue val _id: Long = -1,
-    val _type: String = "Metric",
+    @Id @GeneratedValue val id: Long = -1,
     var name: String = "",
     var description: String = "",
     @Relationship(type = "has_metrics")
@@ -60,8 +57,7 @@ data class Metric(
 
 @Node
 data class Calculable(
-    @Id @GeneratedValue val _id: Long = -1,
-    val _type: String = "Calculable",
+    @Id @GeneratedValue val id: Long = -1,
     var name: String = "",
     @Relationship(type = "left")
     var left: Calculable? = null,
@@ -92,11 +88,11 @@ enum class Operator : BinaryOperator<Double>, DoubleBinaryOperator {
 
 @Node
 data class Measurement(
-    @Id @GeneratedValue val _id: Long = -1,
-    val _type: String = "Measurement",
-    var name: String = "",
-    val value: Double = 0.0,
+    @Id @GeneratedValue val id: Long = -1,
+    var name: String,
+    val value: Double,
     val date: LocalDateTime = LocalDateTime.now(),
     @Relationship(type = "from_metric")
-    val from: Metric? = null,
+    val from: Metric?,
+    val metricId: Long
 )

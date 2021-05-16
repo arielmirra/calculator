@@ -2,6 +2,7 @@ package com.calculator.service
 
 import com.calculator.model.*
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 
 @Service
@@ -12,7 +13,7 @@ class MetricService(
 ) {
     fun getAll(): List<Metric> = metricRepository.findAll()
     fun findByName(name: String): Metric? = metricRepository.findByName(name)
-    fun findById(id: Long): Metric? = metricRepository.findBy_id(id)
+    fun findById(id: Long): Metric? = metricRepository.findByIdOrNull(id)
     fun save(metric: Metric) = metricRepository.save(metric)
     fun deleteById(id: Long) = metricRepository.deleteById(id)
 
@@ -64,7 +65,8 @@ class MetricService(
             val measurement = Measurement(
                 name ="Resultado de la métrica ${it.name}",
                 value  = result,
-                from = it
+                from = it,
+                metricId = it.id
             )
             measurementRepository.save(measurement)
         }
@@ -75,7 +77,8 @@ class MetricService(
             val measurement = Measurement(
                 name ="Resultado de la métrica ${it.name}",
                 value  = result,
-                from = it
+                from = it,
+                metricId = it.id
             )
             measurementRepository.save(measurement)
         }

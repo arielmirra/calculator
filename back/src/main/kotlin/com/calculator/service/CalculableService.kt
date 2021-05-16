@@ -5,6 +5,7 @@ import com.calculator.model.CalculableForm
 import com.calculator.model.CalculableRepository
 import com.calculator.model.Operator
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 
 @Service
@@ -14,24 +15,24 @@ class CalculableService(
 
     fun getAll(): List<Calculable> = calculableRepository.findAll()
     fun findByName(name: String): Calculable? = calculableRepository.findByName(name)
-    fun findById(id: Long): Calculable? = calculableRepository.findBy_id(id)
+    fun findById(id: Long): Calculable? = calculableRepository.findByIdOrNull(id)
     fun save(calculable: Calculable) = calculableRepository.save(calculable)
     fun deleteById(id: Long) = calculableRepository.deleteById(id)
 
     fun create(form: CalculableForm): Calculable {
         val calc: Calculable
         if (hasOperator(form)) {
-            if (hasTerms(form)) {
+            calc = if (hasTerms(form)) {
                 val left = findById(form.left!!)
                 val right = findById(form.right!!)
-                calc = Calculable(
+                Calculable(
                     name = form.name,
                     left = left,
                     right = right,
                     operator = Operator.valueOf(form.operator!!)
                 )
             } else {
-                calc = Calculable(
+                Calculable(
                     name = form.name,
                     operator = Operator.valueOf(form.operator!!)
                 )
