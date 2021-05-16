@@ -8,6 +8,7 @@ import {MetricMeasurementModalComponent} from './metric-measurement-modal/metric
 import {Calculable} from '../../../models/Calculable';
 import {UpdateMetricDialogComponent} from '../../dialogs/update-metric-dialog/update-metric-dialog.component';
 import {CalculableService} from '../../../services/calculable.service';
+import {Measurement} from "../../../models/Measurement";
 
 @Component({
   selector: 'app-metric-list',
@@ -17,6 +18,7 @@ import {CalculableService} from '../../../services/calculable.service';
 export class MetricListComponent implements OnInit {
   metrics: Metric[];
   calculables: Calculable[];
+  lastMeasurement?: Measurement;
 
   constructor(
     private metricService: MetricService,
@@ -44,6 +46,8 @@ export class MetricListComponent implements OnInit {
         width: '550px',
         data: {measure: result}
       });
+      this.lastMeasurement = result;
+      console.log(this.lastMeasurement);
     });
   }
 

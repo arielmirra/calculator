@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import {ChartDataSets, ChartOptions, ChartType} from 'chart.js';
 import {BaseChartDirective, Label, Color} from 'ng2-charts';
 
@@ -7,7 +7,7 @@ import {BaseChartDirective, Label, Color} from 'ng2-charts';
   templateUrl: './chart.component.html',
   styleUrls: ['./chart.component.scss']
 })
-export class ChartComponent implements OnInit {
+export class ChartComponent implements OnInit, OnChanges {
   @Input() dataSet?: ChartDataSets[];
   @Input() labels?: Label[];
   @Input() options?: (ChartOptions & { annotation: any });
@@ -19,14 +19,15 @@ export class ChartComponent implements OnInit {
   ];
   public lineChartLabels: Label[] = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September'];
   public lineChartOptions: (ChartOptions & { annotation: any }) = {
-    responsive: false,
+    responsive: true,
     maintainAspectRatio: false,
     scales: {
       // We use this empty structure as a placeholder for dynamic theming.
       xAxes: [{}],
       yAxes: [
         {
-          id: 'y-axis-0',
+          id: 'y',
+          type: 'linear',
           position: 'left',
         }
       ]
@@ -36,12 +37,12 @@ export class ChartComponent implements OnInit {
         {
           type: 'line',
           mode: 'horizontal',
-          scaleID: 'y-axis-0',
-          value: 10,
+          scaleID: 'y',
+          value: 3.0,
           borderWidth: 2,
+          borderColor: 'rgb(75, 0, 0)',
           label: {
             enabled: true,
-            fontColor: 'orange',
             content: 'threshold'
           }
         },
@@ -86,17 +87,14 @@ export class ChartComponent implements OnInit {
     if (this.labels) {this.lineChartLabels = this.labels; }
   }
 
-  private generateNumber(i: number): number {
-    return Math.floor((Math.random() * (i < 2 ? 100 : 1000)) + 1);
+  ngOnChanges(changes: SimpleChanges): void {
+    for (const prop in changes){
+      if (prop === 'dataSet') {
+        this.lineChartData = changes[prop].currentValue;
+      }
+       else if (prop === 'labels') {
+        this.lineChartLabels = changes[prop].currentValue;
+      }
+    }
   }
-
-  // public pushNew(dot: {lable}): void {
-  //   this.lineChartData.forEach((x, i) => {
-  //     const num = this.generateNumber(i);
-  //     const data: number[] = x.data as number[];
-  //     data.push(num);
-  //   });
-  //   this.lineChartLabels.push(`Label ${this.lineChartLabels.length}`);
-  // }
-
 }

@@ -39,7 +39,7 @@
             <p><strong>Métricas incluídas:</strong> {{m.metrics.length}}</p>
             <p><strong>Cálculos incluídos:</strong> {{m.calculates.length}}</p>
 
-          <app-metric-chart [metric]="m"></app-metric-chart>
+          <app-metric-chart [metric]="m" [lastMeasurement]="lastMeasurement"></app-metric-chart>
 
           <button mat-button color="primary"
                   (click)="measure(m)">
