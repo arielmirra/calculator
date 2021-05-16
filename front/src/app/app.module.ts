@@ -22,6 +22,8 @@ import { UpdateCalculableDialogComponent } from './views/dialogs/update-calculab
 import { UpdateMetricDialogComponent } from './views/dialogs/update-metric-dialog/update-metric-dialog.component';
 import { UpdateProjectDialogComponent } from './views/dialogs/update-project-dialog/update-project-dialog.component';
 import { UpdateCompanyDialogComponent } from './views/dialogs/update-company-dialog/update-company-dialog.component';
+import { ChartComponent } from './views/chart/chart.component';
+import {ChartsModule} from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -39,18 +41,20 @@ import { UpdateCompanyDialogComponent } from './views/dialogs/update-company-dia
     UpdateCalculableDialogComponent,
     UpdateMetricDialogComponent,
     UpdateProjectDialogComponent,
-    UpdateCompanyDialogComponent
+    UpdateCompanyDialogComponent,
+    ChartComponent
   ],
-  imports: [
-    CommonModule,
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    FormsModule,
-    ReactiveFormsModule,
-    AppMaterialModule
-  ],
+    imports: [
+        CommonModule,
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        HttpClientModule,
+        FormsModule,
+        ReactiveFormsModule,
+        AppMaterialModule,
+        ChartsModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })
