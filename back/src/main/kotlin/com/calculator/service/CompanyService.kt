@@ -2,6 +2,7 @@ package com.calculator.service
 
 import com.calculator.model.*
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 
 @Service
@@ -12,7 +13,7 @@ class CompanyService(
 
     fun getAll(): List<Company> = companyRepository.findAll()
     fun findByName(name: String): Company? = companyRepository.findByName(name)
-    fun findById(id: Long): Company? = companyRepository.findBy_id(id)
+    fun findById(id: Long): Company? = companyRepository.findByIdOrNull(id)
     fun save(company: Company) = companyRepository.save(company)
     fun deleteById(id: Long) = companyRepository.deleteById(id)
 
