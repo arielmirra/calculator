@@ -9,6 +9,7 @@ import {ProjectListComponent} from './views/lists/project-list/project-list.comp
 import {CompanyFormComponent} from './views/forms/company-form/company-form.component';
 import {CompanyListComponent} from './views/lists/company-list/company-list.component';
 import {ChartComponent} from './views/chart/chart.component';
+import {MetricChartComponent} from './views/chart/metric-chart/metric-chart.component';
 
 export const routes: Routes = [
   {
@@ -72,7 +73,7 @@ export const routes: Routes = [
     children: [
       {
         path: 'example',
-        component: ChartComponent
+        component: MetricChartComponent
       },
     ]
   }
