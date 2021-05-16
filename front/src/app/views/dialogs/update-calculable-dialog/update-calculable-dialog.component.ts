@@ -20,14 +20,14 @@ export class UpdateCalculableDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.calculable = this.data.actual;
-    this.everyCalculable = this.data.calculables.filter(c => c._id !== this.data.actual._id);
+    this.everyCalculable = this.data.calculables.filter(c => c.id !== this.data.actual.id);
     console.log(this.calculable);
     this.calculableForm = CalculableForm.empty();
-    this.calculableForm.id = this.calculable._id;
+    this.calculableForm.id = this.calculable.id;
     this.calculableForm.name = this.calculable.name;
     this.calculableForm.value = this.calculable.value;
-    this.calculableForm.left = this.calculable.left ? this.calculable.left._id : null;
-    this.calculableForm.right = this.calculable.right ? this.calculable.right._id : null;
+    this.calculableForm.left = this.calculable.left ? this.calculable.left.id : null;
+    this.calculableForm.right = this.calculable.right ? this.calculable.right.id : null;
     this.calculableForm.operator = this.calculable.operator;
   }
 

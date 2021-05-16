@@ -82,7 +82,7 @@ export class CompanyService {
       .pipe(
         map(response => {
           const companies = response.body.map(a => Object.assign(Company.empty(), a));
-          return companies[0]._id !== -1 ? companies : [];
+          return companies[0].id !== -1 ? companies : [];
         }),
         catchError(err => {
           console.log(err);

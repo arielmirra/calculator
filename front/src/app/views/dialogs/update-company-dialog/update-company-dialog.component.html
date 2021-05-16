@@ -31,7 +31,7 @@
             *ngFor="let p of selectedProjects"
             [selectable]="selectable"
             [removable]="removable"
-            (removed)="remove(p._id)">
+            (removed)="remove(p.id)">
             {{p.name}}
             <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
           </mat-chip>

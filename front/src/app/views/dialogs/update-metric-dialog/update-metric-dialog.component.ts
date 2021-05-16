@@ -46,21 +46,21 @@ export class UpdateMetricDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.metric = this.data.actual;
-    this.everyMetric = this.data.metrics.filter(c => c._id !== this.data.actual._id);
+    this.everyMetric = this.data.metrics.filter(c => c.id !== this.data.actual.id);
     this.everyCalculable = this.data.calculables;
     this.metricForm = MetricForm.empty();
-    this.metricForm.id = this.metric._id;
+    this.metricForm.id = this.metric.id;
     this.metricForm.name = this.metric.name;
     this.metricForm.description = this.metric.description;
-    this.metricForm.calculates = this.metric.calculates.map(c => c._id);
-    this.metricForm.metrics = this.metric.metrics.map(c => c._id);
+    this.metricForm.calculates = this.metric.calculates.map(c => c.id);
+    this.metricForm.metrics = this.metric.metrics.map(c => c.id);
 
-    this.selectedMetrics = this.everyMetric.filter(m => this.metricForm.metrics.indexOf(m._id) > -1);
+    this.selectedMetrics = this.everyMetric.filter(m => this.metricForm.metrics.indexOf(m.id) > -1);
     this.filteredMetrics = this.metricCtrl.valueChanges.pipe(
       startWith(null),
       map((m: string | null) => m ? this._filterMetrics(m) : this.metricsLeft()));
 
-    this.selectedCalculables = this.everyCalculable.filter(m => this.metricForm.calculates.indexOf(m._id) > -1);
+    this.selectedCalculables = this.everyCalculable.filter(m => this.metricForm.calculates.indexOf(m.id) > -1);
     this.filteredCalculables = this.calculableCtrl.valueChanges.pipe(
       startWith(null),
       map((c: string | null) => c ? this._filterMCalculables(c) : this.calclablesLeft()));
@@ -93,7 +93,7 @@ export class UpdateMetricDialogComponent implements OnInit {
       if (input) {
         input.value = '';
       }
-      this.metricForm.calculates = this.selectedCalculables.map(m => m._id);
+      this.metricForm.calculates = this.selectedCalculables.map(m => m.id);
       this.calculableCtrl.setValue(null);
     } else {
       if ((value || '').trim()) {
@@ -107,7 +107,7 @@ export class UpdateMetricDialogComponent implements OnInit {
       if (input) {
         input.value = '';
       }
-      this.metricForm.metrics = this.selectedMetrics.map(m => m._id);
+      this.metricForm.metrics = this.selectedMetrics.map(m => m.id);
       this.metricCtrl.setValue(null);
     }
   }
@@ -121,35 +121,35 @@ export class UpdateMetricDialogComponent implements OnInit {
   }
 
   private removeMetric(metric: number): void {
-    const index = this.selectedMetrics.indexOf(this.everyMetric.filter(m => m._id === metric)[0]);
+    const index = this.selectedMetrics.indexOf(this.everyMetric.filter(m => m.id === metric)[0]);
 
     if (index >= 0) {
       this.selectedMetrics.splice(index, 1);
     }
-    this.metricForm.metrics = this.selectedMetrics.map(m1 => m1._id);
+    this.metricForm.metrics = this.selectedMetrics.map(m1 => m1.id);
   }
 
   private removeCalculable(calc: number): void {
-    const index = this.selectedCalculables.indexOf(this.everyCalculable.filter(c => c._id === calc)[0]);
+    const index = this.selectedCalculables.indexOf(this.everyCalculable.filter(c => c.id === calc)[0]);
 
     if (index >= 0) {
       this.selectedCalculables.splice(index, 1);
     }
-    this.metricForm.calculates = this.selectedCalculables.map(c => c._id);
+    this.metricForm.calculates = this.selectedCalculables.map(c => c.id);
   }
 
   selectedMetric(event: MatAutocompleteSelectedEvent): void {
     this.selectedMetrics.push(this.everyMetric.filter(m => m.name === event.option.value)[0]);
     this.metricsInput.nativeElement.value = '';
     this.metricCtrl.setValue(null);
-    this.metricForm.metrics = this.selectedMetrics.map(m1 => m1._id);
+    this.metricForm.metrics = this.selectedMetrics.map(m1 => m1.id);
   }
 
   selectedCalculable(event: MatAutocompleteSelectedEvent): void {
     this.selectedCalculables.push(this.everyCalculable.filter(c => c.name === event.option.value)[0]);
     this.calculablesInput.nativeElement.value = '';
     this.calculableCtrl.setValue(null);
-    this.metricForm.calculates = this.selectedCalculables.map(c => c._id);
+    this.metricForm.calculates = this.selectedCalculables.map(c => c.id);
   }
 
   private _filterMetrics(value: string): Metric[] {

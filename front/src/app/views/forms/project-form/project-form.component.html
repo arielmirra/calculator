@@ -29,7 +29,7 @@
         <mat-form-field appearance="outline">
           <mat-label>Métricas incluídas</mat-label>
           <mat-select [(value)]="selectedMetrics" multiple>
-            <mat-option *ngFor="let m of metrics" value="{{m._id}}">{{m.name}}</mat-option>
+            <mat-option *ngFor="let m of metrics" value="{{m.id}}">{{m.name}}</mat-option>
           </mat-select>
         </mat-form-field>
 

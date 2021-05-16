@@ -82,7 +82,7 @@ export class ProjectService {
       .pipe(
         map(response => {
           const projects = response.body.map(a => Object.assign(Project.empty(), a));
-          return projects[0]._id !== -1 ? projects : [];
+          return projects[0].id !== -1 ? projects : [];
         }),
         catchError(err => {
           console.log(err);

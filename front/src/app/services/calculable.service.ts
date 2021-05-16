@@ -90,8 +90,8 @@ export class CalculableService {
       );
   }
 
-  calculate(_id: number): Observable<number> {
-    return this.http.get(`${this.basePath}calculate/${_id}`)
+  calculate(id: number): Observable<number> {
+    return this.http.get(`${this.basePath}calculate/${id}`)
       .pipe(
         map(response => {
           return response.body;
