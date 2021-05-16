@@ -3,9 +3,7 @@ import {Metric} from '../../../models/Metric';
 import {ChartDataSets} from 'chart.js';
 import {MeasurementService} from '../../../services/measurement.service';
 import {Measurement} from '../../../models/Measurement';
-import {formatDate} from '@angular/common';
-import localeEsAr from '@angular/common/locales/es-AR';
-import { registerLocaleData } from '@angular/common';
+import {DatePipe} from '@angular/common';
 
 @Component({
   selector: 'app-metric-chart',
@@ -22,18 +20,12 @@ export class MetricChartComponent implements OnInit {
   public chartDataSet: ChartDataSets;
 
   constructor(
-    public measurementService: MeasurementService
+    public measurementService: MeasurementService,
+    private datePipe: DatePipe
   ) { }
 
   ngOnInit(): void {
-    // TODO get Measurements of this.metric
-    // this.measures = [
-    //   {_id: 1, name: 'first', value: 14, date: new Date('3/3/2021')},
-    //   {_id: 2, name: 'second', value: 15, date: new Date('3/4/2021')},
-    //   {_id: 3, name: 'third', value: 13, date: new Date('3/5/2021')},
-    // ];
     this.fetch();
-
   }
 
   private fetch(): void {
@@ -49,22 +41,14 @@ export class MetricChartComponent implements OnInit {
   }
 
   private setValues(): void {
-    this.measurementValues = this.measures.map((m, index) => m.value);
+    this.measurementValues = this.measures.map((m) => m.value);
     console.log('MEASUREMENT VALUES');
     console.log(this.measurementValues);
   }
 
   private setLabels(): void {
-    this.measurementDates = this.measures.map((m, index) => this.parseDate(m.date));
+    this.measurementDates = this.measures.map((m) => this.datePipe.transform(m.date, 'dd/MM/yy H:mm'));
     console.log('MEASUREMENT DATES');
     console.log(this.measurementDates);
-  }
-
-  private parseDate(date: Date): string {
-    const val = Date.parse(date.toString());
-    const theDate =  new Date();
-    theDate.setTime(val);
-    registerLocaleData(localeEsAr, 'es-AR');
-    return formatDate(theDate, 'dd/MM/yy H:mm', 'es-AR');
   }
 }
