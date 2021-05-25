@@ -23,7 +23,9 @@ export class ChartComponent implements OnInit, OnChanges {
     maintainAspectRatio: false,
     scales: {
       // We use this empty structure as a placeholder for dynamic theming.
-      xAxes: [{}],
+      xAxes: [{
+        type: 'time'
+      }],
       yAxes: [
         {
           id: 'y',

@@ -1,6 +1,6 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {Metric} from '../../../models/Metric';
-import {ChartDataSets} from 'chart.js';
+import {ChartDataSets, ChartPoint} from 'chart.js';
 import {MeasurementService} from '../../../services/measurement.service';
 import {Measurement} from '../../../models/Measurement';
 import {DatePipe} from '@angular/common';
@@ -16,7 +16,7 @@ export class MetricChartComponent implements OnInit, OnChanges {
   @Input() lastMeasurement!: Measurement;
 
   public measures: Measurement[];
-  public measurementValues: number[];
+  public measurementValues: ChartPoint[];
   public measurementDates: string[];
   public chartDataSet: ChartDataSets;
 
@@ -45,7 +45,10 @@ export class MetricChartComponent implements OnInit, OnChanges {
   }
 
   private setValues(): void {
-    this.measurementValues = this.measures.map((m) => m.value);
+    this.measurementValues = this.measures.map((m) => {
+      return {y: m.value, x: m.date};
+    });
+    console.log(this.measurementValues);
   }
 
   private setLabels(): void {

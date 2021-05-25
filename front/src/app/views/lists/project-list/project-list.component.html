@@ -38,9 +38,11 @@
           <p><strong>Descripción:</strong> {{p.description}}</p>
           <p><strong>Métricas incluídas:</strong> {{p.metrics.length}}</p>
 
-          <button mat-button color="primary">
-            Realizar una medición
-          </button>
+          <app-project-chart [project]="p" [lastMeasurement]="lastMeasurement"> </app-project-chart>
+
+<!--          <button mat-button color="primary">-->
+<!--            Realizar una medición-->
+<!--          </button>-->
 
         </mat-expansion-panel>
       </mat-accordion>

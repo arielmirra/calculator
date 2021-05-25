@@ -7,6 +7,7 @@ import {ProjectService} from '../../../services/project.service';
 import {UpdateProjectDialogComponent} from '../../dialogs/update-project-dialog/update-project-dialog.component';
 import {MetricService} from '../../../services/metric.service';
 import {Metric} from '../../../models/Metric';
+import {Measurement} from '../../../models/Measurement';
 
 @Component({
   selector: 'app-project-list',
@@ -16,6 +17,7 @@ import {Metric} from '../../../models/Metric';
 export class ProjectListComponent implements OnInit {
   projects: Project[];
   metrics: Metric[];
+  lastMeasurement?: {value: Measurement, of: Metric};
 
   constructor(
     private projectService: ProjectService,

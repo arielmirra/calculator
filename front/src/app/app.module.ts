@@ -25,6 +25,7 @@ import {UpdateCompanyDialogComponent} from './views/dialogs/update-company-dialo
 import {ChartComponent} from './views/chart/chart.component';
 import {ChartsModule} from 'ng2-charts';
 import {MetricChartComponent} from './views/chart/metric-chart/metric-chart.component';
+import {ProjectChartComponent} from './views/chart/project-chart/project-chart.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import {MetricChartComponent} from './views/chart/metric-chart/metric-chart.comp
     UpdateProjectDialogComponent,
     UpdateCompanyDialogComponent,
     ChartComponent,
-    MetricChartComponent
+    MetricChartComponent,
+    ProjectChartComponent
   ],
   imports: [
     CommonModule,

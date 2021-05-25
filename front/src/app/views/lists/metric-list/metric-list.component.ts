@@ -8,7 +8,7 @@ import {MetricMeasurementModalComponent} from './metric-measurement-modal/metric
 import {Calculable} from '../../../models/Calculable';
 import {UpdateMetricDialogComponent} from '../../dialogs/update-metric-dialog/update-metric-dialog.component';
 import {CalculableService} from '../../../services/calculable.service';
-import {Measurement} from "../../../models/Measurement";
+import {Measurement} from '../../../models/Measurement';
 
 @Component({
   selector: 'app-metric-list',
