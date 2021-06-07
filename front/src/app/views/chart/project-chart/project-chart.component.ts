@@ -24,7 +24,6 @@ export class ProjectChartComponent implements OnInit, OnChanges {
   constructor(
     public measurementService: MeasurementService,
     private snackbarService: SnackbarService,
-    private datePipe: DatePipe
   ) { }
 
   ngOnInit(): void {

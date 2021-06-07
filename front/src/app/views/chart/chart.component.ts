@@ -70,7 +70,7 @@ export class ChartComponent implements OnInit, OnChanges {
     },
     { // green
       backgroundColor: `rgba(0, 255, 0, 0)`,
-      borderColor: 'green',
+      borderColor: 'rgb(66,193,83)',
       pointBackgroundColor: 'rgba(148,159,177,1)',
       pointBorderColor: '#fff',
       pointHoverBackgroundColor: '#fff',
