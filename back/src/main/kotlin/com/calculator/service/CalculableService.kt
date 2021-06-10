@@ -1,16 +1,14 @@
 package com.calculator.service
 
-import com.calculator.model.Calculable
-import com.calculator.model.CalculableForm
-import com.calculator.model.CalculableRepository
-import com.calculator.model.Operator
+import com.calculator.model.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 
 @Service
 class CalculableService(
-    @Autowired private val calculableRepository: CalculableRepository
+    @Autowired private val calculableRepository: CalculableRepository,
+    @Autowired private val calculusService: CalculusService
 ) {
 
     fun getAll(): List<Calculable> = calculableRepository.findAll()
@@ -46,7 +44,10 @@ class CalculableService(
         return save(calc)
     }
 
-    fun calculate(id: Long): Double? = findById(id)?.calculate()
+    fun createCalculus(id: Long): Calculus? =
+        findById(id)?.let{
+            calculusService.createFromCalculable(it)
+        }
 
     fun update(id: Long, form: CalculableForm): Boolean =
         findById(id)?.let {

@@ -38,3 +38,6 @@ interface ProjectRepository : Neo4jRepository<Project, Long> {
 interface CompanyRepository : Neo4jRepository<Company, Long> {
     fun findByName(name: String): Company?
 }
+
+@Repository
+interface CalculusRepository : Neo4jRepository<Calculus, Long> {}

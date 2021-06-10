@@ -67,6 +67,19 @@ data class Calculable(
     var value: Double? = null
 ) {
     fun calculate(): Double = value ?: operator!!.apply(left!!.calculate(), right!!.calculate())
+
+    fun deepCopy(): Calculable {
+        return if (operator != null) {
+            Calculable(
+                name = name,
+                operator = operator,
+                left = left!!.deepCopy(),
+                right = right!!.deepCopy()
+            )
+        } else {
+            Calculable(name = name, value = value)
+        }
+    }
 }
 
 enum class Operator : BinaryOperator<Double>, DoubleBinaryOperator {
@@ -85,6 +98,14 @@ enum class Operator : BinaryOperator<Double>, DoubleBinaryOperator {
 
     override fun applyAsDouble(t: Double, u: Double) = apply(t, u)
 }
+
+
+@Node
+data class Calculus(
+    @Id @GeneratedValue val id: Long = -1,
+    var calcTree: Calculable,
+    var values: MutableSet<Long> = mutableSetOf()
+)
 
 @Node
 data class Measurement(

@@ -20,7 +20,8 @@ class CalculatorApplication {
             projectRepository: ProjectRepository,
             metricRepository: MetricRepository,
             calculableRepository: CalculableRepository,
-            measurementRepository: MeasurementRepository
+            measurementRepository: MeasurementRepository,
+            calculusRepository: CalculusRepository
     ): CommandLineRunner? {
         return CommandLineRunner {
             companyRepository.deleteAll()
@@ -28,6 +29,7 @@ class CalculatorApplication {
             metricRepository.deleteAll()
             calculableRepository.deleteAll()
             measurementRepository.deleteAll()
+            calculusRepository.deleteAll()
         }
     }
 
@@ -37,7 +39,8 @@ class CalculatorApplication {
         projectRepository: ProjectRepository,
         metricRepository: MetricRepository,
         calculableRepository: CalculableRepository,
-        measurementRepository: MeasurementRepository
+        measurementRepository: MeasurementRepository,
+        calculusRepository: CalculusRepository
     ): CommandLineRunner? {
         return CommandLineRunner {
             companyRepository.deleteAll()
@@ -45,6 +48,7 @@ class CalculatorApplication {
             metricRepository.deleteAll()
             calculableRepository.deleteAll()
             measurementRepository.deleteAll()
+            calculusRepository.deleteAll()
 
             val simpleCalc = calculableRepository.save(Calculable(
                 name = "1",

@@ -2,6 +2,7 @@ package com.calculator.controller
 
 import com.calculator.model.Calculable
 import com.calculator.model.CalculableForm
+import com.calculator.model.Calculus
 import com.calculator.service.CalculableService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
@@ -28,8 +29,8 @@ class CalculableController(
         calculableService.findByName(name)?.let { ok(it) } ?: notFound()
 
     @GetMapping("/calculate/{id}")
-    fun calculate(@PathVariable id: Long): ResponseEntity<Double> =
-        calculableService.calculate(id)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()
+    fun calculate(@PathVariable id: Long): ResponseEntity<Calculus> =
+        calculableService.createCalculus(id)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()
 
     @PostMapping
     fun create(@RequestBody form: CalculableForm, b: UriComponentsBuilder): ResponseEntity<Calculable> =
