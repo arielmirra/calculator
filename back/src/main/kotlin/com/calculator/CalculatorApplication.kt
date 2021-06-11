@@ -52,12 +52,10 @@ class CalculatorApplication {
 
             val simpleCalc = calculableRepository.save(Calculable(
                 name = "1",
-                value = 1.0
             ))
 
             val simpleCalc2 = calculableRepository.save(Calculable(
                 name = "2",
-                value = 2.0
             ))
 
             val complexCalc = calculableRepository.save(Calculable(

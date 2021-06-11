@@ -8,7 +8,8 @@ import org.springframework.stereotype.Service
 @Service
 class CalculusService(
     @Autowired private val calculusRepository: CalculusRepository,
-    @Autowired private val calculableRepository: CalculableRepository
+    @Autowired private val calculableRepository: CalculableRepository,
+    @Autowired private val measurementRepository: MeasurementRepository,
 ) {
 
     fun getAll(): List<Calculus> = calculusRepository.findAll()
@@ -27,23 +28,31 @@ class CalculusService(
         val savedCopy = calculableRepository.save(copy)
         val savedCopyFromRepository = calculableRepository.findByIdOrNull(savedCopy.id)
         val calculus = Calculus(calcTree = savedCopyFromRepository!!)
-        getValuesSet(calculus.calcTree, calculus.values)
-        calculusRepository.save(calculus)
+        getValues(calculus.calcTree, calculus.values)
         return calculusRepository.save(calculus)
     }
 
 
-    private fun getValuesSet(calculable: Calculable, values: MutableSet<Long>) {
+    private fun getValues(calculable: Calculable, values: MutableSet<Calculable>) {
         if (calculable.operator != null) {
-            getValuesSet(calculable.left!!, values)
-            getValuesSet(calculable.right!!, values)
+            getValues(calculable.left!!, values)
+            getValues(calculable.right!!, values)
         }
         else {
             println("a leaf")
             println(calculable)
-            values.add(calculable.id)
+            values.add(calculable)
         }
     }
 
-
+    fun calculate(calc: Calculus): Measurement {
+        // complete calcTree with provided values
+        return Measurement(
+            name = "Measurement",
+//            value = calc.calcTree.calculate(),
+            value = 1.0,
+            from = Metric(),
+            metricId = calc.calcTree.id
+        )
+    }
 }

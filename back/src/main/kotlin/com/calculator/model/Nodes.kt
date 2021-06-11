@@ -104,7 +104,7 @@ enum class Operator : BinaryOperator<Double>, DoubleBinaryOperator {
 data class Calculus(
     @Id @GeneratedValue val id: Long = -1,
     var calcTree: Calculable,
-    var values: MutableSet<Long> = mutableSetOf()
+    var values: MutableSet<Calculable> = mutableSetOf()
 )
 
 @Node
