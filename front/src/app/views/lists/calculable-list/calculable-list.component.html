@@ -38,7 +38,6 @@
 
           <div *ngIf="!calc.operator">
             <p><strong>Nombre:</strong> {{calc.name}}</p>
-            <p><strong>Valor:</strong> {{calc.value}}</p>
           </div>
 
           <div *ngIf="calc.operator">
@@ -49,7 +48,7 @@
           </div>
 
           <button mat-button color="primary"
-                  (click)="calculate(calc)">
+                  (click)="calculate(calc)" *ngIf="calc.operator">
             Calcular
           </button>
 

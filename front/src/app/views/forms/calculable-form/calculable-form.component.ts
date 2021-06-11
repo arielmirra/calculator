@@ -31,8 +31,7 @@ export class CalculableFormComponent implements OnInit {
     const maxInputLength = 25;
 
     this.simpleForm = new FormGroup({
-      name: new FormControl('', [Validators.required, Validators.minLength(minInputLength), Validators.maxLength(maxInputLength)]),
-      value: new FormControl(null, [Validators.required])
+      name: new FormControl('', [Validators.required, Validators.minLength(minInputLength), Validators.maxLength(maxInputLength)])
     });
 
     this.form = new FormGroup({
@@ -67,7 +66,6 @@ export class CalculableFormComponent implements OnInit {
   newSimpleCalc(formDirective: FormGroupDirective): void {
     const form = CalculableForm.empty();
     form.name = this.simpleForm.controls.name.value;
-    form.value = this.simpleForm.controls.value.value;
     console.log(form);
     this.calculableService.addCalculable(form).subscribe(success => {
       this.resetForm(formDirective);
