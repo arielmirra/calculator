@@ -6,8 +6,8 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface MeasurementRepository : Neo4jRepository<Measurement, Long> {
-    fun findByName(name: String): Measurement?
-    fun findAllByMetricId(id: Long): List<Measurement>
+//    fun findByName(name: String): Measurement?
+//    fun findAllByMetricId(id: Long): List<Measurement>
 }
 
 @Repository
@@ -40,4 +40,4 @@ interface CompanyRepository : Neo4jRepository<Company, Long> {
 }
 
 @Repository
-interface CalculusRepository : Neo4jRepository<Calculus, Long> {}
+interface FormulaRepository : Neo4jRepository<Formula, Long> {}

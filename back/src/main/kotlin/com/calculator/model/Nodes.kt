@@ -1,9 +1,6 @@
 package com.calculator.model
 
-import org.springframework.data.neo4j.core.schema.GeneratedValue
-import org.springframework.data.neo4j.core.schema.Id
-import org.springframework.data.neo4j.core.schema.Node
-import org.springframework.data.neo4j.core.schema.Relationship
+import org.springframework.data.neo4j.core.schema.*
 import java.time.LocalDateTime
 import java.util.function.BinaryOperator
 import java.util.function.DoubleBinaryOperator
@@ -101,19 +98,17 @@ enum class Operator : BinaryOperator<Double>, DoubleBinaryOperator {
 
 
 @Node
-data class Calculus(
+data class Formula(
     @Id @GeneratedValue val id: Long = -1,
     var calcTree: Calculable,
-    var values: MutableSet<Calculable> = mutableSetOf()
+    @CompositeProperty var variables: MutableMap<String, Double> = mutableMapOf()
 )
 
 @Node
 data class Measurement(
     @Id @GeneratedValue val id: Long = -1,
-    var name: String,
     val value: Double,
     val date: LocalDateTime = LocalDateTime.now(),
-    @Relationship(type = "from_metric")
-    val from: Metric?,
-    val metricId: Long
+    @Relationship(type = "from")
+    val from: Formula,
 )

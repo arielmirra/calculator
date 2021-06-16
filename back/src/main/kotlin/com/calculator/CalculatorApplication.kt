@@ -16,12 +16,12 @@ class CalculatorApplication {
 
 //    @Bean
     fun setup(
-            companyRepository: CompanyRepository,
-            projectRepository: ProjectRepository,
-            metricRepository: MetricRepository,
-            calculableRepository: CalculableRepository,
-            measurementRepository: MeasurementRepository,
-            calculusRepository: CalculusRepository
+    companyRepository: CompanyRepository,
+    projectRepository: ProjectRepository,
+    metricRepository: MetricRepository,
+    calculableRepository: CalculableRepository,
+    measurementRepository: MeasurementRepository,
+    formulaRepository: FormulaRepository
     ): CommandLineRunner? {
         return CommandLineRunner {
             companyRepository.deleteAll()
@@ -29,7 +29,7 @@ class CalculatorApplication {
             metricRepository.deleteAll()
             calculableRepository.deleteAll()
             measurementRepository.deleteAll()
-            calculusRepository.deleteAll()
+            formulaRepository.deleteAll()
         }
     }
 
@@ -40,7 +40,7 @@ class CalculatorApplication {
         metricRepository: MetricRepository,
         calculableRepository: CalculableRepository,
         measurementRepository: MeasurementRepository,
-        calculusRepository: CalculusRepository
+        formulaRepository: FormulaRepository
     ): CommandLineRunner? {
         return CommandLineRunner {
             companyRepository.deleteAll()
@@ -48,7 +48,7 @@ class CalculatorApplication {
             metricRepository.deleteAll()
             calculableRepository.deleteAll()
             measurementRepository.deleteAll()
-            calculusRepository.deleteAll()
+            formulaRepository.deleteAll()
 
             val simpleCalc = calculableRepository.save(Calculable(
                 name = "1",
@@ -105,12 +105,12 @@ class CalculatorApplication {
                 projects = mutableSetOf(project)
             ))
 
-            val measurement = measurementRepository.save(Measurement(
-                name = "test measurement",
-                value = 1.0,
-                from = testMetric,
-                metricId = testMetric.id
-            ))
+//            val measurement = measurementRepository.save(Measurement(
+//                name = "test measurement",
+//                value = 1.0,
+//                from = testMetric,
+//                metricId = testMetric.id
+//            ))
         }
     }
 }

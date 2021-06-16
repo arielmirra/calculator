@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service
 @Service
 class CalculableService(
     @Autowired private val calculableRepository: CalculableRepository,
-    @Autowired private val calculusService: CalculusService
+    @Autowired private val formulaService: FormulaService
 ) {
 
     fun getAll(): List<Calculable> = calculableRepository.findAll()
@@ -44,9 +44,9 @@ class CalculableService(
         return save(calc)
     }
 
-    fun createCalculus(id: Long): Calculus? =
+    fun createFormula(id: Long): Formula? =
         findById(id)?.let{
-            calculusService.createFromCalculable(it)
+            formulaService.createFromCalculable(it)
         }
 
     fun update(id: Long, form: CalculableForm): Boolean =

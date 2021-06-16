@@ -11,13 +11,12 @@ class MeasurementService(
     @Autowired private val measurementRepository: MeasurementRepository,
 ) {
     fun getAll(): List<Measurement> = measurementRepository.findAll()
-    fun findByName(name: String): Measurement? = measurementRepository.findByName(name)
     fun findById(id: Long): Measurement? = measurementRepository.findByIdOrNull(id)
     fun save(measurement: Measurement) = measurementRepository.save(measurement)
     fun deleteById(id: Long) = measurementRepository.deleteById(id)
 
-    fun findAllFromMetricId(id: Long): List<Measurement> =
-        measurementRepository.findAllByMetricId(id)
+//    fun findAllFromMetricId(id: Long): List<Measurement> =
+//        measurementRepository.findAllByMetricId(id)
 
 
     fun delete(id: Long): Boolean = findById(id)?.let {
