@@ -40,4 +40,6 @@ interface CompanyRepository : Neo4jRepository<Company, Long> {
 }
 
 @Repository
-interface FormulaRepository : Neo4jRepository<Formula, Long> {}
+interface FormulaRepository : Neo4jRepository<Formula, Long> {
+    fun findAllByCalcTreeId(id: Long): List<Formula>
+}

@@ -22,8 +22,11 @@ class FormulaController(
     fun getById(@PathVariable id: Long): ResponseEntity<Formula> =
         formulaService.findById(id)?.let { ok(it) } ?: notFound()
 
+    @GetMapping("/from/{calcId}")
+    fun getByCalcId(@PathVariable calcId: Long): List<Formula> = formulaService.findByCalcId(calcId)
+
     @PutMapping("/{id}")
-    fun update(
+    fun measure(
         @PathVariable id: Long,
         @RequestBody calc: Formula,
         b: UriComponentsBuilder

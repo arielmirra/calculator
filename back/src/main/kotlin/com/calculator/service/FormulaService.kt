@@ -14,6 +14,7 @@ class FormulaService(
 
     fun getAll(): List<Formula> = formulaRepository.findAll()
     fun findById(id: Long): Formula? = formulaRepository.findByIdOrNull(id)
+    fun findByCalcId(id: Long): List<Formula> = formulaRepository.findAllByCalcTreeId(id)
     fun save(Formula: Formula) = formulaRepository.save(Formula)
     fun deleteById(id: Long) = formulaRepository.deleteById(id)
 
