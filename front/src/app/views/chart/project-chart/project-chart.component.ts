@@ -2,10 +2,9 @@ import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core'
 import {Measurement} from '../../../models/Measurement';
 import {ChartDataSets, ChartPoint} from 'chart.js';
 import {MeasurementService} from '../../../services/measurement.service';
-import {DatePipe} from '@angular/common';
 import {Project} from '../../../models/Project';
-import {Metric} from '../../../models/Metric';
 import {SnackbarService} from '../../../services/snackbar.service';
+import {Formula} from '../../../models/Formula';
 
 @Component({
   selector: 'app-project-chart',
@@ -15,7 +14,7 @@ import {SnackbarService} from '../../../services/snackbar.service';
 export class ProjectChartComponent implements OnInit, OnChanges {
 
   @Input() project: Project;
-  @Input() lastMeasurement!: {value: Measurement, of: Metric};
+  @Input() lastMeasurement!: {value: Measurement, of: Formula};
 
   public measures: Measurement[][] = [];
   public measurementValues: ChartPoint[][] = [];
@@ -31,7 +30,7 @@ export class ProjectChartComponent implements OnInit, OnChanges {
   }
 
   private fetch(): void {
-    this.project.metrics.map((m, index) => {
+    this.project.calculables.map((m, index) => {
       this.measurementService.getMeasurementFromMetric(m.id).subscribe(list => {
         this.setMeasures(list, index, m.name);
       });
@@ -70,7 +69,7 @@ export class ProjectChartComponent implements OnInit, OnChanges {
         this.lastMeasurement = changes[prop].currentValue;
       }
     }
-    if (this.lastMeasurement && this.project.metrics.filter(m => m.id === this.lastMeasurement.of.id)) {
+    if (this.lastMeasurement && this.project.calculables.filter(m => m.id === this.lastMeasurement.of.id)) {
       this.updateMeasures(this.lastMeasurement.value, this.lastMeasurement.of.name);
       console.log(this.lastMeasurement);
       console.log(this.chartDataSet);

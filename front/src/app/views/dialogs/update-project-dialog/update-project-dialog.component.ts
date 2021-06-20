@@ -43,9 +43,9 @@ export class UpdateProjectDialogComponent implements OnInit {
     this.projectForm.id = this.project.id;
     this.projectForm.name = this.project.name;
     this.projectForm.description = this.project.description;
-    this.projectForm.metrics = this.project.metrics.map(c => c.id);
+    this.projectForm.calculables = this.project.calculables.map(c => c.id);
 
-    this.selectedMetrics = this.everyMetric.filter(m => this.projectForm.metrics.indexOf(m.id) > -1);
+    this.selectedMetrics = this.everyMetric.filter(m => this.projectForm.calculables.indexOf(m.id) > -1);
     this.filteredMetrics = this.metricCtrl.valueChanges.pipe(
       startWith(null),
       map((m: string | null) => m ? this._filter(m) : this.left()));
@@ -78,7 +78,7 @@ export class UpdateProjectDialogComponent implements OnInit {
     if (input) {
       input.value = '';
     }
-    this.projectForm.metrics = this.selectedMetrics.map(m => m.id);
+    this.projectForm.calculables = this.selectedMetrics.map(m => m.id);
     this.metricCtrl.setValue(null);
   }
 
@@ -88,14 +88,14 @@ export class UpdateProjectDialogComponent implements OnInit {
     if (index >= 0) {
       this.selectedMetrics.splice(index, 1);
     }
-    this.projectForm.metrics = this.selectedMetrics.map(m1 => m1.id);
+    this.projectForm.calculables = this.selectedMetrics.map(m1 => m1.id);
   }
 
   selected(event: MatAutocompleteSelectedEvent): void {
     this.selectedMetrics.push(this.everyMetric.filter(m => m.name === event.option.value)[0]);
     this.metricsInput.nativeElement.value = '';
     this.metricCtrl.setValue(null);
-    this.projectForm.metrics = this.selectedMetrics.map(m1 => m1.id);
+    this.projectForm.calculables = this.selectedMetrics.map(m1 => m1.id);
   }
 
   private _filter(value: string): Metric[] {

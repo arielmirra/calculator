@@ -1,12 +1,13 @@
 export class Calculable {
 
   public static empty(): Calculable {
-    return new Calculable(-1, '', null, null, null, null);
+    return new Calculable(-1, '', '', null, null, null, null);
   }
 
   constructor(
     public id: number,
     public name: string,
+    public description: string,
     public left?: Calculable,
     public right?: Calculable,
     public operator?: Operator,
@@ -18,11 +19,12 @@ export class Calculable {
 export class CalculableForm {
 
   public static empty(): CalculableForm {
-    return new CalculableForm('', null, null, null, null);
+    return new CalculableForm('', '', null, null, null, null);
   }
 
   constructor(
     public name: string,
+    public description: string,
     public left?: number, // only id
     public id?: number,
     public right?: number,

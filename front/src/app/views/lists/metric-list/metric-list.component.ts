@@ -1,8 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {Metric} from '../../../models/Metric';
 import {SnackbarService} from '../../../services/snackbar.service';
 import {Router} from '@angular/router';
-import {MetricService} from '../../../services/metric.service';
 import {MatDialog} from '@angular/material/dialog';
 import {MetricMeasurementModalComponent} from './metric-measurement-modal/metric-measurement-modal.component';
 import {Calculable} from '../../../models/Calculable';
@@ -16,12 +14,11 @@ import {Measurement} from '../../../models/Measurement';
   styleUrls: ['./metric-list.component.scss']
 })
 export class MetricListComponent implements OnInit {
-  metrics: Metric[];
+  metrics: Calculable[];
   calculables: Calculable[];
   lastMeasurement?: Measurement;
 
   constructor(
-    private metricService: MetricService,
     private calculableService: CalculableService,
     private snackbar: SnackbarService,
     public dialog: MatDialog,
@@ -40,7 +37,7 @@ export class MetricListComponent implements OnInit {
     this.calculableService.fetchAll().subscribe(r => this.calculables = r);
   }
 
-  measure(m: Metric): void {
+  measure(m: Calculable): void {
     this.metricService.measure(m.id).subscribe(result => {
       this.dialog.open(MetricMeasurementModalComponent, {
         width: '550px',
@@ -55,7 +52,7 @@ export class MetricListComponent implements OnInit {
     this.router.navigate(['metric/new']);
   }
 
-  openDialog(metric: Metric): void {
+  openDialog(metric: Calculable): void {
     const dialogRef = this.dialog.open(UpdateMetricDialogComponent, {
       width: '400px',
       data: {actual: metric, metrics: this.metrics, calculables: this.calculables}

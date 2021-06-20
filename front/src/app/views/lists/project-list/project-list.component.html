@@ -36,7 +36,7 @@
           </mat-expansion-panel-header>
           <p><strong>Nombre:</strong> {{p.name}}</p>
           <p><strong>Descripción:</strong> {{p.description}}</p>
-          <p><strong>Métricas incluídas:</strong> {{p.metrics.length}}</p>
+          <p><strong>Métricas incluídas:</strong> {{p.calculables.length}}</p>
 
           <app-project-chart [project]="p" [lastMeasurement]="lastMeasurement"> </app-project-chart>
 

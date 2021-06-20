@@ -1,11 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, FormGroupDirective, Validators} from '@angular/forms';
-import {Calculable} from '../../../models/Calculable';
+import {Calculable, CalculableForm} from '../../../models/Calculable';
 import {Router} from '@angular/router';
 import {SnackbarService} from '../../../services/snackbar.service';
 import {CalculableService} from '../../../services/calculable.service';
-import {MetricService} from '../../../services/metric.service';
-import {Metric, MetricForm} from '../../../models/Metric';
 
 @Component({
   selector: 'app-metric-form',
@@ -14,7 +12,7 @@ import {Metric, MetricForm} from '../../../models/Metric';
 })
 export class MetricFormComponent implements OnInit {
   form: FormGroup;
-  metrics: Metric[];
+  metrics: Calculable[];
   calculables: Calculable[];
   selectedMetrics: number[] = [];
   selectedCalculables: number[] = [];
@@ -22,8 +20,7 @@ export class MetricFormComponent implements OnInit {
   constructor(
     private router: Router,
     private snackbarService: SnackbarService,
-    private calculableService: CalculableService,
-    private metricService: MetricService
+    private calculableService: CalculableService
   ) {
   }
 
@@ -39,7 +36,6 @@ export class MetricFormComponent implements OnInit {
 
   fetch(): void {
     this.calculableService.fetchAll().subscribe(list => this.calculables = list);
-    this.metricService.fetchAll().subscribe(list => this.metrics = list);
   }
 
   hasError(controlName: string, errorName: string): boolean {
@@ -47,7 +43,7 @@ export class MetricFormComponent implements OnInit {
   }
 
   newMetric(formDirective: FormGroupDirective): void {
-    const form = MetricForm.empty();
+    const form = CalculableForm.empty();
     form.name = this.form.controls.name.value;
     form.description = this.form.controls.description.value;
     form.metrics = this.selectedMetrics;

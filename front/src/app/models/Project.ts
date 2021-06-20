@@ -1,4 +1,4 @@
-import {Metric} from './Metric';
+import {Calculable} from './Calculable';
 
 export class Project {
 
@@ -10,7 +10,7 @@ export class Project {
     public id: number,
     public name: string,
     public description: string,
-    public metrics: Metric[],
+    public calculables: Calculable[],
   ) {
 
   }
@@ -26,7 +26,7 @@ export class ProjectForm {
     public name: string,
     public description: string,
     public id?: number,
-    public metrics?: number[]
+    public calculables?: number[]
   ) {
 
   }

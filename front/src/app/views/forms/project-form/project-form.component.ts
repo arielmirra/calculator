@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {SnackbarService} from '../../../services/snackbar.service';
-import {MetricService} from '../../../services/metric.service';
 import {FormControl, FormGroup, FormGroupDirective, Validators} from '@angular/forms';
-import {Metric} from '../../../models/Metric';
 import {ProjectService} from '../../../services/project.service';
 import {ProjectForm} from '../../../models/Project';
+import {Calculable} from '../../../models/Calculable';
+import {CalculableService} from '../../../services/calculable.service';
 
 @Component({
   selector: 'app-project-form',
@@ -14,13 +14,13 @@ import {ProjectForm} from '../../../models/Project';
 })
 export class ProjectFormComponent implements OnInit {
   form: FormGroup;
-  metrics: Metric[];
+  metrics: Calculable[];
   selectedMetrics: number[] = [];
 
   constructor(
     private router: Router,
     private snackbarService: SnackbarService,
-    private metricService: MetricService,
+    private metricService: CalculableService,
     private projectService: ProjectService
   ) {
   }
@@ -47,7 +47,7 @@ export class ProjectFormComponent implements OnInit {
     const form = ProjectForm.empty();
     form.name = this.form.controls.name.value;
     form.description = this.form.controls.description.value;
-    form.metrics = this.selectedMetrics;
+    form.calculables = this.selectedMetrics;
     console.log(form);
     this.projectService.addProject(form).subscribe(success => {
       this.resetForm(formDirective);

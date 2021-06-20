@@ -1,7 +1,6 @@
 import {Component, ElementRef, Inject, OnInit, ViewChild} from '@angular/core';
-import {Calculable} from '../../../models/Calculable';
+import {Calculable, CalculableForm} from '../../../models/Calculable';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {Metric, MetricForm} from '../../../models/Metric';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs';
@@ -18,13 +17,13 @@ const CALCULABLE_TYPE = 1;
 })
 export class UpdateMetricDialogComponent implements OnInit {
 
-  metric: Metric;
-  metricForm: MetricForm;
+  metric: Calculable;
+  metricForm: CalculableForm;
   everyCalculable: Calculable[];
-  everyMetric: Metric[];
+  everyMetric: Calculable[];
 
   selectedCalculables: Calculable[];
-  selectedMetrics: Metric[];
+  selectedMetrics: Calculable[];
 
   selectable = true;
   removable = true;
@@ -32,7 +31,7 @@ export class UpdateMetricDialogComponent implements OnInit {
   calculableCtrl = new FormControl();
   metricCtrl = new FormControl();
   filteredCalculables: Observable<Calculable[]>;
-  filteredMetrics: Observable<Metric[]>;
+  filteredMetrics: Observable<Calculable[]>;
 
   @ViewChild('metricsInput') metricsInput: ElementRef<HTMLInputElement>;
   @ViewChild('calculablesInput') calculablesInput: ElementRef<HTMLInputElement>;
@@ -48,7 +47,7 @@ export class UpdateMetricDialogComponent implements OnInit {
     this.metric = this.data.actual;
     this.everyMetric = this.data.metrics.filter(c => c.id !== this.data.actual.id);
     this.everyCalculable = this.data.calculables;
-    this.metricForm = MetricForm.empty();
+    this.metricForm = CalculableForm.empty();
     this.metricForm.id = this.metric.id;
     this.metricForm.name = this.metric.name;
     this.metricForm.description = this.metric.description;
