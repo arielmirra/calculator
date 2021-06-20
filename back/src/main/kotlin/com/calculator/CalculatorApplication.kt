@@ -18,7 +18,6 @@ class CalculatorApplication {
     fun setup(
     companyRepository: CompanyRepository,
     projectRepository: ProjectRepository,
-    metricRepository: MetricRepository,
     calculableRepository: CalculableRepository,
     measurementRepository: MeasurementRepository,
     formulaRepository: FormulaRepository
@@ -26,7 +25,6 @@ class CalculatorApplication {
         return CommandLineRunner {
             companyRepository.deleteAll()
             projectRepository.deleteAll()
-            metricRepository.deleteAll()
             calculableRepository.deleteAll()
             measurementRepository.deleteAll()
             formulaRepository.deleteAll()
@@ -37,7 +35,6 @@ class CalculatorApplication {
     fun testSetup(
         companyRepository: CompanyRepository,
         projectRepository: ProjectRepository,
-        metricRepository: MetricRepository,
         calculableRepository: CalculableRepository,
         measurementRepository: MeasurementRepository,
         formulaRepository: FormulaRepository
@@ -45,7 +42,6 @@ class CalculatorApplication {
         return CommandLineRunner {
             companyRepository.deleteAll()
             projectRepository.deleteAll()
-            metricRepository.deleteAll()
             calculableRepository.deleteAll()
             measurementRepository.deleteAll()
             formulaRepository.deleteAll()
@@ -65,23 +61,23 @@ class CalculatorApplication {
                 operator = Operator.PLUS
             ))
 
-            val testMetric = metricRepository.save(Metric(
-                name = "test",
-                description = "test metric",
-                calculates = mutableSetOf(simpleCalc, simpleCalc2)
-            ))
-
-            val emptyMetric = metricRepository.save(Metric(
-                name = "empty",
-                description = "empty"
-            ))
-
-            val complexMetric = metricRepository.save(Metric(
-                name = "complexMetric",
-                description = "complex metric",
-                calculates = mutableSetOf(complexCalc),
-                metrics = mutableSetOf(emptyMetric)
-            ))
+//            val testMetric = metricRepository.save(Metric(
+//                name = "test",
+//                description = "test metric",
+//                calculates = mutableSetOf(simpleCalc, simpleCalc2)
+//            ))
+//
+//            val emptyMetric = metricRepository.save(Metric(
+//                name = "empty",
+//                description = "empty"
+//            ))
+//
+//            val complexMetric = metricRepository.save(Metric(
+//                name = "complexMetric",
+//                description = "complex metric",
+//                calculates = mutableSetOf(complexCalc),
+//                metrics = mutableSetOf(emptyMetric)
+//            ))
 
             val emptyProject = projectRepository.save(Project(
                 name = "emptyProject",
@@ -91,7 +87,7 @@ class CalculatorApplication {
             val project = projectRepository.save(Project(
                 name = "project",
                 description = "project with a metric",
-                metrics = mutableSetOf(complexMetric)
+                calculables = mutableSetOf(complexCalc)
             ))
 
             val emptyCompany = companyRepository.save(Company(

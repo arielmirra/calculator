@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service
 
 @Service
 class MeasurementService(
-    @Autowired private val metricService: MetricService,
     @Autowired private val measurementRepository: MeasurementRepository,
 ) {
     fun getAll(): List<Measurement> = measurementRepository.findAll()

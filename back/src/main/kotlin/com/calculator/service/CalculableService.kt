@@ -75,10 +75,8 @@ class CalculableService(
 
     fun delete(id: Long): Boolean =
         findById(id)?.let {
-            if (calculableRepository.calcUsage(id).isEmpty()) {
-                deleteById(id)
-                true
-            } else false
+            deleteById(id)
+            true
         } ?: false
 
     private fun hasOperator(form: CalculableForm) = form.operator != null

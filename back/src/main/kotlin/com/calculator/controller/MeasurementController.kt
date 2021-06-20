@@ -1,7 +1,6 @@
 package com.calculator.controller
 
 import com.calculator.model.Measurement
-import com.calculator.model.Metric
 import com.calculator.service.MeasurementService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
