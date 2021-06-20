@@ -8,17 +8,10 @@ data class CalculableForm(
     val value: Double?
 )
 
-data class MetricForm(
-    val name: String,
-    val description: String,
-    val metrics: MutableList<Long>,
-    val calculates: MutableList<Long>
-)
-
 data class ProjectForm(
     val name: String,
     val description: String,
-    val metrics: MutableList<Long>
+    val calculables: MutableList<Long>
 )
 
 data class CompanyForm(

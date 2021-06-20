@@ -21,41 +21,15 @@ data class Project(
     var description: String = "",
     val date: LocalDateTime = LocalDateTime.now(),
     @Relationship(type = "metrics")
-    var metrics: MutableSet<Metric> = mutableSetOf()
+    var calculables: MutableSet<Calculable> = mutableSetOf()
 )
-
-
-@Node
-data class Metric(
-    @Id @GeneratedValue val id: Long = -1,
-    var name: String = "",
-    var description: String = "",
-    @Relationship(type = "has_metrics")
-    var metrics: MutableSet<Metric> = mutableSetOf(),
-    @Relationship(type = "calculates")
-    var calculates: MutableSet<Calculable> = mutableSetOf()
-) {
-    fun measures(metric: Metric) = metrics.add(metric)
-
-    fun measure(): Double {
-        var result = if (metrics.isEmpty()) 0.0 else metrics.sumOf { m -> m.measure() }
-        if (calculates.isNotEmpty()) result += calculateCalculables()
-        return result
-    }
-
-    fun calculates(calculable: Calculable) = calculates.add(calculable)
-
-    private fun calculateCalculables(): Double {
-        return if (calculates.isNotEmpty()) calculates.sumOf { c -> c.calculate() }
-        else 0.0
-    }
-}
 
 
 @Node
 data class Calculable(
     @Id @GeneratedValue val id: Long = -1,
     var name: String = "",
+    var description: String = "",
     @Relationship(type = "left")
     var left: Calculable? = null,
     @Relationship(type = "right")
@@ -77,6 +51,10 @@ data class Calculable(
             Calculable(name = name, value = value)
         }
     }
+}
+
+enum class CalculableType {
+    METRIC, OPERATOR, VALUE
 }
 
 enum class Operator : BinaryOperator<Double>, DoubleBinaryOperator {

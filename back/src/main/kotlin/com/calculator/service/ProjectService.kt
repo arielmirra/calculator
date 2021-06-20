@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service
 @Service
 class ProjectService(
     @Autowired private val projectRepository: ProjectRepository,
-    @Autowired private val metricRepository: MetricRepository
+    @Autowired private val calculableRepository: CalculableRepository
 ) {
 
     fun getAll(): List<Project> = projectRepository.findAll()
@@ -18,12 +18,12 @@ class ProjectService(
     fun deleteById(id: Long) = projectRepository.deleteById(id)
 
     fun create(form: ProjectForm): Project? {
-        val metrics = parseMetrics(form)
+        val calculables = parseCalculables(form)
 
         val project = Project(
             name = form.name,
             description = form.description,
-            metrics = metrics
+            calculables = calculables
         )
 
         return save(project)
@@ -32,7 +32,7 @@ class ProjectService(
     fun update(id: Long, form: ProjectForm): Boolean = findById(id)?.let {
         it.name = form.name
         it.description = form.description
-        it.metrics = parseMetrics(form)
+        it.calculables = parseCalculables(form)
 
         save(it)
         true
@@ -43,9 +43,9 @@ class ProjectService(
         true
     } ?: false
 
-    private fun parseMetrics(form: ProjectForm): MutableSet<Metric> {
-        return form.metrics
-            .map { metricRepository.findById(it) }
+    private fun parseCalculables(form: ProjectForm): MutableSet<Calculable> {
+        return form.calculables
+            .map { calculableRepository.findById(it) }
             .filter { it.isPresent }
             .map { it.get() }
             .toMutableSet()
