@@ -13,7 +13,7 @@
 
     </mat-toolbar>
 
-    <mat-card-content class="plan-list">
+    <mat-card-content class="list">
 
       <div *ngIf="metrics.length === 0" class="empty-list">
         <h1>No se encuentra ninguna métrica</h1>
@@ -34,10 +34,11 @@
 
             </mat-panel-title>
           </mat-expansion-panel-header>
-            <p><strong>Nombre:</strong> {{m.name}}</p>
-            <p><strong>Descripción:</strong> {{m.description}}</p>
-            <p><strong>Métricas incluídas:</strong> {{m.metrics.length}}</p>
-            <p><strong>Cálculos incluídos:</strong> {{m.calculates.length}}</p>
+          <p><strong>Nombre:</strong> {{m.name}}</p>
+          <p><strong>Descripción:</strong> {{m.description}}</p>
+          <p><strong>1er término:</strong> {{m.left.name}}</p>
+          <p><strong>Operador entre ellos:</strong> {{m.operator}}</p>
+          <p><strong>2do término:</strong> {{m.right.name}}</p>
 
           <app-metric-chart [metric]="m" [lastMeasurement]="lastMeasurement"></app-metric-chart>
 

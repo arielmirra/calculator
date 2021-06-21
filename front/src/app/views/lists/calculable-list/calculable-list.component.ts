@@ -29,10 +29,6 @@ export class CalculableListComponent implements OnInit {
     this.calculableService.fetchAll().subscribe(list => this.calculables = list);
   }
 
-  calculate(calc: Calculable): void {
-    this.calculableService.calculate(calc.id).subscribe(result => this.snackbar.openSnackbar(`El resultado del cálculo es ${result}`));
-  }
-
   createCalc(): void {
     this.router.navigate(['calculable/new']);
   }

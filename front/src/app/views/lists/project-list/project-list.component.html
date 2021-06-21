@@ -13,7 +13,7 @@
 
     </mat-toolbar>
 
-    <mat-card-content class="plan-list">
+    <mat-card-content class="list">
 
       <div *ngIf="projects.length === 0" class="empty-list">
         <h1>No se encuentra ningún proyecto</h1>
@@ -38,6 +38,7 @@
           <p><strong>Descripción:</strong> {{p.description}}</p>
           <p><strong>Métricas incluídas:</strong> {{p.calculables.length}}</p>
 
+<!--          TODO: change this-->
           <app-project-chart [project]="p" [lastMeasurement]="lastMeasurement"> </app-project-chart>
 
 <!--          <button mat-button color="primary">-->

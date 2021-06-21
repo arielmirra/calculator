@@ -3,6 +3,7 @@ import {HttpService} from './http.service';
 import {Observable, of} from 'rxjs';
 import {catchError, map} from 'rxjs/operators';
 import {Calculable, CalculableForm} from '../models/Calculable';
+import {Formula} from '../models/Formula';
 
 @Injectable({
   providedIn: 'root'
@@ -90,11 +91,12 @@ export class CalculableService {
       );
   }
 
-  calculate(id: number): Observable<number> {
-    return this.http.get(`${this.basePath}calculate/${id}`)
+  measure(id: number): Observable<Formula> {
+    return this.http.get(`${this.basePath}measure/${id}`)
       .pipe(
         map(response => {
-          return response.body;
+          console.log('formula object from back-end: \n' + response.body);
+          return Object.assign(Formula.empty(), response.body);
         }),
         catchError(err => {
           console.log(err);

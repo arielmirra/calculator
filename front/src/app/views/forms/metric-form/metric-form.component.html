@@ -2,11 +2,13 @@
   <mat-card>
     <mat-card-header>
       <mat-card-title>Creá una métrica</mat-card-title>
-      <mat-card-subtitle>Cada métrica puede tener otras métricas y cálculos
-        dentro que utiliza para realizar su medición final</mat-card-subtitle>
+      <mat-card-subtitle>Cada métrica puede tener otras métricas y/o cálculos
+        dentro que utiliza para realizar su medición final
+      </mat-card-subtitle>
     </mat-card-header>
-    <form [formGroup]="form" #formDirective="ngForm" novalidate autocomplete="off">
+    <form [formGroup]="form" novalidate #formDirective="ngForm" autocomplete="off">
       <mat-card-content>
+
         <mat-form-field appearance="outline">
           <mat-label>Nombre</mat-label>
           <input
@@ -14,32 +16,45 @@
             type="text"
             formControlName="name"
             placeholder="Nombre">
-          <mat-error *ngIf="hasError('name', 'required')">Esta entrada debe ser correcta</mat-error>
-          </mat-form-field>
+          <mat-error *ngIf="hasError('name', 'required')">Esta entrada es requerida</mat-error>
+        </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Descripción</mat-label>
-          <input
+          <mat-label>Descripción de la métrica</mat-label>
+          <textarea
             matInput
             type="text"
             formControlName="description"
-            placeholder="Descripción">
-          <mat-error *ngIf="hasError('description', 'required')">Esta entrada debe ser correcta</mat-error>
+            placeholder="Descripción"
+            cdkTextareaAutosize>
+          </textarea>
+          <mat-error *ngIf="hasError('description', 'required')">Esta entrada es requerida</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Métricas incluídas</mat-label>
-          <mat-select [(value)]="selectedMetrics" multiple>
-            <mat-option *ngFor="let m of metrics" value="{{m.id}}">{{m.name}}</mat-option>
-          </mat-select>
-        </mat-form-field>
-
-        <mat-form-field appearance="outline">
-          <mat-label>Cálculos incluídos</mat-label>
-          <mat-select [(value)]="selectedCalculables" multiple>
+          <mat-label>Primer término</mat-label>
+          <mat-select [(value)]="left" placeholder="Primer término">
             <mat-option *ngFor="let calc of calculables" value="{{calc.id}}">{{calc.name}}</mat-option>
           </mat-select>
         </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Operador entre términos</mat-label>
+          <mat-select [(value)]="operator" placeholder="Operador entre términos">
+            <mat-option value="PLUS">Sumar</mat-option>
+            <mat-option value="MINUS">Restar</mat-option>
+            <mat-option value="TIMES">Multiplicar</mat-option>
+            <mat-option value="DIVIDE">Dividir</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Segundo término</mat-label>
+          <mat-select [(value)]="right" placeholder="Segundo término">
+            <mat-option *ngFor="let calc of calculables" value="{{calc.id}}">{{calc.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
       </mat-card-content>
       <mat-card-actions>
         <button mat-raised-button
@@ -50,7 +65,6 @@
           Guardar
         </button>
       </mat-card-actions>
-
     </form>
   </mat-card>
 

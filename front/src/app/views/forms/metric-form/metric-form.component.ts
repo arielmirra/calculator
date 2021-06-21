@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, FormGroupDirective, Validators} from '@angular/forms';
-import {Calculable, CalculableForm} from '../../../models/Calculable';
+import {Calculable, CalculableForm, Operator} from '../../../models/Calculable';
 import {Router} from '@angular/router';
 import {SnackbarService} from '../../../services/snackbar.service';
 import {CalculableService} from '../../../services/calculable.service';
@@ -12,10 +12,10 @@ import {CalculableService} from '../../../services/calculable.service';
 })
 export class MetricFormComponent implements OnInit {
   form: FormGroup;
-  metrics: Calculable[];
+  operator: Operator;
+  left: number;
+  right: number;
   calculables: Calculable[];
-  selectedMetrics: number[] = [];
-  selectedCalculables: number[] = [];
 
   constructor(
     private router: Router,
@@ -45,29 +45,30 @@ export class MetricFormComponent implements OnInit {
   newMetric(formDirective: FormGroupDirective): void {
     const form = CalculableForm.empty();
     form.name = this.form.controls.name.value;
-    form.description = this.form.controls.description.value;
-    form.metrics = this.selectedMetrics;
-    form.calculates = this.selectedCalculables;
+    form.left = this.left;
+    form.right = this.right;
+    form.operator = this.operator;
     console.log(form);
-    this.metricService.addMetric(form).subscribe(success => {
+    this.calculableService.addCalculable(form).subscribe(success => {
       this.resetForm(formDirective);
       if (success) {
         this.fetch();
-        this.snackbarService.openSnackbar('Métrica guardada satisfactoriamente', 'Crear Calculos', '/calculable/new');
+        this.snackbarService.openSnackbar('Métrica guardada satisfactoriamente');
       } else {
-        this.snackbarService.openSnackbar('No se han podido guardar los cambios.');
+        this.snackbarService.openSnackbar('No se ha podido guardar los cambios');
       }
     });
   }
 
   private resetForm(formDirective: FormGroupDirective): void {
-    this.form.reset();
     formDirective.resetForm();
-    this.selectedCalculables = [];
-    this.selectedMetrics = [];
+    this.form.reset();
+    this.operator = null;
+    this.left = null;
+    this.right = null;
   }
 
   isValid(form: FormGroup): boolean {
-    return form.valid;
+    return form.valid && !!this.operator;
   }
 }

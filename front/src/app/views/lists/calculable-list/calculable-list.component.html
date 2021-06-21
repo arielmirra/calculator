@@ -14,7 +14,7 @@
 
     </mat-toolbar>
 
-    <mat-card-content class="plan-list">
+    <mat-card-content class="list">
 
       <div *ngIf="calculables.length === 0" class="empty-list">
         <h1>No se encuentra ningún Calculable</h1>
@@ -46,13 +46,6 @@
             <p><strong>Operador entre ellos:</strong> {{calc.operator}}</p>
             <p *ngIf="calc.right"><strong>2do término:</strong> {{calc.right.name}}</p>
           </div>
-
-          <button mat-button color="primary"
-                  (click)="calculate(calc)" *ngIf="calc.operator">
-            Calcular
-          </button>
-
-
         </mat-expansion-panel>
       </mat-accordion>
     </mat-card-content>

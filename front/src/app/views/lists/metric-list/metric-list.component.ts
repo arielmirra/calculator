@@ -2,11 +2,11 @@ import {Component, OnInit} from '@angular/core';
 import {SnackbarService} from '../../../services/snackbar.service';
 import {Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
-import {MetricMeasurementModalComponent} from './metric-measurement-modal/metric-measurement-modal.component';
 import {Calculable} from '../../../models/Calculable';
-import {UpdateMetricDialogComponent} from '../../dialogs/update-metric-dialog/update-metric-dialog.component';
 import {CalculableService} from '../../../services/calculable.service';
 import {Measurement} from '../../../models/Measurement';
+import {FormulaModalComponent} from './formula-modal/formula-modal.component';
+import {UpdateCalculableDialogComponent} from '../../dialogs/update-calculable-dialog/update-calculable-dialog.component';
 
 @Component({
   selector: 'app-metric-list',
@@ -30,21 +30,16 @@ export class MetricListComponent implements OnInit {
   }
 
   fetch(): void {
-    this.metricService.fetchAll().subscribe(list => {
-      console.log(list);
-      this.metrics = list;
-    });
     this.calculableService.fetchAll().subscribe(r => this.calculables = r);
+    this.metrics = this.calculables.filter(c => c.description !== '');
   }
 
   measure(m: Calculable): void {
-    this.metricService.measure(m.id).subscribe(result => {
-      this.dialog.open(MetricMeasurementModalComponent, {
+    this.calculableService.measure(m.id).subscribe(formula => {
+      this.dialog.open(FormulaModalComponent, {
         width: '550px',
-        data: {measure: result}
+        data: {formula}
       });
-      this.lastMeasurement = result;
-      console.log(this.lastMeasurement);
     });
   }
 
@@ -53,16 +48,16 @@ export class MetricListComponent implements OnInit {
   }
 
   openDialog(metric: Calculable): void {
-    const dialogRef = this.dialog.open(UpdateMetricDialogComponent, {
+    const dialogRef = this.dialog.open(UpdateCalculableDialogComponent, {
       width: '400px',
-      data: {actual: metric, metrics: this.metrics, calculables: this.calculables}
+      data: {actual: metric, calculables: this.calculables}
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(result);
-      this.metricService.updateMetric(result).subscribe(success => {
+      this.calculableService.updateCalculable(result, result.id).subscribe(success => {
         if (success) {
-          this.snackbar.openSnackbar('Cálculo guardado satisfactoriamente');
+          this.snackbar.openSnackbar('Cambios guardados satisfactoriamente');
           this.fetch();
         } else {
           this.snackbar.openSnackbar('No se ha podido guardar los cambios');

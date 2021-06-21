@@ -37,7 +37,6 @@ export class CalculableFormComponent implements OnInit {
     this.form = new FormGroup({
       name: new FormControl('', [Validators.required, Validators.minLength(minInputLength), Validators.maxLength(maxInputLength)]),
     });
-
     this.fetch();
   }
 

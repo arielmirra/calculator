@@ -12,7 +12,8 @@
             name="name"
             type="text"
             [(ngModel)]="calculableForm.name">
-          <mat-error *ngIf="!calculableForm.name || calculableForm.name === ''">Esta entrada debe ser correcta</mat-error>
+          <mat-error *ngIf="!calculableForm.name || calculableForm.name === ''">Esta entrada debe ser correcta
+          </mat-error>
         </mat-form-field>
       </mat-card-content>
     </form>
@@ -29,7 +30,22 @@
             name="name"
             type="text"
             [(ngModel)]="calculableForm.name">
-          <mat-error *ngIf="!calculableForm.name || calculableForm.name === ''">Esta entrada debe ser correcta</mat-error>
+          <mat-error *ngIf="!calculableForm.name || calculableForm.name === ''">Esta entrada debe ser correcta
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="calculable.description !== ''" style="display: block" appearance="outline">
+          <mat-label>Descripción</mat-label>
+          <textarea
+            matInput
+            name="description"
+            type="text"
+            [(ngModel)]="calculableForm.description"
+            cdkTextareaAutosize>
+            </textarea>
+          <mat-error *ngIf="!calculableForm.description || calculableForm.description === ''">Esta entrada debe ser
+            correcta
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field style="display: block" appearance="outline">
@@ -62,6 +78,6 @@
 
 </div>
 <div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">Close</button>
-  <button mat-button [mat-dialog-close]="calculableForm">Update</button>
+  <button mat-button (click)="onNoClick()">Cerrar</button>
+  <button mat-button [mat-dialog-close]="calculableForm">Guardar cambios</button>
 </div>
