@@ -1,9 +1,9 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {Metric} from '../../../models/Metric';
 import {ChartDataSets, ChartPoint} from 'chart.js';
 import {MeasurementService} from '../../../services/measurement.service';
 import {Measurement} from '../../../models/Measurement';
 import {DatePipe} from '@angular/common';
+import {Calculable} from '../../../models/Calculable';
 
 @Component({
   selector: 'app-metric-chart',
@@ -12,7 +12,7 @@ import {DatePipe} from '@angular/common';
 })
 export class MetricChartComponent implements OnInit, OnChanges {
 
-  @Input() metric: Metric;
+  @Input() metric: Calculable;
   @Input() lastMeasurement!: Measurement;
 
   public measures: Measurement[];
@@ -65,7 +65,7 @@ export class MetricChartComponent implements OnInit, OnChanges {
         this.lastMeasurement = changes[prop].currentValue;
       }
     }
-    if (this.lastMeasurement && this.lastMeasurement.metricId === this.metric.id) {
+    if (this.lastMeasurement && this.lastMeasurement.from.calcTree.id === this.metric.id) {
       this.updateMeasures(this.lastMeasurement);
       console.log(this.lastMeasurement);
       console.log(this.chartDataSet);

@@ -5,8 +5,8 @@ import {Router} from '@angular/router';
 import {Project} from '../../../models/Project';
 import {ProjectService} from '../../../services/project.service';
 import {UpdateProjectDialogComponent} from '../../dialogs/update-project-dialog/update-project-dialog.component';
-import {MetricService} from '../../../services/metric.service';
-import {Metric} from '../../../models/Metric';
+// import {MetricService} from '../../../services/metric.service';
+// import {Metric} from '../../../models/Metric';
 import {Measurement} from '../../../models/Measurement';
 
 @Component({
@@ -16,12 +16,12 @@ import {Measurement} from '../../../models/Measurement';
 })
 export class ProjectListComponent implements OnInit {
   projects: Project[];
-  metrics: Metric[];
-  lastMeasurement?: {value: Measurement, of: Metric};
+  // metrics: Metric[];
+  lastMeasurement?: {value: Measurement, of: number};
 
   constructor(
     private projectService: ProjectService,
-    private metricService: MetricService,
+    // private metricService: MetricService,
     private snackbar: SnackbarService,
     public dialog: MatDialog,
     private router: Router) {
@@ -36,9 +36,9 @@ export class ProjectListComponent implements OnInit {
       console.log(list);
       this.projects = list;
     });
-    this.metricService.fetchAll().subscribe(list => {
-      this.metrics = list;
-    });
+    // this.metricService.fetchAll().subscribe(list => {
+    //   this.metrics = list;
+    // });
   }
 
   createProject(): void {
@@ -48,7 +48,7 @@ export class ProjectListComponent implements OnInit {
   openDialog(project: Project): void {
     const dialogRef = this.dialog.open(UpdateProjectDialogComponent, {
       width: '400px',
-      data: {actual: project, metrics: this.metrics}
+      data: {actual: project, metrics: 0/*this.metrics*/}
     });
 
     dialogRef.afterClosed().subscribe(result => {

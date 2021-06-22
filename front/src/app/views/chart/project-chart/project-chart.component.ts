@@ -70,7 +70,7 @@ export class ProjectChartComponent implements OnInit, OnChanges {
       }
     }
     if (this.lastMeasurement && this.project.calculables.filter(m => m.id === this.lastMeasurement.of.id)) {
-      this.updateMeasures(this.lastMeasurement.value, this.lastMeasurement.of.name);
+      this.updateMeasures(this.lastMeasurement.value, this.lastMeasurement.of.calcTree.name);
       console.log(this.lastMeasurement);
       console.log(this.chartDataSet);
     }

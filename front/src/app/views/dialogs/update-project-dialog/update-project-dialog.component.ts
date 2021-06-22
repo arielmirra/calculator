@@ -1,5 +1,4 @@
 import {Component, ElementRef, Inject, OnInit, ViewChild} from '@angular/core';
-import {Metric, MetricForm} from '../../../models/Metric';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {Project, ProjectForm} from '../../../models/Project';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
@@ -8,6 +7,7 @@ import {Observable} from 'rxjs';
 import {MatAutocomplete, MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
 import {MatChipInputEvent} from '@angular/material/chips';
 import {map, startWith} from 'rxjs/operators';
+import {Calculable, CalculableForm} from '../../../models/Calculable';
 
 @Component({
   selector: 'app-update-project-dialog',
@@ -18,14 +18,14 @@ export class UpdateProjectDialogComponent implements OnInit {
 
   project: Project;
   projectForm: ProjectForm;
-  everyMetric: Metric[];
-  selectedMetrics: Metric[];
+  everyMetric: Calculable[];
+  selectedMetrics: Calculable[];
 
   selectable = true;
   removable = true;
   separatorKeysCodes: number[] = [ENTER, COMMA];
   metricCtrl = new FormControl();
-  filteredMetrics: Observable<Metric[]>;
+  filteredMetrics: Observable<Calculable[]>;
 
   @ViewChild('metricsInput') metricsInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto') matAutocomplete: MatAutocomplete;
@@ -39,7 +39,7 @@ export class UpdateProjectDialogComponent implements OnInit {
     console.log(this.data.actual);
     this.project = this.data.actual;
     this.everyMetric = this.data.metrics;
-    this.projectForm = MetricForm.empty();
+    this.projectForm = CalculableForm.empty();
     this.projectForm.id = this.project.id;
     this.projectForm.name = this.project.name;
     this.projectForm.description = this.project.description;
@@ -98,12 +98,12 @@ export class UpdateProjectDialogComponent implements OnInit {
     this.projectForm.calculables = this.selectedMetrics.map(m1 => m1.id);
   }
 
-  private _filter(value: string): Metric[] {
+  private _filter(value: string): Calculable[] {
     const filterValue = value.toLowerCase();
     return this.left().filter(m => m.name.toLowerCase().indexOf(filterValue) === 0);
   }
 
-  private left(): Metric[] {
+  private left(): Calculable[] {
     return this.everyMetric.filter(m => this.selectedMetrics.indexOf(m) < 0);
   }
 }
