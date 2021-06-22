@@ -38,9 +38,22 @@ export class MetricListComponent implements OnInit {
 
   measure(m: Calculable): void {
     this.calculableService.measure(m.id).subscribe(formula => {
-      this.dialog.open(FormulaModalComponent, {
+      const dialogRef = this.dialog.open(FormulaModalComponent, {
         width: '550px',
         data: {formula}
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        console.log(result);
+        // TODO send filled formula (result)
+        // this.calculableService.updateCalculable(result, result.id).subscribe(success => {
+        //   if (success) {
+        //     this.snackbar.openSnackbar('Cambios guardados satisfactoriamente');
+        //     this.fetch();
+        //   } else {
+        //     this.snackbar.openSnackbar('No se ha podido guardar los cambios');
+        //   }
+        // });
       });
     });
   }

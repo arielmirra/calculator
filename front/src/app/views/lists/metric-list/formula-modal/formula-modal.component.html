@@ -1,1 +1,30 @@
-<!--TODO: create a form to fill in formula variables-->
+<div class="material-card-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title> Complete los valores de las variables </mat-card-title>
+<!--      <mat-card-subtitle>Cada métrica puede tener otras métricas y/o cálculos-->
+<!--        dentro que utiliza para realizar su medición final-->
+<!--      </mat-card-subtitle>-->
+    </mat-card-header>
+    <form novalidate autocomplete="off">
+      <mat-card-content>
+
+        <mat-form-field *ngFor="let variable of variables" appearance="outline">
+          <mat-label>{{variable[0]}}</mat-label>
+          <input
+            matInput
+            type="number"
+            [(ngModel)]="variable[1]"
+            placeholder="Nombre">
+          <mat-error *ngIf="!variable[1]">Esta entrada es requerida</mat-error>
+        </mat-form-field>
+      </mat-card-content>
+    </form>
+  </mat-card>
+
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cerrar</button>
+  <button mat-button [disabled]="!isValid()"
+          [mat-dialog-close]="getFinalFormula()">Guardar</button>
+</div>
