@@ -45,6 +45,7 @@ export class MetricFormComponent implements OnInit {
   newMetric(formDirective: FormGroupDirective): void {
     const form = CalculableForm.empty();
     form.name = this.form.controls.name.value;
+    form.description = this.form.controls.description.value;
     form.left = this.left;
     form.right = this.right;
     form.operator = this.operator;

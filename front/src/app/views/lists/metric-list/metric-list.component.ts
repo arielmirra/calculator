@@ -30,8 +30,10 @@ export class MetricListComponent implements OnInit {
   }
 
   fetch(): void {
-    this.calculableService.fetchAll().subscribe(r => this.calculables = r);
-    this.metrics = this.calculables.filter(c => c.description !== '');
+    this.calculableService.fetchAll().subscribe(r => {
+      this.calculables = r;
+      this.metrics = r.filter(c => c.description !== '');
+    });
   }
 
   measure(m: Calculable): void {

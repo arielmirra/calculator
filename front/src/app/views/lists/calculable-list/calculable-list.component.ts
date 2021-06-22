@@ -26,7 +26,10 @@ export class CalculableListComponent implements OnInit {
   }
 
   fetch(): void {
-    this.calculableService.fetchAll().subscribe(list => this.calculables = list);
+    this.calculableService.fetchAll().subscribe(list => {
+      console.log(list);
+      this.calculables = list.filter(c => c.description === '' || !c.description)
+    });
   }
 
   createCalc(): void {
