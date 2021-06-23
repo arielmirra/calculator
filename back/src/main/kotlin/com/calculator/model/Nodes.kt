@@ -79,7 +79,9 @@ enum class Operator : BinaryOperator<Double>, DoubleBinaryOperator {
 data class Formula(
     @Id @GeneratedValue val id: Long = -1,
     var calcTree: Calculable,
-    @CompositeProperty var variables: MutableMap<String, Double> = mutableMapOf()
+    @CompositeProperty var variables: MutableMap<String, Double> = mutableMapOf(),
+    @Relationship(type = "from")
+    val fromId: Long,
 )
 
 @Node

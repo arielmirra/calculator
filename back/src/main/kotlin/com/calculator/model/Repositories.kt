@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface MeasurementRepository : Neo4jRepository<Measurement, Long> {
-
+    fun findAllByFrom_FromId(id: Long): List<Measurement>
 }
 
 @Repository

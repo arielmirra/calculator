@@ -14,8 +14,8 @@ class MeasurementService(
     fun save(measurement: Measurement) = measurementRepository.save(measurement)
     fun deleteById(id: Long) = measurementRepository.deleteById(id)
 
-//    fun findAllFromMetricId(id: Long): List<Measurement> =
-//        measurementRepository.findAllByMetricId(id)
+    fun findAllFromMetricId(id: Long): List<Measurement> =
+        measurementRepository.findAllByFrom_FromId(id)
 
 
     fun delete(id: Long): Boolean = findById(id)?.let {

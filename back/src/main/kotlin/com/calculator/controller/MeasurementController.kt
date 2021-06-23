@@ -20,7 +20,7 @@ class MeasurementController(
     fun getById(@PathVariable id: Long): ResponseEntity<Measurement> =
         measurementService.findById(id)?.let { ok(it) } ?: notFound()
 
-//    @GetMapping("/from/{id}")
-//    fun getAllFromMetric(@PathVariable id: Long): List<Measurement> =
-//        measurementService.findAllFromMetricId(id)
+    @GetMapping("/from/{id}")
+    fun getAllFromMetric(@PathVariable id: Long): List<Measurement> =
+        measurementService.findAllFromMetricId(id)
 }

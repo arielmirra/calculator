@@ -25,16 +25,17 @@ class FormulaService(
         } ?: false
 
     fun createFromCalculable(calculable: Calculable): Formula {
-        val formula = Formula(calcTree = calculable.deepCopy())
+        val formula = Formula(
+            calcTree = calculable.deepCopy(),
+            fromId = calculable.id
+        )
         getValues(formula.calcTree, formula.variables)
         val result = formulaRepository.save(formula)
         return formulaRepository.findByIdOrNull(result.id)!!
     }
 
     fun calculate(formula: Formula): Measurement {
-        println(formula)
         putValues(formula.calcTree, formula.variables)
-        println(formula)
         return measurementRepository.save(Measurement(
             value = formula.calcTree.calculate(),
             from = formula,

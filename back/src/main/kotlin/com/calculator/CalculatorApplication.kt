@@ -47,15 +47,15 @@ class CalculatorApplication {
             formulaRepository.deleteAll()
 
             val simpleCalc = calculableRepository.save(Calculable(
-                name = "1",
+                name = "cálculo 1",
             ))
 
             val simpleCalc2 = calculableRepository.save(Calculable(
-                name = "2",
+                name = "cálculo 2",
             ))
 
             val complexCalc = calculableRepository.save(Calculable(
-                name = "3",
+                name = "cálculo complejo",
                 left = simpleCalc,
                 right = simpleCalc2,
                 operator = Operator.PLUS
@@ -80,24 +80,24 @@ class CalculatorApplication {
 //            ))
 
             val emptyProject = projectRepository.save(Project(
-                name = "emptyProject",
+                name = "Proyecto vacío",
                 description = "empty project"
             ))
 
             val project = projectRepository.save(Project(
-                name = "project",
-                description = "project with a metric",
+                name = "proyecto normal",
+                description = "proyecto con una métrica",
                 calculables = mutableSetOf(complexCalc)
             ))
 
             val emptyCompany = companyRepository.save(Company(
-                name = "emptyCompany",
-                description = "empty company"
+                name = "empresa vacía",
+                description = "compañía vacía"
             ))
 
             val company = companyRepository.save(Company(
-                name = "company",
-                description = "company with a project",
+                name = "Empresa normal",
+                description = "Empresa con un proyecto dentro",
                 projects = mutableSetOf(project)
             ))
 
