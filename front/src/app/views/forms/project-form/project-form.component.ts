@@ -36,7 +36,7 @@ export class ProjectFormComponent implements OnInit {
   }
 
   fetch(): void {
-    this.metricService.fetchAll().subscribe(list => this.metrics = list);
+    this.metricService.fetchAll().subscribe(list => this.metrics = list.filter(c => c.description !== ''));
   }
 
   hasError(controlName: string, errorName: string): boolean {

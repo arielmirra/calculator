@@ -2,8 +2,7 @@
   <mat-card>
     <mat-card-header>
       <mat-card-title>Creá una métrica</mat-card-title>
-      <mat-card-subtitle>Cada métrica puede tener otras métricas y/o cálculos
-        dentro que utiliza para realizar su medición final
+      <mat-card-subtitle>Una métrica es una operación entre otros cálculos o métricas
       </mat-card-subtitle>
     </mat-card-header>
     <form [formGroup]="form" novalidate #formDirective="ngForm" autocomplete="off">
@@ -26,7 +25,7 @@
             type="text"
             formControlName="description"
             placeholder="Descripción"
-            >
+            cdkTextareaAutosize>
           </textarea>
           <mat-error *ngIf="hasError('description', 'required')">Esta entrada es requerida</mat-error>
         </mat-form-field>

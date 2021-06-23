@@ -101,3 +101,15 @@ mat-expansion-panel-header.mat-expanded {
   justify-content: space-between;
   width: 100%;
 }
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  margin: 15px 0 5px 0;
+}
+
+.important-button {
+  width: 30%;
+  padding: 4px 0 !important;
+}

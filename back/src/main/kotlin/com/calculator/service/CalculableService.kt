@@ -19,6 +19,7 @@ class CalculableService(
 
     fun create(form: CalculableForm): Calculable {
         val calc: Calculable
+        println(form)
         if (hasOperator(form)) {
             calc = if (hasTerms(form)) {
                 val left = findById(form.left!!)
@@ -41,6 +42,7 @@ class CalculableService(
                 value = form.value
             )
         }
+        calc.description = form.description
         return save(calc)
     }
 
@@ -57,6 +59,7 @@ class CalculableService(
                 val right = findById(form.right!!)
                 it.left = left
                 it.right = right
+                it.description = form.description
                 it.operator = Operator.valueOf(form.operator!!)
                 save(it)
                 changed = true

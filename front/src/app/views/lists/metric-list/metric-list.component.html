@@ -36,16 +36,18 @@
           </mat-expansion-panel-header>
           <p><strong>Nombre:</strong> {{m.name}}</p>
           <p><strong>Descripción:</strong> {{m.description}}</p>
-          <p><strong>1er término:</strong> {{m.left.name}}</p>
-          <p><strong>Operador entre ellos:</strong> {{m.operator}}</p>
-          <p><strong>2do término:</strong> {{m.right.name}}</p>
+          <p *ngIf="m.left"><strong>1er término:</strong> {{m.left.name}}</p>
+          <p *ngIf="m.operator"><strong>Operador entre ellos:</strong> {{m.operator}}</p>
+          <p *ngIf="m.right"><strong>2do término:</strong> {{m.right.name}}</p>
 
           <app-metric-chart [metric]="m" [lastMeasurement]="lastMeasurement"></app-metric-chart>
 
-          <button mat-button color="primary"
-                  (click)="measure(m)">
-            Realizar una medición
-          </button>
+          <div class="center">
+            <button mat-raised-button color="primary" class="important-button"
+                    (click)="measure(m)">
+              Realizar una medición
+            </button>
+          </div>
 
         </mat-expansion-panel>
       </mat-accordion>

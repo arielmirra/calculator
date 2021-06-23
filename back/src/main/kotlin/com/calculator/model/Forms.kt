@@ -2,6 +2,7 @@ package com.calculator.model
 
 data class CalculableForm(
     val name: String,
+    val description: String,
     val left: Long?,
     val right: Long?,
     val operator: String?,

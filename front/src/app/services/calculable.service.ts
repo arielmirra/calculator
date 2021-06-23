@@ -95,8 +95,15 @@ export class CalculableService {
     return this.http.get(`${this.basePath}measure/${id}`)
       .pipe(
         map(response => {
-          console.log('formula object from back-end: \n' + response.body);
-          return Object.assign(Formula.empty(), response.body);
+          const result = Object.assign(Formula.empty(), response.body);
+          const vars = new Map<string, string>();
+          for (const value in response.body.variables) {
+            if (response.body.variables.hasOwnProperty(value)) {
+              vars.set(value, response.body.variables[value]);
+            }
+          }
+          result.variables = vars;
+          return result;
         }),
         catchError(err => {
           console.log(err);

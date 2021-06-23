@@ -25,6 +25,7 @@ export class UpdateCalculableDialogComponent implements OnInit {
     this.calculableForm = CalculableForm.empty();
     this.calculableForm.id = this.calculable.id;
     this.calculableForm.name = this.calculable.name;
+    this.calculableForm.description = this.calculable.description;
     this.calculableForm.left = this.calculable.left ? this.calculable.left.id : null;
     this.calculableForm.right = this.calculable.right ? this.calculable.right.id : null;
     this.calculableForm.operator = this.calculable.operator;
