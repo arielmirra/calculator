@@ -8,6 +8,7 @@ export class Calculable {
     public id: number,
     public name: string,
     public description: string,
+    public calculableType: CalculableType,
     public left?: Calculable,
     public right?: Calculable,
     public operator?: Operator,
@@ -19,12 +20,13 @@ export class Calculable {
 export class CalculableForm {
 
   public static empty(): CalculableForm {
-    return new CalculableForm('', '', null, null, null, null);
+    return new CalculableForm('', '', CalculableType.VARIABLE, null, null, null, null);
   }
 
   constructor(
     public name: string,
     public description: string,
+    public calculableType: CalculableType,
     public left?: number, // only id
     public id?: number,
     public right?: number,
@@ -39,4 +41,10 @@ export enum Operator {
   MINUS,
   TIMES,
   DIVIDE
+}
+
+export enum CalculableType {
+  METRIC,
+  VARIABLE,
+  COPY
 }

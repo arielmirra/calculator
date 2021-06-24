@@ -30,7 +30,7 @@ data class Calculable(
     @Id @GeneratedValue val id: Long = -1,
     var name: String = "",
     var description: String = "",
-    var calculableType: CalculableType = CalculableType.VALUE,
+    var calculableType: CalculableType = CalculableType.VARIABLE,
     @Relationship(type = "left")
     var left: Calculable? = null,
     @Relationship(type = "right")
@@ -62,7 +62,7 @@ data class Calculable(
 }
 
 enum class CalculableType {
-    METRIC, OPERATOR, VALUE, COPY
+    METRIC, VARIABLE, COPY
 }
 
 enum class Operator : BinaryOperator<Double>, DoubleBinaryOperator {

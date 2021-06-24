@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {SnackbarService} from '../../../services/snackbar.service';
 import {Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
-import {Calculable} from '../../../models/Calculable';
+import {Calculable, CalculableType} from '../../../models/Calculable';
 import {CalculableService} from '../../../services/calculable.service';
 import {Measurement} from '../../../models/Measurement';
 import {FormulaModalComponent} from './formula-modal/formula-modal.component';
@@ -32,7 +32,7 @@ export class MetricListComponent implements OnInit {
   fetch(): void {
     this.calculableService.fetchAll().subscribe(r => {
       this.calculables = r;
-      this.metrics = r.filter(c => c.description !== '');
+      this.metrics = r.filter(c => c.calculableType === CalculableType.METRIC);
     });
   }
 

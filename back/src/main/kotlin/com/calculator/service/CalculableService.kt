@@ -41,7 +41,7 @@ class CalculableService(
         } else {
             calc = Calculable(
                 name = form.name,
-                calculableType = CalculableType.VALUE,
+                calculableType = CalculableType.VARIABLE,
                 value = form.value
             )
         }
