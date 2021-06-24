@@ -26,6 +26,7 @@ class CalculableService(
                 val right = findById(form.right!!)
                 Calculable(
                     name = form.name,
+                    calculableType = CalculableType.METRIC,
                     left = left,
                     right = right,
                     operator = Operator.valueOf(form.operator!!)
@@ -33,12 +34,14 @@ class CalculableService(
             } else {
                 Calculable(
                     name = form.name,
+                    calculableType = CalculableType.METRIC,
                     operator = Operator.valueOf(form.operator!!)
                 )
             }
         } else {
             calc = Calculable(
                 name = form.name,
+                calculableType = CalculableType.VALUE,
                 value = form.value
             )
         }
