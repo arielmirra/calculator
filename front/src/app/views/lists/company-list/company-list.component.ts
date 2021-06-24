@@ -53,7 +53,7 @@ export class CompanyListComponent implements OnInit {
       console.log(result);
       this.companyService.updateCompany(result).subscribe(success => {
         if (success) {
-          this.snackbar.openSnackbar('Cálculo guardado satisfactoriamente');
+          this.snackbar.openSnackbar('Empresa guardada satisfactoriamente');
           this.fetch();
         } else {
           this.snackbar.openSnackbar('No se ha podido guardar los cambios');

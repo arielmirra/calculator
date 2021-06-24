@@ -8,11 +8,11 @@ import {MatDialog} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-calculable-list',
-  templateUrl: './calculable-list.component.html',
-  styleUrls: ['./calculable-list.component.scss']
+  templateUrl: './variable-list.component.html',
+  styleUrls: ['./variable-list.component.scss']
 })
-export class CalculableListComponent implements OnInit {
-  calculables: Calculable[];
+export class VariableListComponent implements OnInit {
+  variables: Calculable[];
 
   constructor(
     private calculableService: CalculableService,
@@ -28,7 +28,7 @@ export class CalculableListComponent implements OnInit {
   fetch(): void {
     this.calculableService.fetchAll().subscribe(list => {
       console.log(list);
-      this.calculables = list.filter(c => c.calculableType === CalculableType.VALUE);
+      this.variables = list.filter(c => c.calculableType === CalculableType.VARIABLE);
     });
   }
 
@@ -39,14 +39,14 @@ export class CalculableListComponent implements OnInit {
   openDialog(calculable: Calculable): void {
     const dialogRef = this.dialog.open(UpdateCalculableDialogComponent, {
       width: '400px',
-      data: {actual: calculable, calculables: this.calculables}
+      data: {actual: calculable, calculables: this.variables}
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(result);
       this.calculableService.updateCalculable(result, result.id).subscribe(success => {
         if (success) {
-          this.snackbar.openSnackbar('Cálculo guardado satisfactoriamente');
+          this.snackbar.openSnackbar('Variable guardada satisfactoriamente');
           this.fetch();
         } else {
           this.snackbar.openSnackbar('No se ha podido guardar los cambios');

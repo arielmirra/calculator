@@ -1,4 +1,4 @@
-<div class="material-card-container" *ngIf="calculables">
+<div class="material-card-container" *ngIf="variables">
   <mat-card class="material-card">
 
     <mat-toolbar role="toolbar" class="card-title">
@@ -16,12 +16,12 @@
 
     <mat-card-content class="list">
 
-      <div *ngIf="calculables.length === 0" class="empty-list">
+      <div *ngIf="variables.length === 0" class="empty-list">
         <h1>No se encuentra ningún Calculable</h1>
       </div>
 
-      <mat-accordion *ngIf="calculables.length > 0">
-        <mat-expansion-panel *ngFor="let calc of calculables">
+      <mat-accordion *ngIf="variables.length > 0">
+        <mat-expansion-panel *ngFor="let calc of variables">
           <mat-expansion-panel-header>
             <mat-panel-title>
               <div class="title">

@@ -72,7 +72,7 @@ export class MetricListComponent implements OnInit {
       console.log(result);
       this.calculableService.updateCalculable(result, result.id).subscribe(success => {
         if (success) {
-          this.snackbar.openSnackbar('Cambios guardados satisfactoriamente');
+          this.snackbar.openSnackbar('Métrica guardada satisfactoriamente');
           this.fetch();
         } else {
           this.snackbar.openSnackbar('No se ha podido guardar los cambios');

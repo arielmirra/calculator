@@ -8,7 +8,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CalculableFormComponent} from './views/forms/calculable-form/calculable-form.component';
 import {NavbarComponent} from './views/navbar/navbar.component';
-import {CalculableListComponent} from './views/lists/calculable-list/calculable-list.component';
+import {VariableListComponent} from './views/lists/variable-list/variable-list.component';
 import {AppMaterialModule} from './app-material.module';
 import {CommonModule} from '@angular/common';
 import {MetricFormComponent} from './views/forms/metric-form/metric-form.component';
@@ -34,7 +34,7 @@ import { FormulaModalComponent } from './views/lists/metric-list/formula-modal/f
     AppComponent,
     CalculableFormComponent,
     NavbarComponent,
-    CalculableListComponent,
+    VariableListComponent,
     MetricFormComponent,
     MetricListComponent,
     MetricMeasurementModalComponent,

@@ -1,23 +1,22 @@
 import {NgModule} from '@angular/core';
-import {Routes, RouterModule} from '@angular/router';
+import {RouterModule, Routes} from '@angular/router';
 import {CalculableFormComponent} from './views/forms/calculable-form/calculable-form.component';
-import {CalculableListComponent} from './views/lists/calculable-list/calculable-list.component';
+import {VariableListComponent} from './views/lists/variable-list/variable-list.component';
 import {MetricFormComponent} from './views/forms/metric-form/metric-form.component';
 import {MetricListComponent} from './views/lists/metric-list/metric-list.component';
 import {ProjectFormComponent} from './views/forms/project-form/project-form.component';
 import {ProjectListComponent} from './views/lists/project-list/project-list.component';
 import {CompanyFormComponent} from './views/forms/company-form/company-form.component';
 import {CompanyListComponent} from './views/lists/company-list/company-list.component';
-import {ChartComponent} from './views/chart/chart.component';
 import {MetricChartComponent} from './views/chart/metric-chart/metric-chart.component';
 
 export const routes: Routes = [
   {
     path: '',
-    component: CalculableListComponent
+    component: VariableListComponent
   },
   {
-    path: 'calculable',
+    path: 'variable',
     children: [
       {
         path: 'new',
@@ -25,7 +24,7 @@ export const routes: Routes = [
       },
       {
         path: 'list',
-        component: CalculableListComponent
+        component: VariableListComponent
       }
     ]
   },

@@ -55,7 +55,7 @@ export class ProjectListComponent implements OnInit {
       console.log(result);
       this.projectService.updateProject(result).subscribe(success => {
         if (success) {
-          this.snackbar.openSnackbar('Cálculo guardado satisfactoriamente');
+          this.snackbar.openSnackbar('Proyecto guardado satisfactoriamente');
           this.fetch();
         } else {
           this.snackbar.openSnackbar('No se ha podido guardar los cambios');

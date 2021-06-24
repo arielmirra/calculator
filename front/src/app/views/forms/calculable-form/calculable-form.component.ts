@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {FormControl, FormGroup, FormGroupDirective, Validators} from '@angular/forms';
 import {SnackbarService} from '../../../services/snackbar.service';
-import {Calculable, CalculableForm, Operator} from '../../../models/Calculable';
+import {CalculableForm} from '../../../models/Calculable';
 import {CalculableService} from '../../../services/calculable.service';
 
 @Component({
@@ -12,12 +12,7 @@ import {CalculableService} from '../../../services/calculable.service';
 })
 export class CalculableFormComponent implements OnInit {
 
-  simpleForm: FormGroup;
   form: FormGroup;
-  operator: Operator;
-  left: number;
-  right: number;
-  calculables: Calculable[];
 
   constructor(
     private router: Router,
@@ -29,68 +24,31 @@ export class CalculableFormComponent implements OnInit {
   ngOnInit(): void {
     const minInputLength = 1;
     const maxInputLength = 25;
-
-    this.simpleForm = new FormGroup({
+    this.form = new FormGroup({
       name: new FormControl('', [Validators.required, Validators.minLength(minInputLength), Validators.maxLength(maxInputLength)])
     });
-
-    this.form = new FormGroup({
-      name: new FormControl('', [Validators.required, Validators.minLength(minInputLength), Validators.maxLength(maxInputLength)]),
-    });
-    this.fetch();
   }
 
-  fetch(): void {
-    this.calculableService.fetchAll().subscribe(list => this.calculables = list);
-  }
-
-  newCalc(formDirective: FormGroupDirective): void {
+  newVariable(formDirective: FormGroupDirective): void {
     const form = CalculableForm.empty();
     form.name = this.form.controls.name.value;
-    form.left = this.left;
-    form.right = this.right;
-    form.operator = this.operator;
     console.log(form);
     this.calculableService.addCalculable(form).subscribe(success => {
       this.resetForm(formDirective);
       if (success) {
-        this.fetch();
-        this.snackbarService.openSnackbar('Cálculo guardado satisfactoriamente');
+        this.snackbarService.openSnackbar('Variable guardada satisfactoriamente');
       } else {
         this.snackbarService.openSnackbar('No se ha podido guardar los cambios');
       }
     });
-  }
-
-  newSimpleCalc(formDirective: FormGroupDirective): void {
-    const form = CalculableForm.empty();
-    form.name = this.simpleForm.controls.name.value;
-    console.log(form);
-    this.calculableService.addCalculable(form).subscribe(success => {
-      this.resetForm(formDirective);
-      if (success) {
-        this.fetch();
-        this.snackbarService.openSnackbar('Cálculo guardado satisfactoriamente');
-      } else {
-        this.snackbarService.openSnackbar('No se ha podido guardar los cambios');
-      }
-    });
-  }
-
-  hasError(controlName: string, errorName: string): boolean {
-    return this.form.controls[controlName].hasError(errorName);
   }
 
   private resetForm(formDirective: FormGroupDirective): void {
     formDirective.resetForm();
-    this.simpleForm.reset();
     this.form.reset();
-    this.operator = null;
-    this.left = null;
-    this.right = null;
   }
 
-  isValid(form: FormGroup): boolean {
-    return form.valid && !!this.operator;
+  hasError(controlName: string, errorName: string): boolean {
+    return this.form.controls[controlName].hasError(errorName);
   }
 }
