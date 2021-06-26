@@ -7,7 +7,6 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CalculableFormComponent} from './views/forms/calculable-form/calculable-form.component';
-import {NavbarComponent} from './views/navbar/navbar.component';
 import {VariableListComponent} from './views/lists/variable-list/variable-list.component';
 import {AppMaterialModule} from './app-material.module';
 import {CommonModule} from '@angular/common';
@@ -33,7 +32,6 @@ import { FormulaModalComponent } from './views/lists/metric-list/formula-modal/f
   declarations: [
     AppComponent,
     CalculableFormComponent,
-    NavbarComponent,
     VariableListComponent,
     MetricFormComponent,
     MetricListComponent,

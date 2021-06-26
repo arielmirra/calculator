@@ -1,2 +1,63 @@
-<app-navbar></app-navbar>
-<div><router-outlet></router-outlet></div>
+<mat-toolbar role="toolbar">
+    <button mat-icon-button *ngIf="sidenav.mode === 'over'" (click)="sidenav.toggle()">
+      <mat-icon *ngIf="!sidenav.opened">
+        menu
+      </mat-icon>
+      <mat-icon *ngIf="sidenav.opened">
+        close
+      </mat-icon>
+    </button>
+
+    <div class="nav-title menu">
+      Creador de métricas para proyectos y empresas
+    </div>
+</mat-toolbar>
+<mat-sidenav-container>
+  <mat-sidenav #sidenav mode="side" opened style="width: 240px">
+    <mat-nav-list>
+      <mat-expansion-panel expanded [class.mat-elevation-z0]="true" dense>
+        <mat-expansion-panel-header>
+          Crear
+        </mat-expansion-panel-header>
+        <mat-nav-list dense>
+          <a mat-list-item routerLink="/company/new">
+            <mat-icon>business</mat-icon>
+            Empresa</a>
+          <a mat-list-item routerLink="/project/new">
+            <mat-icon>analytics</mat-icon>
+            Proyecto</a>
+          <a mat-list-item routerLink="/metric/new">
+            <mat-icon>insights</mat-icon>
+            Métrica</a>
+          <a mat-list-item routerLink="/variable/new">
+            <mat-icon>account_tree</mat-icon>
+            Variable</a>
+        </mat-nav-list>
+      </mat-expansion-panel>
+      <mat-expansion-panel expanded [class.mat-elevation-z0]="true" dense>
+        <mat-expansion-panel-header>
+          Listar
+        </mat-expansion-panel-header>
+        <mat-nav-list dense>
+          <a mat-list-item routerLink="/company/list">
+            <mat-icon>business</mat-icon>
+            Empresas</a>
+          <a mat-list-item routerLink="/project/list">
+            <mat-icon>analytics</mat-icon>
+            Proyectos</a>
+          <a mat-list-item routerLink="/metric/list">
+            <mat-icon>insights</mat-icon>
+            Métricas</a>
+          <a mat-list-item routerLink="/variable/list">
+            <mat-icon>account_tree</mat-icon>
+            Variables</a>
+        </mat-nav-list>
+      </mat-expansion-panel>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div>
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

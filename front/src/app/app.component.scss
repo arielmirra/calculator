@@ -1,0 +1,49 @@
+@import "src/app/_vars.scss";
+
+.mat-toolbar-single-row {
+  height: 50px;
+}
+
+.navigation-items {
+  margin-right: 1rem;
+  margin-left: 1rem;
+  cursor: pointer;
+}
+
+.nav-title {
+  width: 95%;
+  display: flex;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+@media (min-width: 800px) {
+  .nav-title {
+    margin-left: 240px;
+  }
+}
+
+.mat-toolbar {
+  background-color: $calculator-blue;
+  color: #ffffff;
+}
+
+mat-toolbar {
+  position: fixed;
+  z-index: 999;
+  box-shadow: 0 5px 24px -9px rgba(0, 0, 0, 0.75);
+  top: 0;
+
+  span {
+    outline: none;
+  }
+}
+
+mat-sidenav-container {
+  height: calc(100vh - 50px);
+  margin-top: 50px;
+}
+
+.sidenav-expansion-panel {
+  box-shadow: none;
+}
