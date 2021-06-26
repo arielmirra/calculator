@@ -14,13 +14,13 @@ import org.springframework.transaction.annotation.EnableTransactionManagement
 @EnableTransactionManagement
 class CalculatorApplication {
 
-//    @Bean
+    //    @Bean
     fun setup(
-    companyRepository: CompanyRepository,
-    projectRepository: ProjectRepository,
-    calculableRepository: CalculableRepository,
-    measurementRepository: MeasurementRepository,
-    formulaRepository: FormulaRepository
+        companyRepository: CompanyRepository,
+        projectRepository: ProjectRepository,
+        calculableRepository: CalculableRepository,
+        measurementRepository: MeasurementRepository,
+        formulaRepository: FormulaRepository
     ): CommandLineRunner? {
         return CommandLineRunner {
             companyRepository.deleteAll()
@@ -47,15 +47,17 @@ class CalculatorApplication {
             formulaRepository.deleteAll()
 
             val simpleCalc = calculableRepository.save(Calculable(
-                name = "cálculo 1",
+                name = "X",
+                calculableType = CalculableType.VARIABLE,
             ))
 
             val simpleCalc2 = calculableRepository.save(Calculable(
-                name = "cálculo 2",
+                name = "Y",
+                calculableType = CalculableType.VARIABLE,
             ))
 
             val complexCalc = calculableRepository.save(Calculable(
-                name = "cálculo complejo",
+                name = "variable compuesta",
                 left = simpleCalc,
                 right = simpleCalc2,
                 operator = Operator.PLUS

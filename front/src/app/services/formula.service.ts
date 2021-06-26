@@ -29,7 +29,13 @@ export class FormulaService {
   }
 
   measure(id: number, formula: Formula): Observable<Measurement> {
-    return this.http.put(this.basePath + id, formula)
+    const variables = {};
+    formula.variables.forEach((value, key) => {
+      variables[key] = value;
+    });
+    const object = JSON.parse(JSON.stringify(formula));
+    object.variables = variables;
+    return this.http.put(this.basePath + id, object)
       .pipe(
         map((response) => {
           return Object.assign(Measurement.empty(), response.body);

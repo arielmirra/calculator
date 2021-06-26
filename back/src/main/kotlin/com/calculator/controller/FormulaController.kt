@@ -28,10 +28,10 @@ class FormulaController(
     @PutMapping("/{id}")
     fun measure(
         @PathVariable id: Long,
-        @RequestBody calc: Formula,
+        @RequestBody formula: Formula,
         b: UriComponentsBuilder
     ): ResponseEntity<Measurement> =
-        formulaService.calculate(calc).let { ResponseEntity.ok(it) }
+        formulaService.calculate(formula).let { ResponseEntity.ok(it) }
 
     @DeleteMapping("/{id}")
     fun delete(@PathVariable id: Long): ResponseEntity<Boolean> =
