@@ -46,40 +46,38 @@ class CalculatorApplication {
             measurementRepository.deleteAll()
             formulaRepository.deleteAll()
 
-            val simpleCalc = calculableRepository.save(Calculable(
+            val x = calculableRepository.save(Calculable(
                 name = "X",
                 calculableType = CalculableType.VARIABLE,
             ))
 
-            val simpleCalc2 = calculableRepository.save(Calculable(
+            val y = calculableRepository.save(Calculable(
                 name = "Y",
                 calculableType = CalculableType.VARIABLE,
             ))
 
-            val complexCalc = calculableRepository.save(Calculable(
-                name = "variable compuesta",
-                left = simpleCalc,
-                right = simpleCalc2,
-                operator = Operator.PLUS
+            val z = calculableRepository.save(Calculable(
+                name = "Z",
+                calculableType = CalculableType.VARIABLE,
             ))
 
-//            val testMetric = metricRepository.save(Metric(
-//                name = "test",
-//                description = "test metric",
-//                calculates = mutableSetOf(simpleCalc, simpleCalc2)
-//            ))
-//
-//            val emptyMetric = metricRepository.save(Metric(
-//                name = "empty",
-//                description = "empty"
-//            ))
-//
-//            val complexMetric = metricRepository.save(Metric(
-//                name = "complexMetric",
-//                description = "complex metric",
-//                calculates = mutableSetOf(complexCalc),
-//                metrics = mutableSetOf(emptyMetric)
-//            ))
+            val metric1 = calculableRepository.save(Calculable(
+                name = "Métrica común",
+                description = "calcula el resultado de X + Y",
+                left = x,
+                right = y,
+                operator = Operator.PLUS,
+                calculableType = CalculableType.METRIC
+            ))
+
+            val metric2 = calculableRepository.save(Calculable(
+                name = "Métrica compuesta",
+                description = "calcula el resultado de (X + Y) * Z",
+                left = metric1,
+                right = z,
+                operator = Operator.TIMES,
+                calculableType = CalculableType.METRIC
+            ))
 
             val emptyProject = projectRepository.save(Project(
                 name = "Proyecto vacío",
@@ -87,9 +85,15 @@ class CalculatorApplication {
             ))
 
             val project = projectRepository.save(Project(
-                name = "proyecto normal",
+                name = "proyecto común",
                 description = "proyecto con una métrica",
-                calculables = mutableSetOf(complexCalc)
+                calculables = mutableSetOf(metric1)
+            ))
+
+            val project2 = projectRepository.save(Project(
+                name = "proyecto compuesto",
+                description = "proyecto con varias métricas",
+                calculables = mutableSetOf(metric1, metric2)
             ))
 
             val emptyCompany = companyRepository.save(Company(
@@ -102,13 +106,6 @@ class CalculatorApplication {
                 description = "Empresa con un proyecto dentro",
                 projects = mutableSetOf(project)
             ))
-
-//            val measurement = measurementRepository.save(Measurement(
-//                name = "test measurement",
-//                value = 1.0,
-//                from = testMetric,
-//                metricId = testMetric.id
-//            ))
         }
     }
 }
