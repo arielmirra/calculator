@@ -29,11 +29,12 @@ export class VariableListComponent implements OnInit {
     this.calculableService.fetchAll().subscribe(list => {
       console.log(list);
       this.variables = list.filter(c => c.calculableType === CalculableType.VARIABLE);
+      console.log(this.variables);
     });
   }
 
   createCalc(): void {
-    this.router.navigate(['calculable/new']);
+    this.router.navigate(['variable/new']);
   }
 
   openDialog(calculable: Calculable): void {

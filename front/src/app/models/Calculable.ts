@@ -44,7 +44,7 @@ export enum Operator {
 }
 
 export enum CalculableType {
-  METRIC,
-  VARIABLE,
-  COPY
+  METRIC = 'METRIC',
+  VARIABLE = 'VARIABLE' ,
+  COPY = 'COPY',
 }

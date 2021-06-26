@@ -7,6 +7,7 @@ import {CalculableService} from '../../../services/calculable.service';
 import {Measurement} from '../../../models/Measurement';
 import {FormulaModalComponent} from './formula-modal/formula-modal.component';
 import {UpdateCalculableDialogComponent} from '../../dialogs/update-calculable-dialog/update-calculable-dialog.component';
+import {FormulaService} from '../../../services/formula.service';
 
 @Component({
   selector: 'app-metric-list',
@@ -20,6 +21,7 @@ export class MetricListComponent implements OnInit {
 
   constructor(
     private calculableService: CalculableService,
+    private formulaService: FormulaService,
     private snackbar: SnackbarService,
     public dialog: MatDialog,
     private router: Router) {
@@ -45,15 +47,13 @@ export class MetricListComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe(result => {
         console.log(result);
-        // TODO send filled formula (result)
-        // this.calculableService.updateCalculable(result, result.id).subscribe(success => {
-        //   if (success) {
-        //     this.snackbar.openSnackbar('Cambios guardados satisfactoriamente');
-        //     this.fetch();
-        //   } else {
-        //     this.snackbar.openSnackbar('No se ha podido guardar los cambios');
-        //   }
-        // });
+        this.formulaService.measure(formula.fromId, formula).subscribe(result => {
+          if (result){
+            console.log(result);
+          } else {
+            console.log('ERROR');
+          }
+        });
       });
     });
   }
