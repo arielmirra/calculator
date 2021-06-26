@@ -19,8 +19,12 @@ body {
   }
 
   mat-card {
+    width: 60vw;
     grid-area: material-card;
     margin: 15px;
+    @media (max-width: 800px) {
+      width: 90vw;
+    }
 
     mat-form-field {
       padding: 5px 10px;
