@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, FormGroupDirective, Validators} from '@angular/forms';
-import {Calculable, CalculableForm, Operator} from '../../../models/Calculable';
+import {Calculable, CalculableForm, CalculableType, Operator} from '../../../models/Calculable';
 import {Router} from '@angular/router';
 import {SnackbarService} from '../../../services/snackbar.service';
 import {CalculableService} from '../../../services/calculable.service';
@@ -35,7 +35,8 @@ export class MetricFormComponent implements OnInit {
   }
 
   fetch(): void {
-    this.calculableService.fetchAll().subscribe(list => this.calculables = list);
+    this.calculableService.fetchAll().subscribe(list =>
+      this.calculables = list.filter(i => i.calculableType === CalculableType.METRIC || i.calculableType === CalculableType.VARIABLE));
   }
 
   hasError(controlName: string, errorName: string): boolean {
@@ -54,7 +55,7 @@ export class MetricFormComponent implements OnInit {
       this.resetForm(formDirective);
       if (success) {
         this.fetch();
-        this.snackbarService.openSnackbar('Métrica guardada satisfactoriamente');
+        this.snackbarService.openSnackbar('Métrica guardada satisfactoriamente', 'Crear Variables', '/variable/new/');
       } else {
         this.snackbarService.openSnackbar('No se ha podido guardar los cambios');
       }

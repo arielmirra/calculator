@@ -49,7 +49,8 @@ export class MetricListComponent implements OnInit {
         console.log(result);
         this.formulaService.measure(formula.fromId, formula).subscribe(result => {
           if (result){
-            console.log(result);
+            this.lastMeasurement = result;
+            console.log(this.lastMeasurement);
           } else {
             console.log('ERROR');
           }

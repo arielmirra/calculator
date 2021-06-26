@@ -60,12 +60,17 @@ export class MetricChartComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    console.log('GOT TO ON CHANGE');
     for (const prop in changes){
       if (prop === 'lastMeasurement') {
+        console.log('GOT TO ON CHANGE MEASUREMENT');
         this.lastMeasurement = changes[prop].currentValue;
       }
     }
-    if (this.lastMeasurement && this.lastMeasurement.from.calcTree.id === this.metric.id) {
+    console.log(this.lastMeasurement);
+    console.log(this.metric);
+    if (this.lastMeasurement && this.lastMeasurement.from.fromId === this.metric.id) {
+      console.log('GOT TO ON CHANGE MEASUREMENT IFFFFFF ID');
       this.updateMeasures(this.lastMeasurement);
       console.log(this.lastMeasurement);
       console.log(this.chartDataSet);

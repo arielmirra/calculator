@@ -28,10 +28,6 @@ export class FormulaModalComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  isValid(): boolean {
-    return this.variables.filter(i => !i[1]).length === 0;
-  }
-
   getFinalFormula(): Formula {
     this.formula.variables = new Map<string, number>(this.variables);
     return this.formula;

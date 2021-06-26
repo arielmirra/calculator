@@ -4,7 +4,7 @@ import {SnackbarService} from '../../../services/snackbar.service';
 import {FormControl, FormGroup, FormGroupDirective, Validators} from '@angular/forms';
 import {ProjectService} from '../../../services/project.service';
 import {ProjectForm} from '../../../models/Project';
-import {Calculable} from '../../../models/Calculable';
+import {Calculable, CalculableType} from '../../../models/Calculable';
 import {CalculableService} from '../../../services/calculable.service';
 
 @Component({
@@ -36,7 +36,8 @@ export class ProjectFormComponent implements OnInit {
   }
 
   fetch(): void {
-    this.metricService.fetchAll().subscribe(list => this.metrics = list.filter(c => c.description !== ''));
+    this.metricService.fetchAll().subscribe(list =>
+      this.metrics = list.filter(i => i.calculableType === CalculableType.METRIC));
   }
 
   hasError(controlName: string, errorName: string): boolean {
