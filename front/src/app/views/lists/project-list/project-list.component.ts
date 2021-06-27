@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {SnackbarService} from '../../../services/snackbar.service';
 import {MatDialog} from '@angular/material/dialog';
 import {Router} from '@angular/router';
@@ -8,6 +8,8 @@ import {UpdateProjectDialogComponent} from '../../dialogs/update-project-dialog/
 // import {MetricService} from '../../../services/metric.service';
 // import {Metric} from '../../../models/Metric';
 import {Measurement} from '../../../models/Measurement';
+import {Calculable, CalculableType} from "../../../models/Calculable";
+import {CalculableService} from "../../../services/calculable.service";
 
 @Component({
   selector: 'app-project-list',
@@ -16,12 +18,12 @@ import {Measurement} from '../../../models/Measurement';
 })
 export class ProjectListComponent implements OnInit {
   projects: Project[];
-  // metrics: Metric[];
+  metrics: Calculable[];
   lastMeasurement?: {value: Measurement, of: number};
 
   constructor(
     private projectService: ProjectService,
-    // private metricService: MetricService,
+    private calculableService: CalculableService,
     private snackbar: SnackbarService,
     public dialog: MatDialog,
     private router: Router) {
@@ -36,9 +38,8 @@ export class ProjectListComponent implements OnInit {
       console.log(list);
       this.projects = list;
     });
-    // this.metricService.fetchAll().subscribe(list => {
-    //   this.metrics = list;
-    // });
+    this.calculableService.fetchAll().subscribe(list =>
+      this.metrics = list.filter(i => i.calculableType === CalculableType.METRIC));
   }
 
   createProject(): void {
@@ -48,7 +49,7 @@ export class ProjectListComponent implements OnInit {
   openDialog(project: Project): void {
     const dialogRef = this.dialog.open(UpdateProjectDialogComponent, {
       width: '400px',
-      data: {actual: project, metrics: 0/*this.metrics*/}
+      data: {actual: project, metrics: this.metrics}
     });
 
     dialogRef.afterClosed().subscribe(result => {
