@@ -1,47 +1,48 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import {ProjectService} from '../../../services/project.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Company} from '../../../models/Company';
+import {CompanyService} from '../../../services/company.service';
+import {Measurement} from '../../../models/Measurement';
+import {Project} from '../../../models/Project';
+import {UpdateProjectDialogComponent} from '../../dialogs/update-project-dialog/update-project-dialog.component';
 import {SnackbarService} from '../../../services/snackbar.service';
 import {MatDialog} from '@angular/material/dialog';
-import {Router} from '@angular/router';
-import {Project} from '../../../models/Project';
-import {ProjectService} from '../../../services/project.service';
-import {UpdateProjectDialogComponent} from '../../dialogs/update-project-dialog/update-project-dialog.component';
-import {Measurement} from '../../../models/Measurement';
 import {Calculable, CalculableType} from '../../../models/Calculable';
 import {CalculableService} from '../../../services/calculable.service';
 
 @Component({
-  selector: 'app-project-list',
-  templateUrl: './project-list.component.html',
-  styleUrls: ['./project-list.component.scss']
+  selector: 'app-projects-of-company-list',
+  templateUrl: './projects-of-company-list.component.html',
+  styleUrls: ['./projects-of-company-list.component.scss']
 })
-export class ProjectListComponent implements OnInit {
-  projects: Project[];
+export class ProjectsOfCompanyListComponent implements OnInit {
+
+  company: Company;
   metrics: Calculable[];
   lastMeasurement?: {value: Measurement, of: number};
 
   constructor(
     private projectService: ProjectService,
+    private companyService: CompanyService,
     private calculableService: CalculableService,
+    private route: ActivatedRoute,
+    private router: Router,
     private snackbar: SnackbarService,
     public dialog: MatDialog,
-    private router: Router) {
-  }
+  ) { }
 
   ngOnInit(): void {
+    const id: number = +this.route.snapshot.paramMap.get('id');
+    this.companyService.getCompany(id).subscribe(result => {
+      this.company = result;
+    });
     this.fetch();
   }
 
   fetch(): void {
-    this.projectService.fetchAll().subscribe(list => {
-      console.log(list);
-      this.projects = list;
-    });
     this.calculableService.fetchAll().subscribe(list =>
       this.metrics = list.filter(i => i.calculableType === CalculableType.METRIC));
-  }
-
-  createProject(): void {
-    this.router.navigate(['project/new']);
   }
 
   seeMetrics(project: Project): void {

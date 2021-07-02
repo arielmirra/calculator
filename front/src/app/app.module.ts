@@ -27,6 +27,9 @@ import {MetricChartComponent} from './views/chart/metric-chart/metric-chart.comp
 import {ProjectChartComponent} from './views/chart/project-chart/project-chart.component';
 import { MeasureMetricDialogComponent } from './views/dialogs/measure-metric-dialog/measure-metric-dialog.component';
 import { FormulaModalComponent } from './views/lists/metric-list/formula-modal/formula-modal.component';
+import { ProjectsOfCompanyListComponent } from './views/lists/projects-of-company-list/projects-of-company-list.component';
+import { MetricsOfProjectListComponent } from './views/lists/metrics-of-project-list/metrics-of-project-list.component';
+import { MetricsOfMetricsListComponent } from './views/lists/metrics-of-metrics-list/metrics-of-metrics-list.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +51,10 @@ import { FormulaModalComponent } from './views/lists/metric-list/formula-modal/f
     MetricChartComponent,
     ProjectChartComponent,
     MeasureMetricDialogComponent,
-    FormulaModalComponent
+    FormulaModalComponent,
+    ProjectsOfCompanyListComponent,
+    MetricsOfProjectListComponent,
+    MetricsOfMetricsListComponent
   ],
   imports: [
     CommonModule,

@@ -1,41 +1,53 @@
-import {Component, OnInit} from '@angular/core';
-import {SnackbarService} from '../../../services/snackbar.service';
-import {Router} from '@angular/router';
-import {MatDialog} from '@angular/material/dialog';
+import { Component, OnInit } from '@angular/core';
+import {Project} from '../../../models/Project';
 import {Calculable, CalculableType} from '../../../models/Calculable';
-import {CalculableService} from '../../../services/calculable.service';
 import {Measurement} from '../../../models/Measurement';
-import {FormulaModalComponent} from './formula-modal/formula-modal.component';
-import {UpdateCalculableDialogComponent} from '../../dialogs/update-calculable-dialog/update-calculable-dialog.component';
+import {CalculableService} from '../../../services/calculable.service';
 import {FormulaService} from '../../../services/formula.service';
+import {SnackbarService} from '../../../services/snackbar.service';
+import {MatDialog} from '@angular/material/dialog';
+import {ActivatedRoute, Router} from '@angular/router';
+import {ProjectService} from '../../../services/project.service';
+import {UpdateCalculableDialogComponent} from '../../dialogs/update-calculable-dialog/update-calculable-dialog.component';
+import {FormulaModalComponent} from "../metric-list/formula-modal/formula-modal.component";
 
 @Component({
-  selector: 'app-metric-list',
-  templateUrl: './metric-list.component.html',
-  styleUrls: ['./metric-list.component.scss']
+  selector: 'app-metrics-of-project-list',
+  templateUrl: './metrics-of-project-list.component.html',
+  styleUrls: ['./metrics-of-project-list.component.scss']
 })
-export class MetricListComponent implements OnInit {
-  metrics: Calculable[];
+export class MetricsOfProjectListComponent implements OnInit {
+
+  project: Project;
   calculables: Calculable[];
   lastMeasurement?: Measurement;
 
   constructor(
+    private projectService: ProjectService,
     private calculableService: CalculableService,
     private formulaService: FormulaService,
     private snackbar: SnackbarService,
     public dialog: MatDialog,
-    private router: Router) {
-  }
+    private route: ActivatedRoute,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
+    const id: number = +this.route.snapshot.paramMap.get('id');
+    this.projectService.getProject(id).subscribe(result => {
+      this.project = result;
+    });
     this.fetch();
   }
 
   fetch(): void {
     this.calculableService.fetchAll().subscribe(r => {
       this.calculables = r;
-      this.metrics = r.filter(c => c.calculableType === CalculableType.METRIC);
     });
+  }
+
+  seeMetrics(metric: Calculable): void {
+    this.router.navigate(['metric/metrics/' + metric.id]);
   }
 
   measure(m: Calculable): void {
@@ -57,14 +69,6 @@ export class MetricListComponent implements OnInit {
         });
       });
     });
-  }
-
-  createMetric(): void {
-    this.router.navigate(['metric/new']);
-  }
-
-  seeMetrics(metric: Calculable): void {
-    this.router.navigate(['metric/metrics/' + metric.id]);
   }
 
   openDialog(metric: Calculable): void {

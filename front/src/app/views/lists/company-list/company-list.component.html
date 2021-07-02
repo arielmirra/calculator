@@ -37,6 +37,7 @@
           <p><strong>Nombre:</strong> {{c.name}}</p>
           <p><strong>Descripción:</strong> {{c.description}}</p>
           <p><strong>Proyectos incluídos:</strong> {{c.projects.length}}</p>
+          <button mat-button (click)="seeProjects(c)"> Ver Proyectos </button>
 
         </mat-expansion-panel>
       </mat-accordion>

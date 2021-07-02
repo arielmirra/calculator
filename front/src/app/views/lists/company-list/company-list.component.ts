@@ -43,6 +43,10 @@ export class CompanyListComponent implements OnInit {
     this.router.navigate(['company/new']);
   }
 
+  seeProjects(company: Company): void {
+    this.router.navigate(['company/projects/' + company.id]);
+  }
+
   openDialog(company: Company): void {
     const dialogRef = this.dialog.open(UpdateCompanyDialogComponent, {
       width: '400px',

@@ -8,7 +8,9 @@ import {ProjectFormComponent} from './views/forms/project-form/project-form.comp
 import {ProjectListComponent} from './views/lists/project-list/project-list.component';
 import {CompanyFormComponent} from './views/forms/company-form/company-form.component';
 import {CompanyListComponent} from './views/lists/company-list/company-list.component';
-import {MetricChartComponent} from './views/chart/metric-chart/metric-chart.component';
+import {MetricsOfProjectListComponent} from './views/lists/metrics-of-project-list/metrics-of-project-list.component';
+import {MetricsOfMetricsListComponent} from './views/lists/metrics-of-metrics-list/metrics-of-metrics-list.component';
+import {ProjectsOfCompanyListComponent} from './views/lists/projects-of-company-list/projects-of-company-list.component';
 
 export const routes: Routes = [
   {
@@ -38,6 +40,10 @@ export const routes: Routes = [
       {
         path: 'list',
         component: MetricListComponent
+      },
+      {
+        path: 'metrics/:id',
+        component: MetricsOfMetricsListComponent
       }
     ]
   },
@@ -51,6 +57,10 @@ export const routes: Routes = [
       {
         path: 'list',
         component: ProjectListComponent
+      },
+      {
+        path: 'metrics/:id',
+        component: MetricsOfProjectListComponent
       }
     ]
   },
@@ -64,16 +74,11 @@ export const routes: Routes = [
       {
         path: 'list',
         component: CompanyListComponent
-      }
-    ]
-  },
-  {
-    path: 'chart',
-    children: [
-      {
-        path: 'example',
-        component: MetricChartComponent
       },
+      {
+        path: 'projects/:id',
+        component: ProjectsOfCompanyListComponent
+      }
     ]
   }
 ];
