@@ -1,0 +1,38 @@
+<mat-accordion *ngIf="metric.right || metric.right">
+
+  <br/>
+  <mat-expansion-panel *ngIf="metric.left">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <div class="title">
+          <p>
+            {{metric.left.calculableType}}: {{metric.left.name}}
+          </p>
+        </div>
+
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <div *ngIf="metric.left.calculableType === 'METRIC'">
+      <p><strong>Descripción:</strong> {{metric.left.description}}</p>
+      <app-metric-recursive-component [metric]="metric.left"></app-metric-recursive-component>
+    </div>
+  </mat-expansion-panel>
+  <br/>
+  <h2 class="center"><strong>{{Operator[metric.operator]}}</strong></h2>
+  <mat-expansion-panel *ngIf="metric.right">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <div class="title">
+          <p>
+            {{metric.right.calculableType}}: {{metric.right.name}}
+          </p>
+        </div>
+
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <div *ngIf="metric.right.calculableType === 'METRIC'">
+      <p><strong>Descripción:</strong> {{metric.right.description}}</p>
+      <app-metric-recursive-component [metric]="metric.right"></app-metric-recursive-component>
+    </div>
+  </mat-expansion-panel>
+</mat-accordion>

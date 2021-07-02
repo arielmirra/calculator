@@ -1,1 +1,21 @@
-<p>metrics-of-metrics-list works!</p>
+<div class="material-card-container" *ngIf="metric">
+  <mat-card class="material-card">
+
+    <mat-toolbar role="toolbar" class="card-title">
+      <span>Composicion de {{metric.name}}</span>
+
+      <span class="fill-remaining-space"></span>
+
+    </mat-toolbar>
+
+    <mat-card-content class="list">
+
+      <div *ngIf="!metric.left || !metric.right" class="empty-list">
+        <h1>No se encuentra ninguna métrica</h1>
+      </div>
+
+      <app-metric-recursive-component [metric]="metric"></app-metric-recursive-component>
+
+    </mat-card-content>
+  </mat-card>
+</div>

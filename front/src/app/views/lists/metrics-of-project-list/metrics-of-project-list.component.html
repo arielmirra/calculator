@@ -13,6 +13,8 @@
         <h1>No se encuentra ninguna métrica</h1>
       </div>
 
+      <app-project-chart [project]="project" [lastMeasurement]="lastMeasurement"> </app-project-chart>
+      <br/>
       <mat-accordion *ngIf="project.calculables.length > 0">
         <mat-expansion-panel *ngFor="let m of project.calculables">
           <mat-expansion-panel-header>

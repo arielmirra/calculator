@@ -37,10 +37,10 @@ export class CalculableForm {
 }
 
 export enum Operator {
-  PLUS,
-  MINUS,
-  TIMES,
-  DIVIDE
+  PLUS = '+',
+  MINUS = '-',
+  TIMES = '*',
+  DIVIDE = '/'
 }
 
 export enum CalculableType {

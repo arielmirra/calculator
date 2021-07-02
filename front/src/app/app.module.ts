@@ -30,6 +30,7 @@ import { FormulaModalComponent } from './views/lists/metric-list/formula-modal/f
 import { ProjectsOfCompanyListComponent } from './views/lists/projects-of-company-list/projects-of-company-list.component';
 import { MetricsOfProjectListComponent } from './views/lists/metrics-of-project-list/metrics-of-project-list.component';
 import { MetricsOfMetricsListComponent } from './views/lists/metrics-of-metrics-list/metrics-of-metrics-list.component';
+import { MetricRecursiveComponentComponent } from './views/lists/metrics-of-metrics-list/metric-recursive-component/metric-recursive-component.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { MetricsOfMetricsListComponent } from './views/lists/metrics-of-metrics-
     FormulaModalComponent,
     ProjectsOfCompanyListComponent,
     MetricsOfProjectListComponent,
-    MetricsOfMetricsListComponent
+    MetricsOfMetricsListComponent,
+    MetricRecursiveComponentComponent
   ],
   imports: [
     CommonModule,
