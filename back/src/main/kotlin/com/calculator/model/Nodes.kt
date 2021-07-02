@@ -36,7 +36,8 @@ data class Calculable(
     @Relationship(type = "right")
     var right: Calculable? = null,
     var operator: Operator? = null,
-    var value: Double? = null
+    var value: Double? = null,
+    var lastMeasured: LocalDateTime = LocalDateTime.now(),
 ) {
     fun calculate(): Double = value ?: operator!!.apply(left!!.calculate(), right!!.calculate())
 

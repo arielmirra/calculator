@@ -23,11 +23,6 @@ class CalculableController(
     fun getById(@PathVariable id: Long): ResponseEntity<Calculable> =
         calculableService.findById(id)?.let { ok(it) } ?: notFound()
 
-
-    @GetMapping("/name/{name}")
-    fun getByName(@PathVariable name: String): ResponseEntity<Calculable> =
-        calculableService.findByName(name)?.let { ok(it) } ?: notFound()
-
     @GetMapping("/measure/{id}")
     fun calculate(@PathVariable id: Long): ResponseEntity<Formula> =
         calculableService.createFormula(id)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()

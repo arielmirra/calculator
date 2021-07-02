@@ -10,7 +10,8 @@ interface MeasurementRepository : Neo4jRepository<Measurement, Long> {
 
 @Repository
 interface CalculableRepository : Neo4jRepository<Calculable, Long> {
-    fun findByName(name: String): Calculable?
+    fun findAllByNameOrderByLastMeasuredDesc(name: String): List<Calculable>
+    fun findByNameAndCalculableType(name: String, type: CalculableType): List<Calculable>
 }
 
 @Repository

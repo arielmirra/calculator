@@ -35,26 +35,48 @@ class FormulaService(
     }
 
     fun calculate(formula: Formula): Measurement {
+        println("calculating formula from: ${formula.calcTree.name}")
         putValues(formula.calcTree, formula.variables)
+        measureInternalMetrics(formula.calcTree.left!!, formula.variables)
+        measureInternalMetrics(formula.calcTree.right!!, formula.variables)
+        formula.calcTree.left
+        formula.calcTree.right
         return measurementRepository.save(Measurement(
             value = formula.calcTree.calculate(),
             from = formula,
         ))
     }
 
+    private fun measureInternalMetrics(calculable: Calculable, variables: MutableMap<String, Double>): Unit {
+        if (calculable.description != "") {
+            println("measuring internal metric -> ${calculable.name}")
+            val original = calculableRepository.findByNameAndCalculableType(calculable.name, CalculableType.METRIC)[0]
+            val formula = createFromCalculable(original)
+            formula.variables = variables
+            calculate(formula)
+            calculable.left?.let { measureInternalMetrics(it, variables) }
+            calculable.right?.let { measureInternalMetrics(it, variables) }
+        }
+    }
+
     private fun getValues(calculable: Calculable, variables: MutableMap<String, Double>) {
         if (calculable.operator != null) {
             getValues(calculable.left!!, variables)
             getValues(calculable.right!!, variables)
-        }
-        else variables[calculable.name] = 0.0
+        } else variables[calculable.name] = getPreviousValue(calculable)
+    }
+
+    private fun getPreviousValue(calculable: Calculable): Double {
+        val previousValues = calculableRepository
+            .findAllByNameOrderByLastMeasuredDesc(calculable.name)
+            .filter { it.calculableType == CalculableType.COPY }
+        return if (previousValues.isEmpty()) 0.0 else previousValues[0].value!!
     }
 
     private fun putValues(calculable: Calculable, variables: MutableMap<String, Double>) {
         if (variables.containsKey(calculable.name)) {
             calculable.value = variables[calculable.name]
-        }
-        else {
+        } else {
             putValues(calculable.left!!, variables)
             putValues(calculable.right!!, variables)
         }

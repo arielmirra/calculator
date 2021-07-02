@@ -12,7 +12,6 @@ class CalculableService(
 ) {
 
     fun getAll(): List<Calculable> = calculableRepository.findAll()
-    fun findByName(name: String): Calculable? = calculableRepository.findByName(name)
     fun findById(id: Long): Calculable? = calculableRepository.findByIdOrNull(id)
     fun save(calculable: Calculable) = calculableRepository.save(calculable)
     fun deleteById(id: Long) = calculableRepository.deleteById(id)
