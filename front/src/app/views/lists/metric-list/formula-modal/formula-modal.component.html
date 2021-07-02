@@ -1,9 +1,9 @@
-<div class="material-card-container">
-    <mat-card-header>
+ <mat-card-header>
       <mat-card-title>Complete los valores de las variables</mat-card-title>
       <mat-card-subtitle>Asigne valores a las variables para realizar la medición
       </mat-card-subtitle>
-    </mat-card-header>
+ </mat-card-header>
+ <div mat-dialog-content>
     <form novalidate autocomplete="off">
       <mat-card-content>
 
@@ -22,6 +22,5 @@
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Cerrar</button>
-  <button mat-button
-          [mat-dialog-close]="getFinalFormula()">Guardar</button>
+  <button mat-button [mat-dialog-close]="getFinalFormula()">Guardar</button>
 </div>

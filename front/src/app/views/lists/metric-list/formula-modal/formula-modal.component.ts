@@ -25,6 +25,7 @@ export class FormulaModalComponent implements OnInit {
   }
 
   onNoClick(): void {
+    this.formula = Formula.empty();
     this.dialogRef.close();
   }
 

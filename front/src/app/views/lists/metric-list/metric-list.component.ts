@@ -47,9 +47,9 @@ export class MetricListComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe(result => {
         console.log(result);
-        this.formulaService.measure(formula.fromId, formula).subscribe(result => {
-          if (result){
-            this.lastMeasurement = result;
+        this.formulaService.measure(formula.fromId, formula).subscribe(success => {
+          if (success){
+            this.lastMeasurement = success;
             console.log(this.lastMeasurement);
           } else {
             console.log('ERROR');
