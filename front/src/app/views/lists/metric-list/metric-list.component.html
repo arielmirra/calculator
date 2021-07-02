@@ -39,7 +39,8 @@
           <p *ngIf="m.left"><strong>1er término:</strong> {{m.left.name}}</p>
           <p *ngIf="m.operator"><strong>Operador entre ellos:</strong> {{m.operator}}</p>
           <p *ngIf="m.right"><strong>2do término:</strong> {{m.right.name}}</p>
-          <button mat-button (click)="seeMetrics(m)"> Ver Composicion </button>
+          <br/>
+          <button mat-raised-button color="primary" (click)="seeMetrics(m)"> Ver Composicion </button>
 
           <app-metric-chart [metric]="m" [lastMeasurement]="lastMeasurement"></app-metric-chart>
 

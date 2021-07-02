@@ -37,10 +37,10 @@
           <p><strong>Nombre:</strong> {{p.name}}</p>
           <p><strong>Descripción:</strong> {{p.description}}</p>
           <p><strong>Métricas incluídas:</strong> {{p.calculables.length}}</p>
+          <br/>
+          <button mat-raised-button color="primary" *ngIf="p.calculables.length>0" (click)="seeMetrics(p)"> Ver Metricas </button>
 
-          <app-project-chart [project]="p" [lastMeasurement]="lastMeasurement"> </app-project-chart>
-
-          <button mat-button (click)="seeMetrics(p)"> Ver Metricas </button>
+          <app-project-chart [project]="p"  *ngIf="p.calculables.length>0" [lastMeasurement]="lastMeasurement"> </app-project-chart>
 
         </mat-expansion-panel>
       </mat-accordion>
