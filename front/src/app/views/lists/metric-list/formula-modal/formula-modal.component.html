@@ -21,6 +21,6 @@
     </form>
 </div>
 <div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">Cerrar</button>
-  <button mat-button [mat-dialog-close]="getFinalFormula()">Guardar</button>
+  <button mat-button (click)="dialogRef.close()">Cerrar</button>
+  <button mat-button (click)="measureFormula()">Guardar</button>
 </div>

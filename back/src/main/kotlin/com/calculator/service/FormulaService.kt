@@ -21,6 +21,9 @@ class FormulaService(
     fun delete(id: Long): Boolean =
         findById(id)?.let {
             deleteById(it.id)
+            val connectedNodes = mutableSetOf<Calculable>()
+            treeToList(it.calcTree, connectedNodes)
+            calculableRepository.deleteAll(connectedNodes)
             true
         } ?: false
 
@@ -29,22 +32,21 @@ class FormulaService(
             calcTree = calculable.deepCopy(),
             fromId = calculable.id
         )
-        getValues(formula.calcTree, formula.variables)
+        buildVariablesMap(formula.calcTree, formula.variables)
         val result = formulaRepository.save(formula)
         return formulaRepository.findByIdOrNull(result.id)!!
     }
 
     fun calculate(formula: Formula): Measurement {
         println("calculating formula from: ${formula.calcTree.name}")
-        putValues(formula.calcTree, formula.variables)
-        measureInternalMetrics(formula.calcTree.left!!, formula.variables)
-        measureInternalMetrics(formula.calcTree.right!!, formula.variables)
-        formula.calcTree.left
-        formula.calcTree.right
-        return measurementRepository.save(Measurement(
+        assignVariablesValues(formula.calcTree, formula.variables)
+        val result = measurementRepository.save(Measurement(
             value = formula.calcTree.calculate(),
             from = formula,
         ))
+        measureInternalMetrics(formula.calcTree.left!!, formula.variables)
+        measureInternalMetrics(formula.calcTree.right!!, formula.variables)
+        return result
     }
 
     private fun measureInternalMetrics(calculable: Calculable, variables: MutableMap<String, Double>): Unit {
@@ -59,10 +61,10 @@ class FormulaService(
         }
     }
 
-    private fun getValues(calculable: Calculable, variables: MutableMap<String, Double>) {
+    private fun buildVariablesMap(calculable: Calculable, variables: MutableMap<String, Double>) {
         if (calculable.operator != null) {
-            getValues(calculable.left!!, variables)
-            getValues(calculable.right!!, variables)
+            buildVariablesMap(calculable.left!!, variables)
+            buildVariablesMap(calculable.right!!, variables)
         } else variables[calculable.name] = getPreviousValue(calculable)
     }
 
@@ -73,12 +75,18 @@ class FormulaService(
         return if (previousValues.isEmpty()) 0.0 else previousValues[0].value!!
     }
 
-    private fun putValues(calculable: Calculable, variables: MutableMap<String, Double>) {
+    private fun assignVariablesValues(calculable: Calculable, variables: MutableMap<String, Double>) {
         if (variables.containsKey(calculable.name)) {
             calculable.value = variables[calculable.name]
         } else {
-            putValues(calculable.left!!, variables)
-            putValues(calculable.right!!, variables)
+            assignVariablesValues(calculable.left!!, variables)
+            assignVariablesValues(calculable.right!!, variables)
         }
+    }
+
+    private fun treeToList(calculable: Calculable, nodes: MutableSet<Calculable>) {
+        nodes.add(calculable)
+        calculable.left?.let { treeToList(it, nodes) }
+        calculable.right?.let { treeToList(it, nodes) }
     }
 }

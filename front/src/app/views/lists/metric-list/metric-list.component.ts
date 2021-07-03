@@ -46,15 +46,18 @@ export class MetricListComponent implements OnInit {
       });
 
       dialogRef.afterClosed().subscribe(result => {
-        console.log(result);
-        this.formulaService.measure(formula.fromId, formula).subscribe(success => {
-          if (success){
-            this.lastMeasurement = success;
-            console.log(this.lastMeasurement);
-          } else {
-            console.log('ERROR');
-          }
-        });
+        if (result !== undefined) {
+          this.formulaService.measure(formula.fromId, formula).subscribe(success => {
+            if (success){
+              this.lastMeasurement = success;
+              console.log(this.lastMeasurement);
+            } else {
+              console.log('ERROR');
+            }
+          });
+        } else {
+          this.formulaService.deleteFormula(formula.id).subscribe();
+        }
       });
     });
   }

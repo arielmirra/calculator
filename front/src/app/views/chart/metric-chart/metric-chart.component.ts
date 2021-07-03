@@ -48,7 +48,6 @@ export class MetricChartComponent implements OnInit, OnChanges {
     this.measurementValues = this.measures.map((m) => {
       return {y: m.value, x: m.date};
     });
-    console.log(this.measurementValues);
   }
 
   private setLabels(): void {
@@ -65,12 +64,8 @@ export class MetricChartComponent implements OnInit, OnChanges {
         this.lastMeasurement = changes[prop].currentValue;
       }
     }
-    console.log(this.lastMeasurement);
-    console.log(this.metric);
     if (this.lastMeasurement && this.lastMeasurement.from.fromId === this.metric.id) {
       this.updateMeasures(this.lastMeasurement);
-      console.log(this.lastMeasurement);
-      console.log(this.chartDataSet);
     }
   }
 }

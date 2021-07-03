@@ -24,14 +24,9 @@ export class FormulaModalComponent implements OnInit {
       .map((k, index) => [k, values[index]]);
   }
 
-  onNoClick(): void {
-    this.formula = Formula.empty();
-    this.dialogRef.close();
-  }
-
-  getFinalFormula(): Formula {
+  measureFormula(): void {
     this.formula.variables = new Map<string, number>(this.variables);
-    return this.formula;
+    this.dialogRef.close(this.formula);
   }
 
 }
