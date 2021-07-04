@@ -9,7 +9,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ProjectService} from '../../../services/project.service';
 import {UpdateCalculableDialogComponent} from '../../dialogs/update-calculable-dialog/update-calculable-dialog.component';
-import {FormulaModalComponent} from "../metric-list/formula-modal/formula-modal.component";
+import {FormulaModalComponent} from '../metric-list/formula-modal/formula-modal.component';
 
 @Component({
   selector: 'app-metrics-of-project-list',
@@ -33,14 +33,14 @@ export class MetricsOfProjectListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    const id: number = +this.route.snapshot.paramMap.get('id');
-    this.projectService.getProject(id).subscribe(result => {
-      this.project = result;
-    });
     this.fetch();
   }
 
   fetch(): void {
+    const id: number = +this.route.snapshot.paramMap.get('id');
+    this.projectService.getProject(id).subscribe(result => {
+      this.project = result;
+    });
     this.calculableService.fetchAll().subscribe(r => {
       this.calculables = r;
     });

@@ -1,21 +1,26 @@
-<div class="material-card-container" *ngIf="metric">
-  <mat-card class="material-card">
+<div  *ngIf="metric">
+  <div class="material-card-container no-padding">
+    <mat-card class="material-card height-def">
+      <mat-toolbar role="toolbar" class="card-title">
+        <span>Composición de {{metric.name}}</span>
+        <span class="fill-remaining-space"></span>
+        <div class="center">
+          <button mat-raised-button color="primary" class="important-button"
+                  (click)="measure(metric)">
+            Medir
+          </button>
+        </div>
+      </mat-toolbar>
 
-    <mat-toolbar role="toolbar" class="card-title">
-      <span>Composicion de {{metric.name}}</span>
+      <mat-card-content class="list">
 
-      <span class="fill-remaining-space"></span>
+        <div *ngIf="!metric.left || !metric.right" class="empty-list">
+          <h1>No se encuentra ninguna métrica</h1>
+        </div>
+        <app-metric-recursive-component [metric]="metric"></app-metric-recursive-component>
+      </mat-card-content>
+    </mat-card>
+  </div>
 
-    </mat-toolbar>
-
-    <mat-card-content class="list">
-
-      <div *ngIf="!metric.left || !metric.right" class="empty-list">
-        <h1>No se encuentra ninguna métrica</h1>
-      </div>
-
-      <app-metric-recursive-component [metric]="metric"></app-metric-recursive-component>
-
-    </mat-card-content>
-  </mat-card>
+  <app-metric-chart [metric]="metric" [lastMeasurement]="lastMeasurement"></app-metric-chart>
 </div>

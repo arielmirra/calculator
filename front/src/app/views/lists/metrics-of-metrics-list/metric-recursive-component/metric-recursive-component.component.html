@@ -15,6 +15,8 @@
     <div *ngIf="metric.left.calculableType === 'METRIC'">
       <p><strong>Descripción:</strong> {{metric.left.description}}</p>
       <app-metric-recursive-component [metric]="metric.left"></app-metric-recursive-component>
+      <br/>
+      <button mat-raised-button color="primary" (click)="seeMetrics(metric.left)"> Ver Composición </button>
     </div>
   </mat-expansion-panel>
   <br/>
@@ -33,6 +35,8 @@
     <div *ngIf="metric.right.calculableType === 'METRIC'">
       <p><strong>Descripción:</strong> {{metric.right.description}}</p>
       <app-metric-recursive-component [metric]="metric.right"></app-metric-recursive-component>
+      <br/>
+      <button mat-raised-button color="primary" (click)="seeMetrics(metric.right)"> Ver Composición </button>
     </div>
   </mat-expansion-panel>
 </mat-accordion>

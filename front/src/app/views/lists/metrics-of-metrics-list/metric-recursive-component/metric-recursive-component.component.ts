@@ -30,6 +30,14 @@ export class MetricRecursiveComponentComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  seeMetrics(metric: Calculable): void {
+    this.router.routeReuseStrategy.shouldReuseRoute = function () {
+      return false;
+    }
+    this.router.onSameUrlNavigation = 'reload';
+    this.router.navigate(['/metric/metrics/' + metric.id]);
+  }
+
   measure(m: Calculable): void {
     this.calculableService.measure(m.id).subscribe(formula => {
       const dialogRef = this.dialog.open(FormulaModalComponent, {
@@ -39,9 +47,9 @@ export class MetricRecursiveComponentComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe(result => {
         console.log(result);
-        this.formulaService.measure(formula.fromId, formula).subscribe(result => {
-          if (result){
-            this.lastMeasurement = result;
+        this.formulaService.measure(formula.fromId, formula).subscribe(res => {
+          if (res){
+            this.lastMeasurement = res;
             console.log(this.lastMeasurement);
           } else {
             console.log('ERROR');

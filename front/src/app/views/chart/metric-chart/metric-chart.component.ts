@@ -59,6 +59,7 @@ export class MetricChartComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    this.fetch();
     for (const prop in changes){
       if (prop === 'lastMeasurement') {
         this.lastMeasurement = changes[prop].currentValue;

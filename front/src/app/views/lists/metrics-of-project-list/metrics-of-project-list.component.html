@@ -1,54 +1,58 @@
-<div class="material-card-container" *ngIf="project.calculables">
-  <mat-card class="material-card">
+<div  *ngIf="project.calculables">
+  <div class="material-card-container no-padding">
+    <mat-card class="material-card height-def">
 
-    <mat-toolbar role="toolbar" class="card-title">
-      <span>Métricas de {{project.name}}</span>
-      <span class="fill-remaining-space"></span>
+      <mat-toolbar role="toolbar" class="card-title">
+        <span>Métricas de {{project.name}}</span>
+        <span class="fill-remaining-space"></span>
 
-    </mat-toolbar>
+      </mat-toolbar>
 
-    <mat-card-content class="list">
+      <mat-card-content class="list">
 
-      <div *ngIf="project.calculables.length === 0" class="empty-list">
-        <h1>No se encuentra ninguna métrica</h1>
-      </div>
+        <div *ngIf="project.calculables.length === 0" class="empty-list">
+          <h1>No se encuentra ninguna métrica</h1>
+        </div>
 
-      <app-project-chart [project]="project" [lastMeasurement]="lastMeasurement"> </app-project-chart>
-      <br/>
-      <mat-accordion *ngIf="project.calculables.length > 0">
-        <mat-expansion-panel *ngFor="let m of project.calculables">
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              <div class="title">
-                <p>
-                  {{m.name}}
-                </p>
-                <button mat-icon-button (click)="openDialog(m)">
-                  <mat-icon>edit</mat-icon>
-                </button>
-              </div>
 
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-          <p><strong>Nombre:</strong> {{m.name}}</p>
-          <p><strong>Descripción:</strong> {{m.description}}</p>
-          <p *ngIf="m.left"><strong>1er término:</strong> {{m.left.name}}</p>
-          <p *ngIf="m.operator"><strong>Operador entre ellos:</strong> {{m.operator}}</p>
-          <p *ngIf="m.right"><strong>2do término:</strong> {{m.right.name}}</p>
-          <br/>
-          <button mat-raised-button color="primary" (click)="seeMetrics(m)"> Ver Composicion </button>
+        <br/>
+        <mat-accordion *ngIf="project.calculables.length > 0">
+          <mat-expansion-panel *ngFor="let m of project.calculables">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <div class="title">
+                  <p>
+                    {{m.name}}
+                  </p>
+                  <button mat-icon-button (click)="openDialog(m)">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                </div>
 
-          <app-metric-chart [metric]="m" [lastMeasurement]="lastMeasurement"></app-metric-chart>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <p><strong>Nombre:</strong> {{m.name}}</p>
+            <p><strong>Descripción:</strong> {{m.description}}</p>
+            <p *ngIf="m.left"><strong>1er término:</strong> {{m.left.name}}</p>
+            <p *ngIf="m.operator"><strong>Operador entre ellos:</strong> {{m.operator}}</p>
+            <p *ngIf="m.right"><strong>2do término:</strong> {{m.right.name}}</p>
+            <br/>
+            <button mat-raised-button color="primary" (click)="seeMetrics(m)"> Ver Composicion </button>
 
-          <div class="center">
-            <button mat-raised-button color="primary" class="important-button"
-                    (click)="measure(m)">
-              Realizar una medición
-            </button>
-          </div>
+            <app-metric-chart [metric]="m" [lastMeasurement]="lastMeasurement"></app-metric-chart>
 
-        </mat-expansion-panel>
-      </mat-accordion>
-    </mat-card-content>
-  </mat-card>
+            <div class="center">
+              <button mat-raised-button color="primary" class="important-button"
+                      (click)="measure(m)">
+                Realizar una medición
+              </button>
+            </div>
+
+          </mat-expansion-panel>
+        </mat-accordion>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <app-project-chart [project]="project" [lastMeasurement]="lastMeasurement"> </app-project-chart>
 </div>
