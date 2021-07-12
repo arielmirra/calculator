@@ -15,7 +15,8 @@ export class FormulaModalComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<FormulaModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data,
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.formula = this.data.formula;

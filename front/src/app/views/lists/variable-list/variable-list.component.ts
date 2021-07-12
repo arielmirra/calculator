@@ -27,9 +27,7 @@ export class VariableListComponent implements OnInit {
 
   fetch(): void {
     this.calculableService.fetchAll().subscribe(list => {
-      console.log(list);
       this.variables = list.filter(c => c.calculableType === CalculableType.VARIABLE);
-      console.log(this.variables);
     });
   }
 
@@ -44,7 +42,6 @@ export class VariableListComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
       this.calculableService.updateCalculable(result, result.id).subscribe(success => {
         if (success) {
           this.snackbar.openSnackbar('Variable guardada satisfactoriamente');
