@@ -15,7 +15,6 @@ class FormulaService(
     fun getAll(): List<Formula> = formulaRepository.findAll()
     fun findById(id: Long): Formula? = formulaRepository.findByIdOrNull(id)
     fun findByCalcId(id: Long): List<Formula> = formulaRepository.findAllByCalcTreeId(id)
-    fun save(Formula: Formula) = formulaRepository.save(Formula)
     fun deleteById(id: Long) = formulaRepository.deleteById(id)
 
     fun delete(id: Long): Boolean =
@@ -62,16 +61,25 @@ class FormulaService(
     }
 
     private fun buildVariablesMap(calculable: Calculable, variables: MutableMap<String, Double>) {
-        if (calculable.operator != null) {
-            buildVariablesMap(calculable.left!!, variables)
-            buildVariablesMap(calculable.right!!, variables)
-        } else variables[calculable.name] = getPreviousValue(calculable)
+        when (calculable.operator) {
+            Operator.SUMMATION -> calculable.children.forEach { buildVariablesMap(it, variables) }
+            Operator.AVERAGE -> calculable.children.forEach { buildVariablesMap(it, variables) }
+            else -> {
+                if (isSimpleMetric(calculable)) {
+                    buildVariablesMap(calculable.left!!, variables)
+                    buildVariablesMap(calculable.right!!, variables)
+                } else variables[calculable.name] = getPreviousValue(calculable)
+            }
+        }
     }
+
+    private fun isSimpleMetric(calculable: Calculable): Boolean =
+        calculable.operator != null  && calculable.operator != Operator.AVERAGE && calculable.operator != Operator.SUMMATION
 
     private fun getPreviousValue(calculable: Calculable): Double {
         val previousValues = calculableRepository
             .findAllByNameOrderByLastMeasuredDesc(calculable.name)
-            .filter { it.calculableType == CalculableType.COPY }
+            .filter { it.calculableType == CalculableType.COPY && it.value != null }
         return if (previousValues.isEmpty()) 0.0 else previousValues[0].value!!
     }
 
@@ -79,13 +87,20 @@ class FormulaService(
         if (variables.containsKey(calculable.name)) {
             calculable.value = variables[calculable.name]
         } else {
-            assignVariablesValues(calculable.left!!, variables)
-            assignVariablesValues(calculable.right!!, variables)
+            when (calculable.operator) {
+                Operator.SUMMATION -> calculable.children.forEach { assignVariablesValues(it, variables) }
+                Operator.AVERAGE -> calculable.children.forEach { assignVariablesValues(it, variables) }
+                else -> {
+                    assignVariablesValues(calculable.left!!, variables)
+                    assignVariablesValues(calculable.right!!, variables)
+                }
+            }
         }
     }
 
     private fun treeToList(calculable: Calculable, nodes: MutableSet<Calculable>) {
         nodes.add(calculable)
+        if (calculable.children.isNotEmpty()) calculable.children.forEach { treeToList(it, nodes) }
         calculable.left?.let { treeToList(it, nodes) }
         calculable.right?.let { treeToList(it, nodes) }
     }

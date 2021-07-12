@@ -38,19 +38,37 @@ data class Calculable(
     var operator: Operator? = null,
     var value: Double? = null,
     var lastMeasured: LocalDateTime = LocalDateTime.now(),
+    @Relationship(type = "CHILDREN")
+    var children: MutableSet<Calculable> = mutableSetOf()
 ) {
-    fun calculate(): Double = value ?: operator!!.apply(left!!.calculate(), right!!.calculate())
+    fun calculate(): Double {
+        return when (operator) {
+            Operator.SUMMATION -> children.sumOf { it.calculate() }
+            Operator.AVERAGE -> children.map {it.calculate()}.average()
+            else -> if (value == null) operator!!.apply(left!!.calculate(), right!!.calculate()) else value!!
+        }
+    }
 
     fun deepCopy(): Calculable {
         return if (operator != null) {
-            Calculable(
-                name = name,
-                description = description,
-                calculableType = CalculableType.COPY,
-                operator = operator,
-                left = left!!.deepCopy(),
-                right = right!!.deepCopy()
-            )
+            if (operator == Operator.AVERAGE || operator == Operator.SUMMATION) {
+                Calculable(
+                    name = name,
+                    description = description,
+                    calculableType = CalculableType.COPY,
+                    operator = operator,
+                    children = children.map { it.deepCopy() }.toMutableSet()
+                )
+            } else {
+                Calculable(
+                    name = name,
+                    description = description,
+                    calculableType = CalculableType.COPY,
+                    operator = operator,
+                    left = left!!.deepCopy(),
+                    right = right!!.deepCopy()
+                )
+            }
         } else {
             Calculable(
                 name = name,
@@ -78,6 +96,12 @@ enum class Operator : BinaryOperator<Double>, DoubleBinaryOperator {
     },
     DIVIDE {
         override fun apply(t: Double, u: Double): Double = t / u
+    },
+    SUMMATION {
+        override fun apply(t: Double, u: Double): Double = TODO("not necessary")
+    },
+    AVERAGE {
+        override fun apply(t: Double, u: Double): Double = TODO("not necessary")
     };
 
     override fun applyAsDouble(t: Double, u: Double) = apply(t, u)
